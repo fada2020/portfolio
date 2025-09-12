@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:yaml/yaml.dart';
@@ -41,7 +40,7 @@ String _fullUrl(String base, String path) {
 Future<void> main(List<String> args) async {
   final outDir = (args.length >= 2 && args[0] == '--out') ? args[1] : 'build/web';
   final base = Platform.environment['SITE_BASE_URL'] ?? 'https://example.com';
-  final now = DateTime.now().toUtc().toIso8601String().split('.').first + 'Z';
+  final now = '${DateTime.now().toUtc().toIso8601String().split('.').first}Z';
 
   final entries = <String>{
     '/',
@@ -86,4 +85,3 @@ Future<void> main(List<String> args) async {
 
   stdout.writeln('Generated sitemap.xml and robots.txt in $outDir');
 }
-

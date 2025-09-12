@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_web_libraries_in_flutter, deprecated_member_use
 import 'dart:html' as html;
 
 Future<String?> getSavedLocaleCode() async {
@@ -11,4 +12,3 @@ Future<void> saveLocaleCode(String? code) async {
     html.window.localStorage['locale'] = code;
   }
 }
-

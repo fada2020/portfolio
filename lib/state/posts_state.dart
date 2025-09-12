@@ -46,6 +46,6 @@ final postExcerptProvider = FutureProvider.family<String, ({String localeCode, S
   text = text.replaceAll(RegExp(r'^#{1,6}\s*', multiLine: true), '');
   text = text.replaceAll(RegExp(r'[*_>#-]'), ' ');
   text = text.replaceAll(RegExp(r'\s+'), ' ').trim();
-  if (text.length > 200) text = text.substring(0, 200) + '…';
+  if (text.length > 200) text = '${text.substring(0, 200)}…';
   return text;
 });

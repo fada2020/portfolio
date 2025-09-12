@@ -20,8 +20,8 @@ String buildCurl(
     final val = sch['default'] ?? (sch['type'] == 'integer' || sch['type'] == 'number' ? 0 : 'value');
     if (p.required) qp[p.name] = '$val';
   }
-  final query = qp.isEmpty ? '' : '?' + qp.entries.map((e) => '${Uri.encodeQueryComponent(e.key)}=${Uri.encodeQueryComponent(e.value)}').join('&');
-  final uri = baseUrl.replaceAll(RegExp(r'/+$'), '') + path + query;
+  final query = qp.isEmpty ? '' : '?${qp.entries.map((e) => '${Uri.encodeQueryComponent(e.key)}=${Uri.encodeQueryComponent(e.value)}').join('&')}';
+  final uri = '${baseUrl.replaceAll(RegExp(r'/+$'), '')}$path$query';
   final parts = ["curl -X ${e.method} '$uri'", "-H 'accept: application/json'"];
   if (includeAuth && token.isNotEmpty) {
     parts.add("-H 'authorization: Bearer ${token.replaceAll("'", "\'")}'");
@@ -36,4 +36,3 @@ String buildCurl(
   // Keep single-line for portability in terminals/editors.
   return parts.join(' ');
 }
-
