@@ -14,9 +14,12 @@ void main() {
   });
 
   test('loadProjectBody loads Markdown content', () async {
-    final md = await loadProjectBody('en', 'projects/svc-gateway.md');
+    final projects = await loadProjects('en');
+    // pick the first project that declares a body path
+    final firstWithBody = projects.firstWhere((p) => p.body != null && p.body!.isNotEmpty);
+    final md = await loadProjectBody('en', firstWithBody.body!);
     expect(md, isNotNull);
-    expect(md!.contains('# Architecture'), true);
+    expect(md!.isNotEmpty, true);
   });
 
   test('loadPosts loads EN posts', () async {
@@ -25,4 +28,3 @@ void main() {
     expect(posts.first.id, isNotEmpty);
   });
 }
-

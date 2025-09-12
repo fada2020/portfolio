@@ -18,9 +18,10 @@ class ResumePage extends ConsumerWidget {
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 900),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                   Text(p.name, style: Theme.of(context).textTheme.headlineSmall),
                   const SizedBox(height: 4),
                   Text('${p.title} · ${p.location}', style: Theme.of(context).textTheme.bodyMedium),
@@ -66,6 +67,7 @@ class ResumePage extends ConsumerWidget {
                   ]),
                 ],
               ),
+            ),
             ),
           ),
         );
