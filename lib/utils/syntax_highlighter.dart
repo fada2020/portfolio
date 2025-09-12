@@ -35,7 +35,6 @@ class AppSyntaxHighlighter extends SyntaxHighlighter {
   }
 
   TextStyle? _styleFor(String? className) {
-    final cs = _theme;
     switch (className) {
       case 'keyword':
       case 'built_in':
@@ -59,4 +58,3 @@ class AppSyntaxHighlighter extends SyntaxHighlighter {
     }
   }
 }
-

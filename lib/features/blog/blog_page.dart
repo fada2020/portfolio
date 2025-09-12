@@ -111,7 +111,7 @@ class _PostCard extends ConsumerWidget {
             children: [
               Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
               const SizedBox(height: 6),
-              Text('${date.toIso8601String().split('T').first}', style: Theme.of(context).textTheme.bodySmall),
+              Text(date.toIso8601String().split('T').first, style: Theme.of(context).textTheme.bodySmall),
               const SizedBox(height: 10),
               Expanded(
                 child: excerptAsync.when(

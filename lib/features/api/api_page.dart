@@ -140,7 +140,7 @@ class _EndpointsList extends ConsumerWidget {
                 child: ExpansionTile(
                   title: Text(tag, style: const TextStyle(fontWeight: FontWeight.bold)),
                   children: [
-                    for (final e in endpoints!)
+                    for (final e in endpoints)
                       _EndpointTile(
                         e: e,
                         baseUrlAsync: baseUrlAsync,
@@ -325,4 +325,3 @@ class _CodeBox extends StatelessWidget {
     );
   }
 }
-
