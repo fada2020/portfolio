@@ -15,7 +15,7 @@ void main() {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        home: ResumePage(),
+        home: Scaffold(body: ResumePage()),
       ),
     ));
 
@@ -23,4 +23,3 @@ void main() {
     expect(find.text('Download Resume'), findsOneWidget);
   });
 }
-

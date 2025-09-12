@@ -21,14 +21,25 @@
   links:
     repo: https://github.com/example/billing
   body: projects/billing-pipeline.md
- - id: portfolio-nextjs
-   title: 개인 포트폴리오 (Next.js)
-   period: 2024.08–2024.09
-   stack: [Node.js, React, Next.js, TypeScript, Vercel]
-   domains: [프런트엔드, 포트폴리오]
-   role: 단독 개발
-   summary: Next.js로 SEO 친화적인 포트폴리오 구축, Vercel에 ISR로 배포.
-   links:
-     repo: https://github.com/example/portfolio-nextjs
-     demo: https://example-portfolio.vercel.app
-   body: projects/portfolio-nextjs.md
+- id: portfolio-nextjs
+  title: 개인 포트폴리오 (Next.js)
+  period: 2024.08–2024.09
+  stack: [Node.js, React, Next.js, TypeScript, Vercel]
+  domains: [프런트엔드, 포트폴리오]
+  role: 단독 개발
+  summary: Next.js로 SEO 친화적인 포트폴리오 구축, Vercel에 ISR로 배포.
+  links:
+    repo: https://github.com/example/portfolio-nextjs
+    demo: https://example-portfolio.vercel.app
+  body: projects/portfolio-nextjs.md
+- id: url-shortener
+  title: URL 단축기 (Next.js)
+  period: 2024.10–2024.11
+  stack: [Node.js, React, Next.js, TypeScript, Prisma, SQLite, Vercel]
+  domains: [백엔드, API]
+  role: 단독 개발
+  summary: API Routes와 Prisma로 간단한 URL 단축기 구현; 클릭 수 대시보드 제공.
+  links:
+    repo: https://github.com/fada2020/url-shortener
+    demo: https://url.fada2020.dev
+  body: projects/url-shortener.md

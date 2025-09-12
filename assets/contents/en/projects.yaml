@@ -21,14 +21,25 @@
   links:
     repo: https://github.com/example/billing
   body: projects/billing-pipeline.md
- - id: portfolio-nextjs
-   title: Personal Portfolio (Next.js)
-   period: 2024.08–2024.09
-   stack: [Node.js, React, Next.js, TypeScript, Vercel]
-   domains: [Frontend, Portfolio]
-   role: Solo Developer
-   summary: Built a fast, SEO-friendly portfolio with Next.js, deployed on Vercel with ISR.
-   links:
-     repo: https://github.com/example/portfolio-nextjs
-     demo: https://example-portfolio.vercel.app
-   body: projects/portfolio-nextjs.md
+- id: portfolio-nextjs
+  title: Personal Portfolio (Next.js)
+  period: 2024.08–2024.09
+  stack: [Node.js, React, Next.js, TypeScript, Vercel]
+  domains: [Frontend, Portfolio]
+  role: Solo Developer
+  summary: Built a fast, SEO-friendly portfolio with Next.js, deployed on Vercel with ISR.
+  links:
+    repo: https://github.com/example/portfolio-nextjs
+    demo: https://example-portfolio.vercel.app
+  body: projects/portfolio-nextjs.md
+- id: url-shortener
+  title: URL Shortener (Next.js)
+  period: 2024.10–2024.11
+  stack: [Node.js, React, Next.js, TypeScript, Prisma, SQLite, Vercel]
+  domains: [Backend, API]
+  role: Solo Developer
+  summary: Built a tiny URL shortener with API routes and Prisma; simple dashboard for clicks.
+  links:
+    repo: https://github.com/fada2020/url-shortener
+    demo: https://url.fada2020.dev
+  body: projects/url-shortener.md
