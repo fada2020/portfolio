@@ -30,4 +30,8 @@ flutter:
   assets:
     - assets/contents/en/
     - assets/contents/ko/
+    - assets/contents/en/projects/
+    - assets/contents/ko/projects/
+    - assets/contents/en/posts/
+    - assets/contents/ko/posts/
     - assets/openapi/
