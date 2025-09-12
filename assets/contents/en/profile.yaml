@@ -11,7 +11,7 @@ links:
   linkedin: https://www.linkedin.com/in/hyeokju-lee-48750b193/
   resume_url: https://example.com/resume.pdf
 skills:
-  primary: [Java, Kotlin, Spring Boot, PostgreSQL, Redis, Python]
-  secondary: [Flutter, PHP]
-  exposure: [Node.js, React, Next.js]
+  primary: [Java, Spring Boot, MariaDB, aws, linux, Javascript]
+  secondary: [Flutter, PHP, Python]
+  exposure: [Node.js, Kotlin, React, Next.js]
   learning: [TypeScript]
