@@ -1,7 +1,7 @@
 - id: svc-gateway
   title: 서비스 게이트웨이 현대화
   period: 2023.01–2023.09
-  stack: [Kotlin, Spring Boot, Redis, Kafka, K8s]
+  stack: [Kotlin, Spring Boot, Redis, Flutter, PHP, Python, JavaScript]
   domains: [게이트웨이, 플랫폼]
   role: 테크 리드 / 백엔드
   summary: 레거시 API 게이트웨이를 Spring Boot로 마이그레이션, 무중단 배포; 98퍼센타일 지연 -37%.
@@ -14,10 +14,21 @@
 - id: billing-pipeline
   title: 실시간 빌링 파이프라인
   period: 2022.04–2022.12
-  stack: [Java, Flink, Debezium, PostgreSQL, S3]
+  stack: [Java, PostgreSQL, S3, Flutter, PHP, Python, JavaScript]
   domains: [빌링, 데이터]
   role: 백엔드 엔지니어
   summary: CDC 기반 정확히 한 번 처리 구현; 정산 시간을 며칠에서 분 단위로 단축.
   links:
     repo: https://github.com/example/billing
   body: projects/billing-pipeline.md
+ - id: portfolio-nextjs
+   title: 개인 포트폴리오 (Next.js)
+   period: 2024.08–2024.09
+   stack: [Node.js, React, Next.js, TypeScript, Vercel]
+   domains: [프런트엔드, 포트폴리오]
+   role: 단독 개발
+   summary: Next.js로 SEO 친화적인 포트폴리오 구축, Vercel에 ISR로 배포.
+   links:
+     repo: https://github.com/example/portfolio-nextjs
+     demo: https://example-portfolio.vercel.app
+   body: projects/portfolio-nextjs.md

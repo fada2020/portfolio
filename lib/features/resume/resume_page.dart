@@ -39,6 +39,33 @@ class ResumePage extends ConsumerWidget {
                         ),
                       )),
                   const SizedBox(height: 16),
+                  Text('Skills', style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(height: 8),
+                  if ((p.skills['primary'] ?? []).isNotEmpty) ...[
+                    Text('Primary', style: Theme.of(context).textTheme.bodySmall),
+                    const SizedBox(height: 6),
+                    Wrap(spacing: 8, runSpacing: 8, children: (p.skills['primary'] ?? []).map((s) => Chip(label: Text(s))).toList()),
+                    const SizedBox(height: 12),
+                  ],
+                  if ((p.skills['secondary'] ?? []).isNotEmpty) ...[
+                    Text('Secondary', style: Theme.of(context).textTheme.bodySmall),
+                    const SizedBox(height: 6),
+                    Wrap(spacing: 8, runSpacing: 8, children: (p.skills['secondary'] ?? []).map((s) => Chip(label: Text(s))).toList()),
+                    const SizedBox(height: 12),
+                  ],
+                  if ((p.skills['exposure'] ?? []).isNotEmpty) ...[
+                    Text('Exposure', style: Theme.of(context).textTheme.bodySmall),
+                    const SizedBox(height: 6),
+                    Wrap(spacing: 8, runSpacing: 8, children: (p.skills['exposure'] ?? []).map((s) => Chip(label: Text(s))).toList()),
+                    const SizedBox(height: 12),
+                  ],
+                  if ((p.skills['learning'] ?? []).isNotEmpty) ...[
+                    Text('Learning', style: Theme.of(context).textTheme.bodySmall),
+                    const SizedBox(height: 6),
+                    Wrap(spacing: 8, runSpacing: 8, children: (p.skills['learning'] ?? []).map((s) => Chip(label: Text(s))).toList()),
+                    const SizedBox(height: 16),
+                  ],
+                  const SizedBox(height: 8),
                   Wrap(spacing: 12, children: [
                     if (links['resume_url'] != null)
                       OutlinedButton.icon(

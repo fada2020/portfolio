@@ -1,7 +1,7 @@
 - id: svc-gateway
   title: Service Gateway Modernization
   period: 2023.01–2023.09
-  stack: [Kotlin, Spring Boot, Redis, Kafka, K8s]
+  stack: [Kotlin, Spring Boot, Redis, Flutter, PHP, Python, JavaScript]
   domains: [Gateway, Platform]
   role: Tech Lead / Backend
   summary: Migrated legacy API gateway to Spring Boot with zero-downtime rollout; 98th latency -37%.
@@ -14,10 +14,21 @@
 - id: billing-pipeline
   title: Real-time Billing Pipeline
   period: 2022.04–2022.12
-  stack: [Java, Flink, Debezium, PostgreSQL, S3]
+  stack: [Java, PostgreSQL, S3, Flutter, PHP, Python, JavaScript]
   domains: [Billing, Data]
   role: Backend Engineer
   summary: Implemented exactly-once billing with CDC; reduced reconciliation time from days to minutes.
   links:
     repo: https://github.com/example/billing
   body: projects/billing-pipeline.md
+ - id: portfolio-nextjs
+   title: Personal Portfolio (Next.js)
+   period: 2024.08–2024.09
+   stack: [Node.js, React, Next.js, TypeScript, Vercel]
+   domains: [Frontend, Portfolio]
+   role: Solo Developer
+   summary: Built a fast, SEO-friendly portfolio with Next.js, deployed on Vercel with ISR.
+   links:
+     repo: https://github.com/example/portfolio-nextjs
+     demo: https://example-portfolio.vercel.app
+   body: projects/portfolio-nextjs.md

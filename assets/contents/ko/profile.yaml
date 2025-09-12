@@ -1,4 +1,4 @@
-name: 존 백엔드
+name: 이혁주
 title: 백엔드 엔지니어
 location: 서울, 대한민국
 summary:
@@ -6,7 +6,12 @@ summary:
   - 게이트웨이 현대화로 p98 지연 37% 절감.
   - Exactly-once 실시간 빌링 파이프라인 구축.
 links:
-  email: john.backend@example.com
-  github: https://github.com/example
-  linkedin: https://www.linkedin.com/in/example
+  email: leehyeokju1@gmail.com
+  github: https://github.com/fada2020
+  linkedin: https://www.linkedin.com/in/hyeokju-lee-48750b193/
   resume_url: https://example.com/resume-ko.pdf
+skills:
+  primary: [Java, Kotlin, Spring Boot, PostgreSQL, Redis, Python]
+  secondary: [Flutter, PHP]
+  exposure: [Node.js, React, Next.js]
+  learning: [TypeScript]

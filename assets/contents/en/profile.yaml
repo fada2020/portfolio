@@ -1,4 +1,4 @@
-name: John Backend
+name: HYEOK JU LEE
 title: Backend Engineer
 location: Seoul, KR
 summary:
@@ -6,7 +6,12 @@ summary:
   - Reduced p98 latency by 37% via gateway modernization.
   - Built real-time billing with exactly-once semantics.
 links:
-  email: john.backend@example.com
-  github: https://github.com/example
-  linkedin: https://www.linkedin.com/in/example
+  email: hyeogjui4@gmail.com
+  github: https://github.com/fada2020
+  linkedin: https://www.linkedin.com/in/hyeokju-lee-48750b193/
   resume_url: https://example.com/resume.pdf
+skills:
+  primary: [Java, Kotlin, Spring Boot, PostgreSQL, Redis, Python]
+  secondary: [Flutter, PHP]
+  exposure: [Node.js, React, Next.js]
+  learning: [TypeScript]
