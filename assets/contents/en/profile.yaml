@@ -1,0 +1,12 @@
+name: John Backend
+title: Backend Engineer
+location: Seoul, KR
+summary:
+  - Designed and shipped scalable services handling 10x traffic growth.
+  - Reduced p98 latency by 37% via gateway modernization.
+  - Built real-time billing with exactly-once semantics.
+links:
+  email: john.backend@example.com
+  github: https://github.com/example
+  linkedin: https://www.linkedin.com/in/example
+  resume_url: https://example.com/resume.pdf

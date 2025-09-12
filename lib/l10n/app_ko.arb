@@ -1,0 +1,11 @@
+{
+  "appTitle": "백엔드 포트폴리오",
+  "navHome": "홈",
+  "navProjects": "프로젝트",
+  "navApi": "API",
+  "navBlog": "블로그",
+  "navResume": "이력서",
+  "navContact": "연락처",
+  "languageKorean": "한국어",
+  "languageEnglish": "영어"
+}

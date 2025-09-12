@@ -1,0 +1,23 @@
+- id: svc-gateway
+  title: Service Gateway Modernization
+  period: 2023.01–2023.09
+  stack: [Kotlin, Spring Boot, Redis, Kafka, K8s]
+  domains: [Gateway, Platform]
+  role: Tech Lead / Backend
+  summary: Migrated legacy API gateway to Spring Boot with zero-downtime rollout; 98th latency -37%.
+  metrics:
+    p98_latency_ms_before: 210
+    p98_latency_ms_after: 132
+  links:
+    repo: https://github.com/example/gateway
+  body: projects/svc-gateway.md
+- id: billing-pipeline
+  title: Real-time Billing Pipeline
+  period: 2022.04–2022.12
+  stack: [Java, Flink, Debezium, PostgreSQL, S3]
+  domains: [Billing, Data]
+  role: Backend Engineer
+  summary: Implemented exactly-once billing with CDC; reduced reconciliation time from days to minutes.
+  links:
+    repo: https://github.com/example/billing
+  body: projects/billing-pipeline.md

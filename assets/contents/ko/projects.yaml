@@ -1,0 +1,23 @@
+- id: svc-gateway
+  title: 서비스 게이트웨이 현대화
+  period: 2023.01–2023.09
+  stack: [Kotlin, Spring Boot, Redis, Kafka, K8s]
+  domains: [게이트웨이, 플랫폼]
+  role: 테크 리드 / 백엔드
+  summary: 레거시 API 게이트웨이를 Spring Boot로 마이그레이션, 무중단 배포; 98퍼센타일 지연 -37%.
+  metrics:
+    p98_latency_ms_before: 210
+    p98_latency_ms_after: 132
+  links:
+    repo: https://github.com/example/gateway
+  body: projects/svc-gateway.md
+- id: billing-pipeline
+  title: 실시간 빌링 파이프라인
+  period: 2022.04–2022.12
+  stack: [Java, Flink, Debezium, PostgreSQL, S3]
+  domains: [빌링, 데이터]
+  role: 백엔드 엔지니어
+  summary: CDC 기반 정확히 한 번 처리 구현; 정산 시간을 며칠에서 분 단위로 단축.
+  links:
+    repo: https://github.com/example/billing
+  body: projects/billing-pipeline.md

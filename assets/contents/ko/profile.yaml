@@ -1,0 +1,12 @@
+name: 존 백엔드
+title: 백엔드 엔지니어
+location: 서울, 대한민국
+summary:
+  - 10배 트래픽 증가에 대응하는 확장형 서비스 설계/운영.
+  - 게이트웨이 현대화로 p98 지연 37% 절감.
+  - Exactly-once 실시간 빌링 파이프라인 구축.
+links:
+  email: john.backend@example.com
+  github: https://github.com/example
+  linkedin: https://www.linkedin.com/in/example
+  resume_url: https://example.com/resume-ko.pdf

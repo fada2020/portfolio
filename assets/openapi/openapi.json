@@ -1,0 +1,54 @@
+{
+  "openapi": "3.0.3",
+  "info": {"title": "Portfolio API Showcase", "version": "1.0.0"},
+  "servers": [{"url": "https://api.example.com"}],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "operationId": "getHealth",
+        "tags": ["System"],
+        "responses": {
+          "200": {"description": "OK", "content": {"application/json": {"schema": {"type": "object", "properties": {"status": {"type": "string"}}}}}}
+        }
+      }
+    },
+    "/v1/billing/invoices": {
+      "get": {
+        "summary": "List invoices",
+        "operationId": "listInvoices",
+        "tags": ["Billing"],
+        "parameters": [
+          {"name": "customerId", "in": "query", "required": false, "schema": {"type": "string"}},
+          {"name": "limit", "in": "query", "required": false, "schema": {"type": "integer", "default": 20}}
+        ],
+        "responses": {
+          "200": {"description": "Success", "content": {"application/json": {"schema": {"type": "array", "items": {"type": "object", "properties": {"id": {"type": "string"}, "amount": {"type": "number"}}}}}}}
+        }
+      },
+      "post": {
+        "summary": "Create invoice",
+        "operationId": "createInvoice",
+        "tags": ["Billing"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["customerId", "amount"],
+                "properties": {
+                  "customerId": {"type": "string"},
+                  "amount": {"type": "number"}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {"description": "Created"}
+        }
+      }
+    }
+  }
+}

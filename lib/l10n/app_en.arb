@@ -1,0 +1,11 @@
+{
+  "appTitle": "Backend Portfolio",
+  "navHome": "Home",
+  "navProjects": "Projects",
+  "navApi": "API",
+  "navBlog": "Blog",
+  "navResume": "Resume",
+  "navContact": "Contact",
+  "languageKorean": "Korean",
+  "languageEnglish": "English"
+}

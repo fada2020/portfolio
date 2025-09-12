@@ -1,0 +1,33 @@
+name: portfolio
+description: Backend developer portfolio (Flutter Web) with Riverpod, i18n, and GitHub Pages deploy.
+publish_to: "none"
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  flutter_riverpod: ^2.5.1
+  go_router: ^14.2.0
+  yaml: ^3.1.2
+  url_launcher: ^6.3.0
+  flutter_markdown: ^0.7.3+1
+  highlight: ^0.7.0
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  generate: true
+  uses-material-design: true
+  assets:
+    - assets/contents/en/
+    - assets/contents/ko/
+    - assets/openapi/

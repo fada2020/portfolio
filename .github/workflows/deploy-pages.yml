@@ -1,0 +1,92 @@
+name: Deploy Flutter Web to GitHub Pages
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Enable web
+        run: flutter config --enable-web
+
+      - name: Flutter version
+        run: flutter --version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Test
+        run: flutter test
+
+      - name: Compute base-href
+        id: basehref
+        shell: bash
+        run: |
+          REPO="${{ github.event.repository.name }}"
+          if [[ "$REPO" == *.github.io ]]; then
+            echo "base=/" >> "$GITHUB_OUTPUT"
+          else
+            echo "base=/${REPO}/" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build web
+        run: flutter build web --base-href "${{ steps.basehref.outputs.base }}"
+
+      - name: SPA 404 fallback
+        run: cp build/web/index.html build/web/404.html
+
+      - name: Compute site base URL
+        id: siteurl
+        shell: bash
+        run: |
+          OWNER="${{ github.repository_owner }}"
+          REPO="${{ github.event.repository.name }}"
+          if [[ "$REPO" == "$OWNER.github.io" ]]; then
+            echo "url=https://$OWNER.github.io/" >> "$GITHUB_OUTPUT"
+          else
+            echo "url=https://$OWNER.github.io/$REPO/" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Generate sitemap and robots.txt
+        env:
+          SITE_BASE_URL: ${{ steps.siteurl.outputs.url }}
+        run: dart run tool/sitemap.dart --out build/web
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
