@@ -2,7 +2,7 @@ name: HYEOK JU LEE
 title: Backend Engineer
 location: Seoul, KR
 summary:
-  - Designed and shipped scalable services handling 10x traffic growth.
+  - Streamlined CI/CD to reduce release lead time.
   - Reduced p98 latency by 37% via gateway modernization.
   - Built real-time billing with exactly-once semantics.
 links:
