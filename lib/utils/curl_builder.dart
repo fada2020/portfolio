@@ -24,7 +24,7 @@ String buildCurl(
   final uri = '${baseUrl.replaceAll(RegExp(r'/+$'), '')}$path$query';
   final parts = ["curl -X ${e.method} '$uri'", "-H 'accept: application/json'"];
   if (includeAuth && token.isNotEmpty) {
-    parts.add("-H 'authorization: Bearer ${token.replaceAll("'", "\'")}'");
+    parts.add("-H 'authorization: Bearer ${token.replaceAll("'", r"\'")}'");
   }
   if (e.requestBodySchema != null && e.method != 'GET') {
     final body = components == null

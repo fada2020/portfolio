@@ -3,15 +3,15 @@ title: 백엔드 엔지니어
 location: 서울, 대한민국
 summary:
   - 배포 자동화 정비로 출시 리드타임 단축.
-  - 게이트웨이 현대화로 p98 지연 37% 절감.
-  - Exactly-once 실시간 빌링 파이프라인 구축.
+  - 다국어(i18n) 적용과 언어 전환 UX 구축.
+  - OpenAPI 기반 API 쇼케이스와 cURL 생성으로 DX 개선.
 links:
   email: leehyeokju1@gmail.com
   github: https://github.com/fada2020
   linkedin: https://www.linkedin.com/in/hyeokju-lee-48750b193/
   resume_url: https://example.com/resume-ko.pdf
 skills:
-  primary: [Java, Spring Boot, MariaDB, aws, linux, Javascript]
-  secondary: [Flutter, PHP, Python]
-  exposure: [Node.js, Kotlin, React, Next.js]
+  primary: [Dart, Flutter, Riverpod]
+  secondary: [go_router, OpenAPI, YAML, Markdown]
+  exposure: [GitHub Actions, GitHub Pages, SEO]
   learning: [TypeScript]

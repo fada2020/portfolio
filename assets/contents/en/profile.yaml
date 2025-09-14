@@ -3,15 +3,15 @@ title: Backend Engineer
 location: Seoul, KR
 summary:
   - Streamlined CI/CD to reduce release lead time.
-  - Reduced p98 latency by 37% via gateway modernization.
-  - Built real-time billing with exactly-once semantics.
+  - Implemented i18n (KO/EN) with a language switcher.
+  - Built an OpenAPI-based API showcase with cURL generation.
 links:
   email: hyeogjui4@gmail.com
   github: https://github.com/fada2020
   linkedin: https://www.linkedin.com/in/hyeokju-lee-48750b193/
   resume_url: https://example.com/resume.pdf
 skills:
-  primary: [Java, Spring Boot, MariaDB, aws, linux, Javascript]
-  secondary: [Flutter, PHP, Python]
-  exposure: [Node.js, Kotlin, React, Next.js]
+  primary: [Dart, Flutter, Riverpod]
+  secondary: [go_router, OpenAPI, YAML, Markdown]
+  exposure: [GitHub Actions, GitHub Pages, SEO]
   learning: [TypeScript]

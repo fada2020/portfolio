@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio/l10n/app_localizations.dart';
+import 'package:portfolio/state/posts_state.dart';
 import 'package:portfolio/state/profile_state.dart';
 import 'package:portfolio/state/projects_state.dart';
-import 'package:portfolio/state/posts_state.dart';
 import 'package:portfolio/utils/period.dart';
 
 class HomePage extends ConsumerWidget {
@@ -31,7 +31,7 @@ class HomePage extends ConsumerWidget {
                 elevation: 0.5,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
-                  side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.2)),
+                  side: BorderSide(color: Theme.of(context).dividerColor.withValues(alpha: 0.2)),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
@@ -93,7 +93,7 @@ class HomePage extends ConsumerWidget {
                   ),
                 ),
               ),
-              error: (e, st) => _ErrorBox(message: 'Failed to load profile'),
+              error: (e, st) => const _ErrorBox(message: 'Failed to load profile'),
               loading: () => const _Shimmer(height: 160),
             ),
 
@@ -141,7 +141,7 @@ class HomePage extends ConsumerWidget {
                   },
                 );
               },
-              error: (e, st) => _ErrorBox(message: 'Failed to load projects'),
+              error: (e, st) => const _ErrorBox(message: 'Failed to load projects'),
               loading: () => const _GridSkeleton(),
             ),
 
@@ -166,7 +166,7 @@ class HomePage extends ConsumerWidget {
                     for (final p in recent) _PostPreviewCard(localeCode: localeCode, id: p.id, title: p.title, date: p.date, tags: p.tags, bodyPath: p.body)],
                 );
               },
-              error: (e, st) => _ErrorBox(message: 'Failed to load posts'),
+              error: (e, st) => const _ErrorBox(message: 'Failed to load posts'),
               loading: () => const _ListSkeleton(count: 3),
             ),
           ],
@@ -191,7 +191,7 @@ class _ProjectCard extends StatelessWidget {
         elevation: 0.5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
-          side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.2)),
+          side: BorderSide(color: Theme.of(context).dividerColor.withValues(alpha: 0.2)),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -237,7 +237,7 @@ class _PostPreviewCard extends ConsumerWidget {
         margin: const EdgeInsets.symmetric(vertical: 8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
-          side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.2)),
+          side: BorderSide(color: Theme.of(context).dividerColor.withValues(alpha: 0.2)),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -271,7 +271,7 @@ class _Shimmer extends StatelessWidget {
     return Container(
       height: height,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.4),
+        color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(12),
       ),
     );
@@ -320,7 +320,7 @@ class _ErrorBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      color: Theme.of(context).colorScheme.errorContainer.withOpacity(0.3),
+      color: Theme.of(context).colorScheme.errorContainer.withValues(alpha: 0.3),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(

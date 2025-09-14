@@ -18,7 +18,7 @@ class AppSyntaxHighlighter extends SyntaxHighlighter {
         children.add(TextSpan(style: style, children: _textSpans(node.children!)));
       }
     }
-    return TextSpan(style: const TextStyle(fontFamily: 'monospace', fontSize: 12), children: children);
+    return TextSpan(style: TextStyle(fontFamily: 'monospace', fontSize: _theme.bodySmall?.fontSize ?? 12), children: children);
   }
 
   List<TextSpan> _textSpans(List<hi.Node> nodes) {

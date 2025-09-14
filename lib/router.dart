@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:portfolio/features/home/home_page.dart';
-import 'package:portfolio/features/projects/projects_page.dart';
-import 'package:portfolio/features/projects/project_detail_page.dart';
 import 'package:portfolio/features/api/api_page.dart';
-import 'package:portfolio/features/blog/blog_page.dart';
 import 'package:portfolio/features/blog/blog_detail_page.dart';
-import 'package:portfolio/features/resume/resume_page.dart';
-import 'package:portfolio/features/contact/contact_page.dart';
+import 'package:portfolio/features/blog/blog_page.dart';
 import 'package:portfolio/features/common/widgets/app_shell.dart';
+import 'package:portfolio/features/contact/contact_page.dart';
+import 'package:portfolio/features/home/home_page.dart';
+import 'package:portfolio/features/projects/project_detail_page.dart';
+import 'package:portfolio/features/projects/projects_page.dart';
+import 'package:portfolio/features/resume/resume_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(

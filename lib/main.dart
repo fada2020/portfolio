@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/router.dart';
 import 'package:portfolio/state/locale_state.dart';
-import 'package:portfolio/l10n/app_localizations.dart';
 
 void main() {
   runApp(const ProviderScope(child: PortfolioApp()));
@@ -28,7 +28,7 @@ class PortfolioApp extends ConsumerWidget {
       title: 'Portfolio',
       routerConfig: router,
       locale: locale,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

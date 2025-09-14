@@ -103,7 +103,9 @@ class _PostCard extends ConsumerWidget {
       onTap: () => context.go('/blog/$id'),
       child: Card(
         elevation: 0.5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.2))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: BorderSide(color: Theme.of(context).dividerColor.withValues(alpha: 0.2))),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

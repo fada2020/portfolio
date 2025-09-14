@@ -1,45 +1,24 @@
-- id: svc-gateway
-  title: Service Gateway Modernization
-  period: 2023.01–2023.09
-  stack: [Kotlin, Spring Boot, Redis, Flutter, PHP, Python, JavaScript]
-  domains: [Gateway, Platform]
-  role: Tech Lead / Backend
-  summary: Migrated legacy API gateway to Spring Boot with zero-downtime rollout; 98th latency -37%.
-  metrics:
-    p98_latency_ms_before: 210
-    p98_latency_ms_after: 132
-  links:
-    repo: https://github.com/example/gateway
-  body: projects/svc-gateway.md
-- id: billing-pipeline
-  title: Real-time Billing Pipeline
-  period: 2022.04–2022.12
-  stack: [Java, PostgreSQL, S3, Flutter, PHP, Python, JavaScript]
-  domains: [Billing, Data]
-  role: Backend Engineer
-  summary: Implemented exactly-once billing with CDC; reduced reconciliation time from days to minutes.
-  links:
-    repo: https://github.com/example/billing
-  body: projects/billing-pipeline.md
-- id: portfolio-nextjs
-  title: Personal Portfolio (Next.js)
-  period: 2024.08–2024.09
-  stack: [Node.js, React, Next.js, TypeScript, Vercel]
-  domains: [Frontend, Portfolio]
+- id: flutter-portfolio
+  title: Portfolio (Flutter Web)
+  period: 2024.09–
+  stack: [Dart, Flutter, Riverpod, go_router, GitHub Pages]
+  domains: [Web, Portfolio]
   role: Solo Developer
-  summary: Built a fast, SEO-friendly portfolio with Next.js, deployed on Vercel with ISR.
-  links:
-    repo: https://github.com/example/portfolio-nextjs
-    demo: https://example-portfolio.vercel.app
-  body: projects/portfolio-nextjs.md
-- id: url-shortener
-  title: URL Shortener (Next.js)
-  period: 2024.10–2024.11
-  stack: [Node.js, React, Next.js, TypeScript, Prisma, SQLite, Vercel]
-  domains: [Backend, API]
+  summary: Built a multilingual portfolio with i18n, YAML/Markdown content pipeline, tests, and CI/CD to GitHub Pages.
+  body: projects/flutter-portfolio.md
+
+- id: openapi-showcase
+  title: OpenAPI Showcase & cURL Builder
+  period: 2024.09–
+  stack: [Dart, Flutter, OpenAPI]
+  domains: [API, Developer Experience]
   role: Solo Developer
-  summary: Built a tiny URL shortener with API routes and Prisma; simple dashboard for clicks.
-  links:
-    repo: https://github.com/fada2020/url-shortener
-    demo: https://url.fada2020.dev
-  body: projects/url-shortener.md
+  summary: Implemented an OpenAPI JSON loader with endpoint grouping, auth toggle, and cURL generation inside the portfolio.
+
+- id: content-pipeline
+  title: Content Pipeline (YAML/Markdown)
+  period: 2024.09–
+  stack: [Dart, YAML, Markdown]
+  domains: [Blog, Content]
+  role: Solo Developer
+  summary: Structured blog and projects using YAML/Markdown with loaders and Markdown rendering.

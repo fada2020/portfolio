@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:portfolio/state/projects_state.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:portfolio/utils/syntax_highlighter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectDetailPage extends ConsumerWidget {
   const ProjectDetailPage({super.key, required this.id});

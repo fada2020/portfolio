@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:yaml/yaml.dart';
-import 'package:portfolio/models/project.dart';
 import 'package:portfolio/models/post.dart';
 import 'package:portfolio/models/profile.dart';
+import 'package:portfolio/models/project.dart';
+import 'package:yaml/yaml.dart';
 
 Future<List<Project>> loadProjects(String localeCode) async {
   final code = (localeCode == 'ko') ? 'ko' : 'en';

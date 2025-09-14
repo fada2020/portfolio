@@ -1,45 +1,24 @@
-- id: svc-gateway
-  title: 서비스 게이트웨이 현대화
-  period: 2023.01–2023.09
-  stack: [Kotlin, Spring Boot, Redis, Flutter, PHP, Python, JavaScript]
-  domains: [게이트웨이, 플랫폼]
-  role: 테크 리드 / 백엔드
-  summary: 레거시 API 게이트웨이를 Spring Boot로 마이그레이션, 무중단 배포; 98퍼센타일 지연 -37%.
-  metrics:
-    p98_latency_ms_before: 210
-    p98_latency_ms_after: 132
-  links:
-    repo: https://github.com/example/gateway
-  body: projects/svc-gateway.md
-- id: billing-pipeline
-  title: 실시간 빌링 파이프라인
-  period: 2022.04–2022.12
-  stack: [Java, PostgreSQL, S3, Flutter, PHP, Python, JavaScript]
-  domains: [빌링, 데이터]
-  role: 백엔드 엔지니어
-  summary: CDC 기반 정확히 한 번 처리 구현; 정산 시간을 며칠에서 분 단위로 단축.
-  links:
-    repo: https://github.com/example/billing
-  body: projects/billing-pipeline.md
-- id: portfolio-nextjs
-  title: 개인 포트폴리오 (Next.js)
-  period: 2024.08–2024.09
-  stack: [Node.js, React, Next.js, TypeScript, Vercel]
-  domains: [프런트엔드, 포트폴리오]
+- id: flutter-portfolio
+  title: 포트폴리오 (Flutter Web)
+  period: 2024.09–
+  stack: [Dart, Flutter, Riverpod, go_router, GitHub Pages]
+  domains: [웹, 포트폴리오]
   role: 단독 개발
-  summary: Next.js로 SEO 친화적인 포트폴리오 구축, Vercel에 ISR로 배포.
-  links:
-    repo: https://github.com/example/portfolio-nextjs
-    demo: https://example-portfolio.vercel.app
-  body: projects/portfolio-nextjs.md
-- id: url-shortener
-  title: URL 단축기 (Next.js)
-  period: 2024.10–2024.11
-  stack: [Node.js, React, Next.js, TypeScript, Prisma, SQLite, Vercel]
-  domains: [백엔드, API]
+  summary: i18n, YAML/Markdown 콘텐츠 파이프라인, 테스트, GitHub Pages CI/CD가 포함된 다국어 포트폴리오 구축.
+  body: projects/flutter-portfolio.md
+
+- id: openapi-showcase
+  title: OpenAPI 쇼케이스 & cURL 생성기
+  period: 2024.09–
+  stack: [Dart, Flutter, OpenAPI]
+  domains: [API, 개발자 경험]
   role: 단독 개발
-  summary: API Routes와 Prisma로 간단한 URL 단축기 구현; 클릭 수 대시보드 제공.
-  links:
-    repo: https://github.com/fada2020/url-shortener
-    demo: https://url.fada2020.dev
-  body: projects/url-shortener.md
+  summary: 포트폴리오 내에 OpenAPI JSON 로더, 엔드포인트 그룹화, 인증 토글, cURL 생성 기능 구현.
+
+- id: content-pipeline
+  title: 콘텐츠 파이프라인 (YAML/Markdown)
+  period: 2024.09–
+  stack: [Dart, YAML, Markdown]
+  domains: [블로그, 콘텐츠]
+  role: 단독 개발
+  summary: YAML/Markdown 기반으로 블로그/프로젝트 구성, 로더와 Markdown 렌더링 추가.

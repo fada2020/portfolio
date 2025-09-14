@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:portfolio/models/project.dart';
 import 'package:portfolio/state/projects_filter.dart';
 import 'package:portfolio/state/projects_state.dart';
@@ -7,21 +7,21 @@ import 'package:portfolio/state/projects_state.dart';
 void main() {
   test('filteredProjectsProvider filters by stack and domain and sorts latest', () async {
     final data = <Project>[
-      Project(
+      const Project(
         id: 'a',
         title: 'Older Billing',
         period: '2022.01–2022.06',
-        stack: const ['Java', 'Flink'],
-        domains: const ['Billing'],
+        stack: ['Java', 'Flink'],
+        domains: ['Billing'],
         role: 'BE',
         summary: 'older',
       ),
-      Project(
+      const Project(
         id: 'b',
         title: 'New Gateway',
         period: '2024.02–',
-        stack: const ['Kotlin', 'Spring Boot'],
-        domains: const ['Gateway'],
+        stack: ['Kotlin', 'Spring Boot'],
+        domains: ['Gateway'],
         role: 'BE',
         summary: 'newer',
       ),
@@ -52,4 +52,3 @@ void main() {
     expect(byDomain.map((p) => p.id).toList(), ['a']);
   });
 }
-

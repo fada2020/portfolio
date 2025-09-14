@@ -26,7 +26,7 @@ class Project {
   });
 
   factory Project.fromMap(Map<dynamic, dynamic> m) {
-    Uri? _uri(dynamic v) => v == null ? null : Uri.tryParse(v.toString());
+    Uri? parseUri(dynamic v) => v == null ? null : Uri.tryParse(v.toString());
     return Project(
       id: m['id'] as String,
       title: m['title'] as String,
@@ -37,8 +37,8 @@ class Project {
       summary: m['summary'] as String? ?? '',
       body: m['body'] as String?,
       metrics: (m['metrics'] as Map?)?.map((k, v) => MapEntry(k.toString(), num.tryParse(v.toString()) ?? 0)),
-      repo: _uri(m['links']?['repo']),
-      demo: _uri(m['links']?['demo']),
+      repo: parseUri(m['links']?['repo']),
+      demo: parseUri(m['links']?['demo']),
     );
   }
 }
