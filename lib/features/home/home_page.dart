@@ -66,7 +66,7 @@ class HomePage extends ConsumerWidget {
                                 if (p.links['resume_url'] != null)
                                   FilledButton.icon(
                                     icon: const Icon(Icons.picture_as_pdf),
-                                    label: const Text('Download Resume'),
+                                    label: Text(l10n.commonDownloadResume),
                                     onPressed: () => context.go('/resume'),
                                   ),
                                 FilledButton.icon(
@@ -76,12 +76,12 @@ class HomePage extends ConsumerWidget {
                                 ),
                                 OutlinedButton.icon(
                                   icon: const Icon(Icons.forum),
-                                  label: const Text('Blog'),
+                                  label: Text(l10n.commonBlog),
                                   onPressed: () => context.go('/blog'),
                                 ),
                                 OutlinedButton.icon(
                                   icon: const Icon(Icons.contact_mail),
-                                  label: const Text('Contact'),
+                                  label: Text(l10n.commonContact),
                                   onPressed: () => context.go('/contact'),
                                 ),
                               ],
@@ -103,7 +103,7 @@ class HomePage extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Featured Projects', style: Theme.of(context).textTheme.titleLarge),
+                Text(l10n.homeFeaturedProjects, style: Theme.of(context).textTheme.titleLarge),
                 TextButton(onPressed: () => context.go('/projects'), child: Text(l10n.navProjects))
               ],
             ),
@@ -113,7 +113,7 @@ class HomePage extends ConsumerWidget {
                 final sorted = [...items]..sort((a, b) => periodStartKey(b.period).compareTo(periodStartKey(a.period)));
                 final featured = sorted.take(3).toList();
                 if (featured.isEmpty) {
-                  return const Text('No projects yet.');
+                  return Text(l10n.homeNoProjects);
                 }
                 final cross = constraints.maxWidth >= 1100
                     ? 3
@@ -141,7 +141,7 @@ class HomePage extends ConsumerWidget {
                   },
                 );
               },
-              error: (e, st) => const _ErrorBox(message: 'Failed to load projects'),
+              error: (e, st) => _ErrorBox(message: l10n.errLoadProjects),
               loading: () => const _GridSkeleton(),
             ),
 
@@ -151,8 +151,8 @@ class HomePage extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Recent Posts', style: Theme.of(context).textTheme.titleLarge),
-                TextButton(onPressed: () => context.go('/blog'), child: const Text('View all')),
+                Text(l10n.homeRecentPosts, style: Theme.of(context).textTheme.titleLarge),
+                TextButton(onPressed: () => context.go('/blog'), child: Text(l10n.commonViewAll)),
               ],
             ),
             const SizedBox(height: 8),
@@ -160,13 +160,13 @@ class HomePage extends ConsumerWidget {
               data: (items) {
                 final sorted = [...items]..sort((a, b) => b.date.compareTo(a.date));
                 final recent = sorted.take(3).toList();
-                if (recent.isEmpty) return const Text('No posts yet.');
+                if (recent.isEmpty) return Text(l10n.homeNoPosts);
                 return Column(
                   children: [
                     for (final p in recent) _PostPreviewCard(localeCode: localeCode, id: p.id, title: p.title, date: p.date, tags: p.tags, bodyPath: p.body)],
                 );
               },
-              error: (e, st) => const _ErrorBox(message: 'Failed to load posts'),
+              error: (e, st) => _ErrorBox(message: l10n.errLoadPosts),
               loading: () => const _ListSkeleton(count: 3),
             ),
           ],

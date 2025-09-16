@@ -34,4 +34,121 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageEnglish => 'English';
+
+  @override
+  String get homeFeaturedProjects => 'Featured Projects';
+
+  @override
+  String get homeRecentPosts => 'Recent Posts';
+
+  @override
+  String get commonViewAll => 'View all';
+
+  @override
+  String get commonDownloadResume => 'Download Resume';
+
+  @override
+  String get commonBlog => 'Blog';
+
+  @override
+  String get commonContact => 'Contact';
+
+  @override
+  String get homeNoProjects => 'No projects yet.';
+
+  @override
+  String get homeNoPosts => 'No posts yet.';
+
+  @override
+  String get errLoadProfile => 'Failed to load profile';
+
+  @override
+  String get errLoadProjects => 'Failed to load projects';
+
+  @override
+  String get errLoadPosts => 'Failed to load posts';
+
+  @override
+  String get projectsFilters => 'Filters';
+
+  @override
+  String get projectsStacks => 'Stacks';
+
+  @override
+  String get projectsDomains => 'Domains';
+
+  @override
+  String get projectsSortLatest => 'Latest';
+
+  @override
+  String get projectsSortTitle => 'Title A-Z';
+
+  @override
+  String get projectsClear => 'Clear';
+
+  @override
+  String get projectsNoMatch => 'No projects match filters.';
+
+  @override
+  String get blogSearchTitle => 'Search title';
+
+  @override
+  String get commonTag => 'Tag';
+
+  @override
+  String get commonAll => 'All';
+
+  @override
+  String get errFailedToLoad => 'Failed to load';
+
+  @override
+  String get pageNotFound => 'Page not found';
+
+  @override
+  String get goHome => 'Go Home';
+
+  @override
+  String get commonMenu => 'Menu';
+
+  @override
+  String get commonLanguage => 'Language';
+
+  @override
+  String get skipToContent => 'Skip to content';
+
+  @override
+  String get apiSearchHint => 'Search path, summary, operationId';
+
+  @override
+  String get apiGroupByTag => 'Group by tag';
+
+  @override
+  String get apiIncludeAuth => 'Include Authorization';
+
+  @override
+  String get apiAuthToken => 'Bearer token';
+
+  @override
+  String get apiUntagged => 'Untagged';
+
+  @override
+  String get apiParameters => 'Parameters';
+
+  @override
+  String get apiRequestBodyJson => 'Request Body (application/json)';
+
+  @override
+  String get apiResponseJson => 'Response (application/json, 2xx)';
+
+  @override
+  String get apiCurlTitle => 'cURL';
+
+  @override
+  String get apiCopy => 'Copy';
+
+  @override
+  String get apiCopiedCurl => 'Copied cURL';
+
+  @override
+  String get errLoadSpec => 'Failed to load spec';
 }

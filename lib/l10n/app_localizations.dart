@@ -151,6 +151,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'English'**
   String get languageEnglish;
+
+  /// No description provided for @homeFeaturedProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured Projects'**
+  String get homeFeaturedProjects;
+
+  /// No description provided for @homeRecentPosts.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Posts'**
+  String get homeRecentPosts;
+
+  /// No description provided for @commonViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View all'**
+  String get commonViewAll;
+
+  /// No description provided for @commonDownloadResume.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Resume'**
+  String get commonDownloadResume;
+
+  /// No description provided for @commonBlog.
+  ///
+  /// In en, this message translates to:
+  /// **'Blog'**
+  String get commonBlog;
+
+  /// No description provided for @commonContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get commonContact;
+
+  /// No description provided for @homeNoProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'No projects yet.'**
+  String get homeNoProjects;
+
+  /// No description provided for @homeNoPosts.
+  ///
+  /// In en, this message translates to:
+  /// **'No posts yet.'**
+  String get homeNoPosts;
+
+  /// No description provided for @errLoadProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load profile'**
+  String get errLoadProfile;
+
+  /// No description provided for @errLoadProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load projects'**
+  String get errLoadProjects;
+
+  /// No description provided for @errLoadPosts.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load posts'**
+  String get errLoadPosts;
+
+  /// No description provided for @projectsFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get projectsFilters;
+
+  /// No description provided for @projectsStacks.
+  ///
+  /// In en, this message translates to:
+  /// **'Stacks'**
+  String get projectsStacks;
+
+  /// No description provided for @projectsDomains.
+  ///
+  /// In en, this message translates to:
+  /// **'Domains'**
+  String get projectsDomains;
+
+  /// No description provided for @projectsSortLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest'**
+  String get projectsSortLatest;
+
+  /// No description provided for @projectsSortTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title A-Z'**
+  String get projectsSortTitle;
+
+  /// No description provided for @projectsClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get projectsClear;
+
+  /// No description provided for @projectsNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No projects match filters.'**
+  String get projectsNoMatch;
+
+  /// No description provided for @blogSearchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search title'**
+  String get blogSearchTitle;
+
+  /// No description provided for @commonTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag'**
+  String get commonTag;
+
+  /// No description provided for @commonAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get commonAll;
+
+  /// No description provided for @errFailedToLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load'**
+  String get errFailedToLoad;
+
+  /// No description provided for @pageNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Page not found'**
+  String get pageNotFound;
+
+  /// No description provided for @goHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Home'**
+  String get goHome;
+
+  /// No description provided for @commonMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu'**
+  String get commonMenu;
+
+  /// No description provided for @commonLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get commonLanguage;
+
+  /// No description provided for @skipToContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip to content'**
+  String get skipToContent;
+
+  /// No description provided for @apiSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search path, summary, operationId'**
+  String get apiSearchHint;
+
+  /// No description provided for @apiGroupByTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Group by tag'**
+  String get apiGroupByTag;
+
+  /// No description provided for @apiIncludeAuth.
+  ///
+  /// In en, this message translates to:
+  /// **'Include Authorization'**
+  String get apiIncludeAuth;
+
+  /// No description provided for @apiAuthToken.
+  ///
+  /// In en, this message translates to:
+  /// **'Bearer token'**
+  String get apiAuthToken;
+
+  /// No description provided for @apiUntagged.
+  ///
+  /// In en, this message translates to:
+  /// **'Untagged'**
+  String get apiUntagged;
+
+  /// No description provided for @apiParameters.
+  ///
+  /// In en, this message translates to:
+  /// **'Parameters'**
+  String get apiParameters;
+
+  /// No description provided for @apiRequestBodyJson.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Body (application/json)'**
+  String get apiRequestBodyJson;
+
+  /// No description provided for @apiResponseJson.
+  ///
+  /// In en, this message translates to:
+  /// **'Response (application/json, 2xx)'**
+  String get apiResponseJson;
+
+  /// No description provided for @apiCurlTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'cURL'**
+  String get apiCurlTitle;
+
+  /// No description provided for @apiCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get apiCopy;
+
+  /// No description provided for @apiCopiedCurl.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied cURL'**
+  String get apiCopiedCurl;
+
+  /// No description provided for @errLoadSpec.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load spec'**
+  String get errLoadSpec;
 }
 
 class _AppLocalizationsDelegate

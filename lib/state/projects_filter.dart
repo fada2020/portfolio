@@ -6,14 +6,15 @@ import 'package:portfolio/utils/period.dart';
 enum ProjectSort { latest, title }
 
 class ProjectsFilter {
-  final Set<String> stacks;
-  final Set<String> domains;
-  final ProjectSort sort;
   const ProjectsFilter({
     this.stacks = const {},
     this.domains = const {},
     this.sort = ProjectSort.latest,
   });
+
+  final Set<String> stacks;
+  final Set<String> domains;
+  final ProjectSort sort;
 
   ProjectsFilter copyWith({Set<String>? stacks, Set<String>? domains, ProjectSort? sort}) =>
       ProjectsFilter(stacks: stacks ?? this.stacks, domains: domains ?? this.domains, sort: sort ?? this.sort);
@@ -65,4 +66,3 @@ final filteredProjectsProvider = FutureProvider.family<List<Project>, String>((r
   }
   return sorted;
 });
-

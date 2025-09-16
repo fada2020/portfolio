@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
+import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/models/openapi.dart';
 import 'package:portfolio/state/openapi_state.dart';
 import 'package:portfolio/utils/curl_builder.dart';
@@ -11,6 +13,7 @@ class ApiPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final allAsync = ref.watch(openApiEndpointsProvider);
     final filteredAsync = ref.watch(filteredEndpointsProvider);
     final selectedTag = ref.watch(apiSelectedTagProvider);
@@ -30,23 +33,27 @@ class ApiPage extends ConsumerWidget {
                     children: [
                       Expanded(
                         child: TextField(
-                          decoration: const InputDecoration(prefixIcon: Icon(Icons.search), hintText: 'Search path, summary, operationId'),
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.search),
+                            hintText: l10n.apiSearchHint,
+                            labelText: l10n.apiSearchHint,
+                          ),
                           onChanged: (v) => ref.read(apiSearchQueryProvider.notifier).state = v,
                         ),
                       ),
                       const SizedBox(width: 12),
                       DropdownButton<String?>(
                         value: selectedTag,
-                        hint: const Text('Tag'),
+                        hint: Text(l10n.commonTag),
                         onChanged: (v) => ref.read(apiSelectedTagProvider.notifier).state = v,
                         items: [
-                          const DropdownMenuItem<String?>(value: null, child: Text('All')),
+                          DropdownMenuItem<String?>(value: null, child: Text(l10n.commonAll)),
                           ...tags.map((t) => DropdownMenuItem<String?>(value: t, child: Text(t))),
                         ],
                       ),
                       const SizedBox(width: 12),
                       Row(children: [
-                        const Text('Group by tag'),
+                        Text(l10n.apiGroupByTag),
                         Switch.adaptive(
                           value: groupByTag,
                           onChanged: (v) => ref.read(apiGroupByTagProvider.notifier).state = v,
@@ -57,7 +64,7 @@ class ApiPage extends ConsumerWidget {
                   Row(
                     children: [
                       Row(children: [
-                        const Text('Auth'),
+                        Text(l10n.apiIncludeAuth),
                         Switch.adaptive(
                           value: includeAuth,
                           onChanged: (v) => ref.read(apiIncludeAuthProvider.notifier).state = v,
@@ -67,7 +74,11 @@ class ApiPage extends ConsumerWidget {
                       if (includeAuth)
                         Expanded(
                           child: TextField(
-                            decoration: const InputDecoration(prefixIcon: Icon(Icons.vpn_key), hintText: 'Bearer token'),
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.vpn_key),
+                              hintText: l10n.apiAuthToken,
+                              labelText: l10n.apiAuthToken,
+                            ),
                             onChanged: (v) => ref.read(apiAuthTokenProvider.notifier).state = v,
                           ),
                         ),
@@ -80,14 +91,14 @@ class ApiPage extends ConsumerWidget {
             Expanded(
               child: filteredAsync.when(
                 data: (items) => _EndpointsList(items: items),
-                error: (e, st) => Center(child: Text('Failed to load: $e')),
+                error: (e, st) => Center(child: Text('${l10n.errFailedToLoad}: $e')),
                 loading: () => const Center(child: CircularProgressIndicator()),
               ),
             ),
           ],
         );
       },
-      error: (e, st) => Center(child: Text('Failed to load: $e')),
+      error: (e, st) => Center(child: Text('${l10n.errFailedToLoad}: $e')),
       loading: () => const Center(child: CircularProgressIndicator()),
     );
   }
@@ -114,6 +125,7 @@ class _EndpointsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final baseUrlAsync = ref.watch(openApiBaseUrlProvider);
     final includeAuth = ref.watch(apiIncludeAuthProvider);
     final token = ref.watch(apiAuthTokenProvider);
@@ -126,7 +138,7 @@ class _EndpointsList extends ConsumerWidget {
         if (groupByTag) {
           final groups = <String, List<ApiEndpoint>>{};
           for (final e in items) {
-            final key = (e.tags.isNotEmpty ? e.tags.first : 'Untagged');
+            final key = (e.tags.isNotEmpty ? e.tags.first : l10n.apiUntagged);
             groups.putIfAbsent(key, () => []).add(e);
           }
           final tags = groups.keys.toList()..sort();
@@ -174,7 +186,7 @@ class _EndpointsList extends ConsumerWidget {
           },
         );
       },
-      error: (e, st) => const Center(child: Text('Failed to load spec')),
+      error: (e, st) => Center(child: Text(l10n.errLoadSpec)),
       loading: () => const Center(child: CircularProgressIndicator()),
     );
   }
@@ -200,6 +212,7 @@ class _EndpointTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
       child: ExpansionTile(
@@ -224,7 +237,7 @@ class _EndpointTile extends StatelessWidget {
           if ((e.operationId ?? '').isNotEmpty) Text('operationId: ${e.operationId}', style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 8),
           if (e.parameters.isNotEmpty) ...[
-            Text('Parameters', style: Theme.of(context).textTheme.titleSmall),
+            Text(l10n.apiParameters, style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: 4),
             _JsonBox(data: e.parameters
                 .map((p) => {
@@ -237,13 +250,13 @@ class _EndpointTile extends StatelessWidget {
             const SizedBox(height: 8),
           ],
           if (e.requestBodySchema != null) ...[
-            Text('Request Body (application/json)', style: Theme.of(context).textTheme.titleSmall),
+            Text(l10n.apiRequestBodyJson, style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: 4),
             _JsonBox(data: e.requestBodySchema!),
             const SizedBox(height: 8),
           ],
           if (e.responseSchema != null) ...[
-            Text('Response (application/json, 2xx)', style: Theme.of(context).textTheme.titleSmall),
+            Text(l10n.apiResponseJson, style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: 4),
             _JsonBox(data: e.responseSchema!),
             const SizedBox(height: 8),
@@ -254,22 +267,28 @@ class _EndpointTile extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('cURL', style: Theme.of(context).textTheme.titleSmall),
+                  Text(l10n.apiCurlTitle, style: Theme.of(context).textTheme.titleSmall),
                   const SizedBox(height: 4),
                   Stack(
                     alignment: Alignment.topRight,
                     children: [
                       _CodeBox(text: curl),
-                      IconButton(
-                        tooltip: 'Copy',
-                        icon: const Icon(Icons.copy, size: 18),
-                        onPressed: () {
-                          Clipboard.setData(ClipboardData(text: curl));
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Copied cURL')));
-                        },
+                      Semantics(
+                        label: l10n.apiCopy,
+                        button: true,
+                        child: IconButton(
+                          tooltip: l10n.apiCopy,
+                          icon: const Icon(Icons.copy, size: 18),
+                          onPressed: () {
+                            Clipboard.setData(ClipboardData(text: curl));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.apiCopiedCurl)));
+                          },
+                        ),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 12),
+                  if (e.method.toUpperCase() == 'GET') _TryGetBox(e: e, baseUrl: base, includeAuth: includeAuth, token: token),
                 ],
               );
             },
@@ -322,6 +341,115 @@ class _CodeBox extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         child: SelectableText(text, style: const TextStyle(fontFamily: 'monospace', fontSize: 12)),
       ),
+    );
+  }
+}
+
+class _TryGetBox extends StatefulWidget {
+  const _TryGetBox({required this.e, required this.baseUrl, required this.includeAuth, required this.token});
+  final ApiEndpoint e;
+  final String baseUrl;
+  final bool includeAuth;
+  final String token;
+
+  @override
+  State<_TryGetBox> createState() => _TryGetBoxState();
+}
+
+class _TryGetBoxState extends State<_TryGetBox> {
+  bool _loading = false;
+  int? _status;
+  Map<String, String>? _headers;
+  String? _body;
+  String? _error;
+
+  String _buildUrl() {
+    String path = widget.e.path;
+    for (final p in widget.e.parameters.where((p) => p.location == 'path')) {
+      final isNum = (p.schema?['type'] == 'integer' || p.schema?['type'] == 'number');
+      path = path.replaceAll('{${p.name}}', isNum ? '1' : 'value');
+    }
+    final qp = <String, String>{};
+    for (final p in widget.e.parameters.where((p) => p.location == 'query')) {
+      final sch = p.schema ?? {};
+      final val = sch['default'] ?? (sch['type'] == 'integer' || sch['type'] == 'number' ? 0 : 'value');
+      if (p.required) qp[p.name] = '$val';
+    }
+    final base = widget.baseUrl.replaceAll(RegExp(r'/+$'), '');
+    final query = qp.isEmpty ? '' : '?${qp.entries.map((e) => '${Uri.encodeQueryComponent(e.key)}=${Uri.encodeQueryComponent(e.value)}').join('&')}';
+    return '$base$path$query';
+  }
+
+  Future<void> _exec(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    setState(() {
+      _loading = true;
+      _status = null;
+      _headers = null;
+      _body = null;
+      _error = null;
+    });
+    try {
+      final url = _buildUrl();
+      final uri = Uri.parse(url);
+      final headers = <String, String>{'accept': 'application/json'};
+      if (widget.includeAuth && widget.token.isNotEmpty) {
+        headers['authorization'] = 'Bearer ${widget.token}';
+      }
+      final res = await http.get(uri, headers: headers);
+      String bodyText;
+      final ct = res.headers['content-type'] ?? '';
+      if (ct.contains('application/json')) {
+        try {
+          final obj = jsonDecode(res.body);
+          bodyText = const JsonEncoder.withIndent('  ').convert(obj);
+        } catch (_) {
+          bodyText = res.body;
+        }
+      } else {
+        bodyText = res.body.length > 4000 ? '${res.body.substring(0, 4000)}…' : res.body;
+      }
+      setState(() {
+        _status = res.statusCode;
+        _headers = res.headers;
+        _body = bodyText;
+      });
+    } catch (e) {
+      setState(() => _error = e.toString());
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(l10n.apiTryGet, style: Theme.of(context).textTheme.titleSmall),
+            const SizedBox(width: 8),
+            FilledButton.icon(
+              onPressed: _loading ? null : () => _exec(context),
+              icon: _loading ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.play_arrow),
+              label: Text(l10n.apiExecute),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        if (_error != null) Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+        if (_status != null) ...[
+          Text('${l10n.apiStatus}: $_status'),
+          const SizedBox(height: 4),
+          Text(l10n.apiHeaders, style: Theme.of(context).textTheme.bodySmall),
+          _JsonBox(data: _headers ?? {}),
+          const SizedBox(height: 6),
+          Text(l10n.apiBody, style: Theme.of(context).textTheme.bodySmall),
+          _CodeBox(text: _body ?? ''),
+        ],
+      ],
     );
   }
 }

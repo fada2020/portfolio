@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/state/profile_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -8,11 +9,14 @@ class ResumePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final localeCode = Localizations.localeOf(context).languageCode;
     final async = ref.watch(profileProvider(localeCode));
     return async.when(
       data: (p) {
         final links = p.links;
+        final lang = (localeCode == 'ko') ? 'ko' : 'en';
+        final resumeUrl = links['resume_url'] ?? 'resume-$lang.pdf';
         return Padding(
           padding: const EdgeInsets.all(16),
           child: Center(
@@ -67,12 +71,11 @@ class ResumePage extends ConsumerWidget {
                   ],
                   const SizedBox(height: 8),
                   Wrap(spacing: 12, children: [
-                    if (links['resume_url'] != null)
-                      OutlinedButton.icon(
-                        icon: const Icon(Icons.picture_as_pdf),
-                        label: const Text('Download Resume'),
-                        onPressed: () => launchUrl(Uri.parse(links['resume_url']!)),
-                      ),
+                    OutlinedButton.icon(
+                      icon: const Icon(Icons.picture_as_pdf),
+                      label: Text(l10n.commonDownloadResume),
+                      onPressed: () => launchUrl(Uri.parse(resumeUrl)),
+                    ),
                     if (links['github'] != null)
                       OutlinedButton.icon(
                         icon: const Icon(Icons.code),

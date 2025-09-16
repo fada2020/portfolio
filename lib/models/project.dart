@@ -1,16 +1,4 @@
 class Project {
-  final String id;
-  final String title;
-  final String period;
-  final List<String> stack;
-  final List<String> domains;
-  final String role;
-  final Map<String, num>? metrics;
-  final String summary;
-  final String? body; // path to markdown file relative to locale folder
-  final Uri? repo;
-  final Uri? demo;
-
   const Project({
     required this.id,
     required this.title,
@@ -41,4 +29,16 @@ class Project {
       demo: parseUri(m['links']?['demo']),
     );
   }
+
+  final String id;
+  final String title;
+  final String period;
+  final List<String> stack;
+  final List<String> domains;
+  final String role;
+  final Map<String, num>? metrics;
+  final String summary;
+  final String? body; // path to markdown file relative to locale folder
+  final Uri? repo;
+  final Uri? demo;
 }

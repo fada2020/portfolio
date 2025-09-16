@@ -1,10 +1,4 @@
 class PostMeta {
-  final String id;
-  final String title;
-  final DateTime date;
-  final List<String> tags;
-  final String body; // relative path under locale folder
-
   const PostMeta({
     required this.id,
     required this.title,
@@ -24,5 +18,10 @@ class PostMeta {
       body: m['body'] as String,
     );
   }
-}
 
+  final String id;
+  final String title;
+  final DateTime date;
+  final List<String> tags;
+  final String body; // relative path under locale folder
+}

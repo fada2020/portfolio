@@ -9,7 +9,7 @@ links:
   email: leehyeokju1@gmail.com
   github: https://github.com/fada2020
   linkedin: https://www.linkedin.com/in/hyeokju-lee-48750b193/
-  resume_url: https://example.com/resume-ko.pdf
+  resume_url: resume-ko.pdf
 skills:
   primary: [Dart, Flutter, Riverpod]
   secondary: [go_router, OpenAPI, YAML, Markdown]

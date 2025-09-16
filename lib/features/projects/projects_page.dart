@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/state/projects_filter.dart';
 import 'package:portfolio/state/projects_state.dart';
 
@@ -9,6 +10,7 @@ class ProjectsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final localeCode = Localizations.localeOf(context).languageCode;
     final allAsync = ref.watch(projectsProvider(localeCode));
     final filteredAsync = ref.watch(filteredProjectsProvider(localeCode));
@@ -25,34 +27,34 @@ class ProjectsPage extends ConsumerWidget {
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
               child: Row(
                 children: [
-                  const Text('Filters', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text(l10n.projectsFilters, style: const TextStyle(fontWeight: FontWeight.bold)),
                   const Spacer(),
                   DropdownButton<ProjectSort>(
                     value: filter.sort,
                     onChanged: (v) => v == null ? null : ref.read(projectsFilterProvider.notifier).setSort(v),
-                    items: const [
-                      DropdownMenuItem(value: ProjectSort.latest, child: Text('Latest')),
-                      DropdownMenuItem(value: ProjectSort.title, child: Text('Title A-Z')),
+                    items: [
+                      DropdownMenuItem(value: ProjectSort.latest, child: Text(l10n.projectsSortLatest)),
+                      DropdownMenuItem(value: ProjectSort.title, child: Text(l10n.projectsSortTitle)),
                     ],
                   ),
                   const SizedBox(width: 8),
                   TextButton(
                     onPressed: () => ref.read(projectsFilterProvider.notifier).clear(),
-                    child: const Text('Clear')
+                    child: Text(l10n.projectsClear)
                   ),
                 ],
               ),
             ),
             if (stacks.isNotEmpty)
               _ChipsSection(
-                label: 'Stacks',
+                label: l10n.projectsStacks,
                 values: stacks,
                 selected: filter.stacks,
                 onToggle: (s) => ref.read(projectsFilterProvider.notifier).toggleStack(s),
               ),
             if (domains.isNotEmpty)
               _ChipsSection(
-                label: 'Domains',
+                label: l10n.projectsDomains,
                 values: domains,
                 selected: filter.domains,
                 onToggle: (d) => ref.read(projectsFilterProvider.notifier).toggleDomain(d),
@@ -62,7 +64,7 @@ class ProjectsPage extends ConsumerWidget {
               child: filteredAsync.when(
                 data: (items) {
                   if (items.isEmpty) {
-                    return const Center(child: Text('No projects match filters.'));
+                    return Center(child: Text(l10n.projectsNoMatch));
                   }
                   return ListView.separated(
                     padding: const EdgeInsets.all(16),

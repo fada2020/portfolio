@@ -14,6 +14,7 @@
   domains: [API, 개발자 경험]
   role: 단독 개발
   summary: 포트폴리오 내에 OpenAPI JSON 로더, 엔드포인트 그룹화, 인증 토글, cURL 생성 기능 구현.
+  body: projects/openapi-showcase.md
 
 - id: content-pipeline
   title: 콘텐츠 파이프라인 (YAML/Markdown)
@@ -22,3 +23,4 @@
   domains: [블로그, 콘텐츠]
   role: 단독 개발
   summary: YAML/Markdown 기반으로 블로그/프로젝트 구성, 로더와 Markdown 렌더링 추가.
+  body: projects/content-pipeline.md

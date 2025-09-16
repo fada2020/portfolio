@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/state/posts_state.dart';
 
 class BlogPage extends ConsumerWidget {
@@ -8,6 +9,7 @@ class BlogPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final localeCode = Localizations.localeOf(context).languageCode;
     final allAsync = ref.watch(postsProvider(localeCode));
     final filteredAsync = ref.watch(filteredPostsProvider(localeCode));
@@ -24,17 +26,21 @@ class BlogPage extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: TextField(
-                      decoration: const InputDecoration(prefixIcon: Icon(Icons.search), hintText: 'Search title'),
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.search),
+                        hintText: l10n.blogSearchTitle,
+                        labelText: l10n.blogSearchTitle,
+                      ),
                       onChanged: (v) => ref.read(postSearchQueryProvider.notifier).state = v,
                     ),
                   ),
                   const SizedBox(width: 12),
                   DropdownButton<String?>(
                     value: selectedTag,
-                    hint: const Text('Tag'),
+                    hint: Text(l10n.commonTag),
                     onChanged: (v) => ref.read(postSelectedTagProvider.notifier).state = v,
                     items: [
-                      const DropdownMenuItem<String?>(value: null, child: Text('All')),
+                      DropdownMenuItem<String?>(value: null, child: Text(l10n.commonAll)),
                       ...tags.map((t) => DropdownMenuItem<String?>(value: t, child: Text(t))),
                     ],
                   ),
@@ -45,7 +51,7 @@ class BlogPage extends ConsumerWidget {
             Expanded(
               child: filteredAsync.when(
                 data: (items) {
-                  if (items.isEmpty) return const Center(child: Text('No posts'));
+                  if (items.isEmpty) return Center(child: Text(l10n.homeNoPosts));
                   return LayoutBuilder(
                     builder: (context, constraints) {
                       final width = constraints.maxWidth;
@@ -67,14 +73,14 @@ class BlogPage extends ConsumerWidget {
                     },
                   );
                 },
-                error: (e, st) => Center(child: Text('Failed to load posts: $e')),
+                error: (e, st) => Center(child: Text('${l10n.errLoadPosts}: $e')),
                 loading: () => const Center(child: CircularProgressIndicator()),
               ),
             ),
           ],
         );
       },
-      error: (e, st) => Center(child: Text('Failed to load: $e')),
+      error: (e, st) => Center(child: Text('${l10n.errFailedToLoad}: $e')),
       loading: () => const Center(child: CircularProgressIndicator()),
     );
   }

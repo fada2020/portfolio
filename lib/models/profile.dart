@@ -1,11 +1,4 @@
 class Profile {
-  final String name;
-  final String title;
-  final String location;
-  final List<String> summary;
-  final Map<String, String> links; // email, github, linkedin, resume_url
-  final Map<String, List<String>> skills; // primary/secondary/exposure/learning
-
   const Profile({
     required this.name,
     required this.title,
@@ -24,4 +17,11 @@ class Profile {
         skills: ((m['skills'] as Map?) ?? const {})
             .map((k, v) => MapEntry(k.toString(), (v as List?)?.map((e) => e.toString()).toList() ?? const [])),
       );
+
+  final String name;
+  final String title;
+  final String location;
+  final List<String> summary;
+  final Map<String, String> links; // email, github, linkedin, resume_url
+  final Map<String, List<String>> skills; // primary/secondary/exposure/learning
 }
