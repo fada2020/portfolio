@@ -117,6 +117,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get skipToContent => '본문으로 건너뛰기';
 
   @override
+  String get privacyTitle => '개인정보처리방침';
+
+  @override
   String get apiSearchHint => '경로·요약·operationId 검색';
 
   @override
@@ -156,6 +159,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get apiTryGet => '실행 (GET)';
 
   @override
+  String get apiTry => '실행';
+
+  @override
   String get apiExecute => '실행';
 
   @override
@@ -169,4 +175,28 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get apiNoBaseUrl => 'Base URL이 없습니다';
+
+  @override
+  String get apiBaseUrl => 'Base URL';
+
+  @override
+  String get apiBaseUrlOverrideHint => '직접 입력(선택)';
+
+  @override
+  String get apiDuration => '소요시간';
+
+  @override
+  String get apiCopyUrl => 'URL 복사';
+
+  @override
+  String get apiCopiedUrl => 'URL을 복사했습니다';
+
+  @override
+  String get apiCopyBody => '본문 복사';
+
+  @override
+  String get apiCopiedBody => '본문을 복사했습니다';
+
+  @override
+  String get apiMockMode => '목업 응답';
 }

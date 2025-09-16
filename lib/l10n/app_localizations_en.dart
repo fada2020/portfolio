@@ -117,6 +117,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get skipToContent => 'Skip to content';
 
   @override
+  String get privacyTitle => 'Privacy Policy';
+
+  @override
   String get apiSearchHint => 'Search path, summary, operationId';
 
   @override
@@ -156,6 +159,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get apiTryGet => 'Try (GET)';
 
   @override
+  String get apiTry => 'Try';
+
+  @override
   String get apiExecute => 'Execute';
 
   @override
@@ -169,4 +175,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get apiNoBaseUrl => 'No base URL available';
+
+  @override
+  String get apiBaseUrl => 'Base URL';
+
+  @override
+  String get apiBaseUrlOverrideHint => 'Override (optional)';
+
+  @override
+  String get apiDuration => 'Duration';
+
+  @override
+  String get apiCopyUrl => 'Copy URL';
+
+  @override
+  String get apiCopiedUrl => 'Copied URL';
+
+  @override
+  String get apiCopyBody => 'Copy body';
+
+  @override
+  String get apiCopiedBody => 'Copied body';
+
+  @override
+  String get apiMockMode => 'Mock response';
 }

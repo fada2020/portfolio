@@ -200,6 +200,11 @@ class _AppShellState extends ConsumerState<AppShell> {
                     onPressed: () => context.go('/privacy'),
                     child: Text(l10n.privacyTitle),
                   ),
+                  const SizedBox(width: 8),
+                  TextButton(
+                    onPressed: () => context.go('/privacy-app'),
+                    child: Text(l10n.appPrivacyTitle),
+                  ),
                 ],
               ),
             ),

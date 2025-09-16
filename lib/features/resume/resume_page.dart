@@ -9,7 +9,7 @@ class ResumePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final localeCode = Localizations.localeOf(context).languageCode;
     final async = ref.watch(profileProvider(localeCode));
     return async.when(
@@ -73,7 +73,7 @@ class ResumePage extends ConsumerWidget {
                   Wrap(spacing: 12, children: [
                     OutlinedButton.icon(
                       icon: const Icon(Icons.picture_as_pdf),
-                      label: Text(l10n.commonDownloadResume),
+                      label: Text(l10n?.commonDownloadResume ?? 'Download Resume'),
                       onPressed: () => launchUrl(Uri.parse(resumeUrl)),
                     ),
                     if (links['github'] != null)

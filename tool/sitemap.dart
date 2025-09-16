@@ -50,6 +50,7 @@ Future<void> main(List<String> args) async {
     '/resume',
     '/contact',
     '/privacy',
+    '/privacy-app',
   };
   final pids = await _projectIds();
   for (final id in pids) {

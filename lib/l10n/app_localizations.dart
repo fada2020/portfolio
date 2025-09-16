@@ -314,6 +314,12 @@ abstract class AppLocalizations {
   /// **'Skip to content'**
   String get skipToContent;
 
+  /// No description provided for @privacyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyTitle;
+
   /// No description provided for @apiSearchHint.
   ///
   /// In en, this message translates to:
@@ -392,6 +398,12 @@ abstract class AppLocalizations {
   /// **'Try (GET)'**
   String get apiTryGet;
 
+  /// No description provided for @apiTry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try'**
+  String get apiTry;
+
   /// No description provided for @apiExecute.
   ///
   /// In en, this message translates to:
@@ -421,6 +433,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No base URL available'**
   String get apiNoBaseUrl;
+
+  /// No description provided for @apiBaseUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Base URL'**
+  String get apiBaseUrl;
+
+  /// No description provided for @apiBaseUrlOverrideHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Override (optional)'**
+  String get apiBaseUrlOverrideHint;
+
+  /// No description provided for @apiDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get apiDuration;
+
+  /// No description provided for @apiCopyUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy URL'**
+  String get apiCopyUrl;
+
+  /// No description provided for @apiCopiedUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied URL'**
+  String get apiCopiedUrl;
+
+  /// No description provided for @apiCopyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy body'**
+  String get apiCopyBody;
+
+  /// No description provided for @apiCopiedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied body'**
+  String get apiCopiedBody;
+
+  /// No description provided for @apiMockMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Mock response'**
+  String get apiMockMode;
 }
 
 class _AppLocalizationsDelegate
