@@ -49,6 +49,7 @@ Future<void> main(List<String> args) async {
     '/blog',
     '/resume',
     '/contact',
+    '/privacy',
   };
   final pids = await _projectIds();
   for (final id in pids) {

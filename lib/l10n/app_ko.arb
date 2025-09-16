@@ -36,6 +36,7 @@
   "commonLanguage": "언어",
   "skipToContent": "본문으로 건너뛰기"
   ,
+  "privacyTitle": "개인정보처리방침",
   "apiSearchHint": "경로·요약·operationId 검색",
   "apiGroupByTag": "태그별 그룹",
   "apiIncludeAuth": "인증 헤더 포함",

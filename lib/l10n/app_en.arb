@@ -36,6 +36,7 @@
   "commonLanguage": "Language",
   "skipToContent": "Skip to content"
   ,
+  "privacyTitle": "Privacy Policy",
   "apiSearchHint": "Search path, summary, operationId",
   "apiGroupByTag": "Group by tag",
   "apiIncludeAuth": "Include Authorization",

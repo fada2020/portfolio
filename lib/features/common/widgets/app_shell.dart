@@ -186,6 +186,25 @@ class _AppShellState extends ConsumerState<AppShell> {
             ),
           ],
         ),
+        bottomNavigationBar: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Divider(height: 1),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Row(
+                children: [
+                  Text('© ${DateTime.now().year}', style: Theme.of(context).textTheme.bodySmall),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => context.go('/privacy'),
+                    child: Text(l10n.privacyTitle),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       );
     });
   }
