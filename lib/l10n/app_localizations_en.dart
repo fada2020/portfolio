@@ -151,4 +151,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errLoadSpec => 'Failed to load spec';
+
+  @override
+  String get apiTryGet => 'Try (GET)';
+
+  @override
+  String get apiExecute => 'Execute';
+
+  @override
+  String get apiStatus => 'Status';
+
+  @override
+  String get apiHeaders => 'Headers';
+
+  @override
+  String get apiBody => 'Body';
+
+  @override
+  String get apiNoBaseUrl => 'No base URL available';
 }

@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/models/openapi.dart';
 import 'package:portfolio/state/openapi_state.dart';
+import 'package:portfolio/utils/json_schema_sample.dart';
 import 'package:portfolio/utils/curl_builder.dart';
 
 class ApiPage extends ConsumerWidget {
@@ -42,6 +43,25 @@ class ApiPage extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 12),
+                      // Base URL override input (optional)
+                      SizedBox(
+                        width: 320,
+                        child: Consumer(builder: (context, ref, _) {
+                          final hint = ref.watch(openApiBaseUrlProvider).maybeWhen(orElse: () => null, data: (v) => v);
+                          final override = ref.watch(apiBaseUrlOverrideProvider) ?? '';
+                          return TextField(
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.link),
+                              labelText: l10n.apiBaseUrl,
+                              hintText: hint ?? l10n.apiBaseUrlOverrideHint,
+                            ),
+                            controller: TextEditingController(text: override)
+                              ..selection = TextSelection.fromPosition(TextPosition(offset: override.length)),
+                            onChanged: (v) => ref.read(apiBaseUrlOverrideProvider.notifier).state = v.isEmpty ? null : v,
+                          );
+                        }),
+                      ),
+                      const SizedBox(width: 12),
                       DropdownButton<String?>(
                         value: selectedTag,
                         hint: Text(l10n.commonTag),
@@ -68,6 +88,14 @@ class ApiPage extends ConsumerWidget {
                         Switch.adaptive(
                           value: includeAuth,
                           onChanged: (v) => ref.read(apiIncludeAuthProvider.notifier).state = v,
+                        ),
+                      ]),
+                      const SizedBox(width: 8),
+                      Row(children: [
+                        Text(l10n.apiMockMode),
+                        Switch.adaptive(
+                          value: ref.watch(apiMockModeProvider),
+                          onChanged: (v) => ref.read(apiMockModeProvider.notifier).state = v,
                         ),
                       ]),
                       const SizedBox(width: 8),
@@ -192,7 +220,7 @@ class _EndpointsList extends ConsumerWidget {
   }
 }
 
-class _EndpointTile extends StatelessWidget {
+class _EndpointTile extends ConsumerWidget {
   const _EndpointTile({
     required this.e,
     required this.baseUrlAsync,
@@ -211,7 +239,7 @@ class _EndpointTile extends StatelessWidget {
   final String Function(String baseUrl) curlBuilder;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
@@ -263,7 +291,9 @@ class _EndpointTile extends StatelessWidget {
           ],
           baseUrlAsync.when(
             data: (base) {
-              final curl = curlBuilder(base);
+              final override = ref.watch(apiBaseUrlOverrideProvider);
+              final effectiveBase = (override == null || override.isEmpty) ? base : override;
+              final curl = curlBuilder(effectiveBase);
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -288,7 +318,14 @@ class _EndpointTile extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  if (e.method.toUpperCase() == 'GET') _TryGetBox(e: e, baseUrl: base, includeAuth: includeAuth, token: token),
+                  _TryBox(
+                    e: e,
+                    baseUrl: effectiveBase,
+                    includeAuth: includeAuth,
+                    token: token,
+                    components: components,
+                    mock: ref.watch(apiMockModeProvider),
+                  ),
                 ],
               );
             },
@@ -345,23 +382,55 @@ class _CodeBox extends StatelessWidget {
   }
 }
 
-class _TryGetBox extends StatefulWidget {
-  const _TryGetBox({required this.e, required this.baseUrl, required this.includeAuth, required this.token});
+class _TryBox extends StatefulWidget {
+  const _TryBox({
+    required this.e,
+    required this.baseUrl,
+    required this.includeAuth,
+    required this.token,
+    required this.components,
+    required this.mock,
+  });
   final ApiEndpoint e;
   final String baseUrl;
   final bool includeAuth;
   final String token;
+  final Map<String, dynamic>? components;
+  final bool mock;
 
   @override
-  State<_TryGetBox> createState() => _TryGetBoxState();
+  State<_TryBox> createState() => _TryBoxState();
 }
 
-class _TryGetBoxState extends State<_TryGetBox> {
+class _TryBoxState extends State<_TryBox> {
   bool _loading = false;
   int? _status;
   Map<String, String>? _headers;
   String? _body;
   String? _error;
+  int? _durationMs;
+  String? _lastUrl;
+  late final TextEditingController _bodyController;
+  bool _supportsBody = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _supportsBody = const {'POST', 'PUT', 'PATCH'}.contains(widget.e.method.toUpperCase());
+    String initial = '';
+    if (_supportsBody && widget.e.requestBodySchema != null) {
+      final schema = widget.e.requestBodySchema!;
+      final obj = sampleFromSchemaWithComponents(schema, widget.components ?? const {});
+      initial = const JsonEncoder.withIndent('  ').convert(obj);
+    }
+    _bodyController = TextEditingController(text: initial);
+  }
+
+  @override
+  void dispose() {
+    _bodyController.dispose();
+    super.dispose();
+  }
 
   String _buildUrl() {
     String path = widget.e.path;
@@ -391,12 +460,60 @@ class _TryGetBoxState extends State<_TryGetBox> {
     });
     try {
       final url = _buildUrl();
+      _lastUrl = url;
       final uri = Uri.parse(url);
       final headers = <String, String>{'accept': 'application/json'};
       if (widget.includeAuth && widget.token.isNotEmpty) {
         headers['authorization'] = 'Bearer ${widget.token}';
       }
-      final res = await http.get(uri, headers: headers);
+      if (widget.mock) {
+        // Generate mock response from response schema or request schema
+        dynamic mock;
+        if (widget.e.responseSchema != null) {
+          mock = sampleFromSchemaWithComponents(widget.e.responseSchema!, widget.components ?? const {});
+        } else if (widget.e.requestBodySchema != null) {
+          mock = sampleFromSchemaWithComponents(widget.e.requestBodySchema!, widget.components ?? const {});
+        } else {
+          mock = {'ok': true};
+        }
+        await Future.delayed(const Duration(milliseconds: 50));
+        setState(() {
+          _status = 200;
+          _headers = {'content-type': 'application/json'};
+          _body = const JsonEncoder.withIndent('  ').convert(mock);
+          _durationMs = 1;
+        });
+        return;
+      }
+      http.Response res;
+      final sw = Stopwatch()..start();
+      final m = widget.e.method.toUpperCase();
+      if (m == 'GET') {
+        res = await http.get(uri, headers: headers);
+      } else if (m == 'DELETE') {
+        res = await http.delete(uri, headers: headers);
+      } else if (_supportsBody) {
+        headers['content-type'] = 'application/json';
+        dynamic data;
+        try {
+          data = _bodyController.text.trim().isEmpty ? {} : jsonDecode(_bodyController.text);
+        } catch (e) {
+          throw Exception('Invalid JSON body: $e');
+        }
+        final bodyStr = jsonEncode(data);
+        if (m == 'POST') {
+          res = await http.post(uri, headers: headers, body: bodyStr);
+        } else if (m == 'PUT') {
+          res = await http.put(uri, headers: headers, body: bodyStr);
+        } else if (m == 'PATCH') {
+          res = await http.patch(uri, headers: headers, body: bodyStr);
+        } else {
+          res = await http.get(uri, headers: headers); // fallback
+        }
+      } else {
+        res = await http.get(uri, headers: headers);
+      }
+      sw.stop();
       String bodyText;
       final ct = res.headers['content-type'] ?? '';
       if (ct.contains('application/json')) {
@@ -413,6 +530,7 @@ class _TryGetBoxState extends State<_TryGetBox> {
         _status = res.statusCode;
         _headers = res.headers;
         _body = bodyText;
+        _durationMs = sw.elapsedMilliseconds;
       });
     } catch (e) {
       setState(() => _error = e.toString());
@@ -429,7 +547,7 @@ class _TryGetBoxState extends State<_TryGetBox> {
       children: [
         Row(
           children: [
-            Text(l10n.apiTryGet, style: Theme.of(context).textTheme.titleSmall),
+            Text('${l10n.apiTry} (${widget.e.method.toUpperCase()})', style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(width: 8),
             FilledButton.icon(
               onPressed: _loading ? null : () => _exec(context),
@@ -438,16 +556,62 @@ class _TryGetBoxState extends State<_TryGetBox> {
             ),
           ],
         ),
+        if (_supportsBody) ...[
+          const SizedBox(height: 8),
+          Text(l10n.apiRequestBodyJson, style: Theme.of(context).textTheme.bodySmall),
+          const SizedBox(height: 4),
+          TextField(
+            controller: _bodyController,
+            maxLines: 6,
+            decoration: const InputDecoration(border: OutlineInputBorder()),
+            style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+          ),
+        ],
+        if (_lastUrl != null) ...[
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              Expanded(child: Text(_lastUrl!, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontFamily: 'monospace', fontSize: 12))),
+              IconButton(
+                tooltip: l10n.apiCopyUrl,
+                icon: const Icon(Icons.link),
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: _lastUrl!));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.apiCopiedUrl)));
+                },
+              ),
+            ],
+          ),
+        ],
         const SizedBox(height: 8),
         if (_error != null) Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
         if (_status != null) ...[
-          Text('${l10n.apiStatus}: $_status'),
+          Row(children: [
+            Text('${l10n.apiStatus}: $_status'),
+            if (_durationMs != null) ...[
+              const SizedBox(width: 12),
+              Text('${l10n.apiDuration}: ${_durationMs}ms'),
+            ],
+          ]),
           const SizedBox(height: 4),
           Text(l10n.apiHeaders, style: Theme.of(context).textTheme.bodySmall),
           _JsonBox(data: _headers ?? {}),
           const SizedBox(height: 6),
           Text(l10n.apiBody, style: Theme.of(context).textTheme.bodySmall),
-          _CodeBox(text: _body ?? ''),
+          Stack(
+            alignment: Alignment.topRight,
+            children: [
+              _CodeBox(text: _body ?? ''),
+              IconButton(
+                tooltip: l10n.apiCopyBody,
+                icon: const Icon(Icons.copy, size: 18),
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: _body ?? ''));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.apiCopiedBody)));
+                },
+              ),
+            ],
+          ),
         ],
       ],
     );

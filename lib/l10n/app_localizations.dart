@@ -385,6 +385,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to load spec'**
   String get errLoadSpec;
+
+  /// No description provided for @apiTryGet.
+  ///
+  /// In en, this message translates to:
+  /// **'Try (GET)'**
+  String get apiTryGet;
+
+  /// No description provided for @apiExecute.
+  ///
+  /// In en, this message translates to:
+  /// **'Execute'**
+  String get apiExecute;
+
+  /// No description provided for @apiStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get apiStatus;
+
+  /// No description provided for @apiHeaders.
+  ///
+  /// In en, this message translates to:
+  /// **'Headers'**
+  String get apiHeaders;
+
+  /// No description provided for @apiBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Body'**
+  String get apiBody;
+
+  /// No description provided for @apiNoBaseUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'No base URL available'**
+  String get apiNoBaseUrl;
 }
 
 class _AppLocalizationsDelegate

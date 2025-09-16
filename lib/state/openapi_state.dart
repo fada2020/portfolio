@@ -19,6 +19,8 @@ final apiSelectedTagProvider = StateProvider<String?>((ref) => null);
 final apiGroupByTagProvider = StateProvider<bool>((ref) => false);
 final apiIncludeAuthProvider = StateProvider<bool>((ref) => false);
 final apiAuthTokenProvider = StateProvider<String>((ref) => '');
+final apiBaseUrlOverrideProvider = StateProvider<String?>((ref) => null);
+final apiMockModeProvider = StateProvider<bool>((ref) => false);
 
 final filteredEndpointsProvider = FutureProvider<List<ApiEndpoint>>((ref) async {
   final list = await ref.watch(openApiEndpointsProvider.future);

@@ -49,9 +49,19 @@
   "apiCopiedCurl": "cURL을 복사했습니다",
   "errLoadSpec": "스펙을 불러오지 못했습니다",
   "apiTryGet": "실행 (GET)",
+  "apiTry": "실행",
   "apiExecute": "실행",
   "apiStatus": "상태",
   "apiHeaders": "헤더",
   "apiBody": "본문",
-  "apiNoBaseUrl": "Base URL이 없습니다"
+  "apiNoBaseUrl": "Base URL이 없습니다",
+  "apiBaseUrl": "Base URL",
+  "apiBaseUrlOverrideHint": "직접 입력(선택)",
+  "apiDuration": "소요시간",
+  "apiCopyUrl": "URL 복사",
+  "apiCopiedUrl": "URL을 복사했습니다",
+  "apiCopyBody": "본문 복사",
+  "apiCopiedBody": "본문을 복사했습니다"
+  ,
+  "apiMockMode": "목업 응답"
 }

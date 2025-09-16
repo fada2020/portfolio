@@ -49,9 +49,19 @@
   "apiCopiedCurl": "Copied cURL",
   "errLoadSpec": "Failed to load spec",
   "apiTryGet": "Try (GET)",
+  "apiTry": "Try",
   "apiExecute": "Execute",
   "apiStatus": "Status",
   "apiHeaders": "Headers",
   "apiBody": "Body",
-  "apiNoBaseUrl": "No base URL available"
+  "apiNoBaseUrl": "No base URL available",
+  "apiBaseUrl": "Base URL",
+  "apiBaseUrlOverrideHint": "Override (optional)",
+  "apiDuration": "Duration",
+  "apiCopyUrl": "Copy URL",
+  "apiCopiedUrl": "Copied URL",
+  "apiCopyBody": "Copy body",
+  "apiCopiedBody": "Copied body"
+  ,
+  "apiMockMode": "Mock response"
 }

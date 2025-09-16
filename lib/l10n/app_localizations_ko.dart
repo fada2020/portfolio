@@ -151,4 +151,22 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get errLoadSpec => '스펙을 불러오지 못했습니다';
+
+  @override
+  String get apiTryGet => '실행 (GET)';
+
+  @override
+  String get apiExecute => '실행';
+
+  @override
+  String get apiStatus => '상태';
+
+  @override
+  String get apiHeaders => '헤더';
+
+  @override
+  String get apiBody => '본문';
+
+  @override
+  String get apiNoBaseUrl => 'Base URL이 없습니다';
 }
