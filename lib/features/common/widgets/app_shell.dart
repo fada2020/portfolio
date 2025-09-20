@@ -65,6 +65,11 @@ class _AppShellState extends ConsumerState<AppShell> {
                   _NavButton(label: l10n.navResume, route: '/resume'),
                   _NavButton(label: l10n.navContact, route: '/contact'),
                   const SizedBox(width: 8),
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () => context.go('/search'),
+                    tooltip: l10n.navSearch,
+                  ),
                   _LangMenu(tooltip: l10n.commonLanguage),
                   const SizedBox(width: 8),
                 ],
@@ -128,6 +133,15 @@ class _AppShellState extends ConsumerState<AppShell> {
                         onTap: () {
                           Navigator.of(context).pop();
                           context.go('/contact');
+                          Future.microtask(() => _menuButtonFocus.requestFocus());
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.search),
+                        title: Text(l10n.navSearch),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          context.go('/search');
                           Future.microtask(() => _menuButtonFocus.requestFocus());
                         },
                       ),

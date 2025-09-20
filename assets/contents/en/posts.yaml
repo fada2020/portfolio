@@ -1,3 +1,18 @@
+- id: microservices-patterns
+  title: Microservices Design Patterns - Lessons from Production
+  date: 2024-12-15
+  tags: [Backend, Microservices, Architecture, Go]
+  body: posts/microservices-patterns.md
+- id: database-optimization
+  title: Database Performance Optimization - From 30s to 300ms
+  date: 2024-11-28
+  tags: [Database, Performance, PostgreSQL, Optimization]
+  body: posts/database-optimization.md
+- id: cicd-automation
+  title: Building a Robust CI/CD Pipeline - Zero-Downtime Deployments
+  date: 2024-10-15
+  tags: [DevOps, CI/CD, Kubernetes, Automation]
+  body: posts/cicd-automation.md
 - id: riverpod-arch
   title: Scalable State Management with Riverpod
   date: 2024-07-10

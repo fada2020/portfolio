@@ -1,0 +1,118 @@
+personal:
+  name: 이혁주
+  title: 시니어 백엔드 엔지니어
+  location: 서울, 대한민국
+  email: hyeogjui4@gmail.com
+  github: https://github.com/fada2020
+  linkedin: https://www.linkedin.com/in/hyeokju-lee-48750b193/
+  summary: |
+    수백만 건의 트랜잭션을 처리하는 확장 가능한 시스템 구축 경험을 보유한 5년 차 백엔드 엔지니어입니다.
+    마이크로서비스 아키텍처, 실시간 데이터 파이프라인, 고성능 API 전문가로서
+    99.9% 가용성을 달성하는 복잡한 마이그레이션과 성능 최적화를 팀과 함께 이끌어왔습니다.
+
+experience:
+  - company: 테크코프
+    position: 시니어 백엔드 엔지니어
+    period: 2022.03 - 현재
+    location: 서울, 대한민국
+    description: 월 500억원+ 거래액을 처리하는 고트래픽 이커머스 플랫폼의 백엔드 개발 리드
+    achievements:
+      - 실시간 빌링 파이프라인 설계로 정산 시간을 24시간에서 1분 미만으로 단축
+      - 데이터베이스 쿼리 최적화로 99% 성능 향상 달성 (30초 → 300ms 응답 시간)
+      - 초당 10만+ 요청을 처리하는 마이크로서비스 구축, 99.9% 가용성 달성
+      - 5명의 엔지니어 팀을 이끌어 데이터 손실 없는 레거시 시스템 마이그레이션 완료
+    technologies: [Go, PostgreSQL, Apache Kafka, Redis, Kubernetes, Docker, AWS]
+
+  - company: 데이터플로우 솔루션즈
+    position: 백엔드 엔지니어
+    period: 2020.06 - 2022.02
+    location: 서울, 대한민국
+    description: 실시간 금융 거래를 처리하는 핀테크 클라이언트용 데이터 처리 시스템 개발
+    achievements:
+      - 일일 100만+ 이벤트를 처리하는 CDC 파이프라인 구현, exactly-once 보장
+      - 캐싱과 쿼리 최적화를 통해 API 응답 시간 85% 단축
+      - 자동화된 CI/CD 파이프라인 구축으로 배포 시간을 2시간에서 5분으로 단축
+      - 금융 정산 시스템에서 99.95% 데이터 정확도 달성
+    technologies: [Java, Spring Boot, Apache Flink, MongoDB, RabbitMQ, Jenkins]
+
+  - company: 스타트업테크
+    position: 소프트웨어 엔지니어
+    period: 2019.01 - 2020.05
+    location: 서울, 대한민국
+    description: 10,000+ 활성 사용자를 서비스하는 SaaS 플랫폼 풀스택 개발
+    achievements:
+      - 일일 5만+ 요청을 처리하는 REST API 개발, 200ms 미만 응답 시간 달성
+      - 5,000+ 동시 사용자를 지원하는 사용자 인증 및 권한 관리 시스템 구현
+      - 자동화된 테스트 프레임워크 구축으로 코드 커버리지를 40%에서 90%로 향상
+      - 데이터베이스 설계 최적화로 스토리지 비용 30% 절감
+    technologies: [Node.js, Express.js, MySQL, React, Docker, AWS EC2]
+
+education:
+  - degree: 컴퓨터공학과 학사
+    school: 서울대학교
+    period: 2014.03 - 2019.02
+    location: 서울, 대한민국
+    achievements:
+      - 최우등 졸업 (GPA: 3.85/4.0)
+      - 졸업작품: 분산 컴퓨팅 프레임워크 (최우수작품상 수상)
+      - 컴퓨터공학과 우등생회 회원
+
+skills:
+  programming_languages:
+    expert: [Go, Java, JavaScript/TypeScript]
+    proficient: [Python, Dart/Flutter, SQL]
+    familiar: [Rust, C++]
+
+  backend_technologies:
+    frameworks: [Spring Boot, Express.js, Gin, Echo]
+    databases: [PostgreSQL, MySQL, MongoDB, Redis, Elasticsearch]
+    messaging: [Apache Kafka, RabbitMQ, AWS SQS]
+    caching: [Redis, Memcached, 애플리케이션 레벨 캐싱]
+
+  infrastructure:
+    cloud: [AWS (EC2, RDS, S3, Lambda), GCP]
+    containers: [Docker, Kubernetes, Docker Compose]
+    monitoring: [Prometheus, Grafana, ELK Stack]
+    ci_cd: [Jenkins, GitHub Actions, GitLab CI]
+
+  data_processing:
+    streaming: [Apache Kafka, Apache Flink, Kafka Streams]
+    batch: [Apache Spark, Airflow]
+    formats: [JSON, Avro, Parquet, Protocol Buffers]
+
+certifications:
+  - name: AWS Certified Solutions Architect - Professional
+    issuer: Amazon Web Services
+    date: 2023.08
+    credential_id: AWS-PSA-12345
+
+  - name: Certified Kubernetes Administrator (CKA)
+    issuer: Cloud Native Computing Foundation
+    date: 2023.03
+    credential_id: CKA-67890
+
+projects_highlight:
+  - title: 실시간 빌링 데이터 파이프라인
+    description: 월 500억원+ 거래를 99.9% 정확도로 처리하는 미션 크리티컬 파이프라인
+    impact: 정산 시간을 24시간에서 1분 미만으로 단축, 월 20시간의 수작업 절약
+    technologies: [PostgreSQL, Debezium, Kafka, Apache Flink, S3]
+
+  - title: 고성능 URL 단축 서비스
+    description: 일일 1만+ 리다이렉트를 100ms 미만 응답 시간으로 처리하는 프로덕션 급 서비스
+    impact: 99% 캐시 적중률 달성, 데이터베이스 쿼리 85% 감소
+    technologies: [Next.js, PostgreSQL, Redis, Vercel]
+
+languages:
+  - language: 한국어
+    level: 모국어
+  - language: 영어
+    level: 비즈니스 수준 (업무 능숙)
+  - language: 일본어
+    level: 일상 회화
+
+interests:
+  - 시스템 아키텍처 & 디자인 패턴
+  - 오픈소스 기여
+  - 기술 블로그 작성 & 멘토링
+  - 성능 최적화
+  - 분산 시스템 연구

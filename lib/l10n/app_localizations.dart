@@ -320,6 +320,12 @@ abstract class AppLocalizations {
   /// **'Privacy Policy'**
   String get privacyTitle;
 
+  /// No description provided for @appPrivacyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'App Privacy Policy'**
+  String get appPrivacyTitle;
+
   /// No description provided for @apiSearchHint.
   ///
   /// In en, this message translates to:
@@ -481,6 +487,282 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mock response'**
   String get apiMockMode;
+
+  /// No description provided for @contactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get In Touch'**
+  String get contactTitle;
+
+  /// No description provided for @contactSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Have a project in mind or want to discuss backend architecture? I\'d love to hear from you.'**
+  String get contactSubtitle;
+
+  /// No description provided for @contactFormTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Message'**
+  String get contactFormTitle;
+
+  /// No description provided for @contactFormName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get contactFormName;
+
+  /// No description provided for @contactFormNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your full name'**
+  String get contactFormNameHint;
+
+  /// No description provided for @contactFormEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get contactFormEmail;
+
+  /// No description provided for @contactFormEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'your.email@example.com'**
+  String get contactFormEmailHint;
+
+  /// No description provided for @contactFormSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get contactFormSubject;
+
+  /// No description provided for @contactFormSubjectHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s this about?'**
+  String get contactFormSubjectHint;
+
+  /// No description provided for @contactFormMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get contactFormMessage;
+
+  /// No description provided for @contactFormMessageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell me about your project or question...'**
+  String get contactFormMessageHint;
+
+  /// No description provided for @contactFormSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Message'**
+  String get contactFormSend;
+
+  /// No description provided for @contactFormSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending...'**
+  String get contactFormSending;
+
+  /// No description provided for @contactFormSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you! Your email client should open with the message ready to send.'**
+  String get contactFormSuccess;
+
+  /// No description provided for @contactFormNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get contactFormNameRequired;
+
+  /// No description provided for @contactFormEmailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get contactFormEmailRequired;
+
+  /// No description provided for @contactFormEmailInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get contactFormEmailInvalid;
+
+  /// No description provided for @contactFormSubjectRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject is required'**
+  String get contactFormSubjectRequired;
+
+  /// No description provided for @contactFormMessageRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Message is required'**
+  String get contactFormMessageRequired;
+
+  /// No description provided for @contactFormMessageTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Message must be at least 10 characters'**
+  String get contactFormMessageTooShort;
+
+  /// No description provided for @contactInfoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Information'**
+  String get contactInfoTitle;
+
+  /// No description provided for @contactInfoDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Feel free to reach out through any of these channels. I typically respond within 24 hours.'**
+  String get contactInfoDescription;
+
+  /// No description provided for @contactResponseTime.
+  ///
+  /// In en, this message translates to:
+  /// **'I typically respond within 24 hours during business days.'**
+  String get contactResponseTime;
+
+  /// No description provided for @navSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get navSearch;
+
+  /// No description provided for @searchPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get searchPageTitle;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search projects and blog posts...'**
+  String get searchHint;
+
+  /// No description provided for @searchRecentSearches.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent searches'**
+  String get searchRecentSearches;
+
+  /// No description provided for @searchClearHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get searchClearHistory;
+
+  /// No description provided for @searchPopularTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular tags'**
+  String get searchPopularTags;
+
+  /// No description provided for @searchNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found for \"{query}\"'**
+  String searchNoResults(Object query);
+
+  /// No description provided for @searchNoResultsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Try different keywords or browse our projects and blog posts.'**
+  String get searchNoResultsHint;
+
+  /// No description provided for @searchResultsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 result} other{{count} results}} for \"{query}\"'**
+  String searchResultsCount(num count, Object query);
+
+  /// No description provided for @searchProjectsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 project} other{{count} projects}}'**
+  String searchProjectsSection(num count);
+
+  /// No description provided for @searchPostsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 post} other{{count} posts}}'**
+  String searchPostsSection(num count);
+
+  /// No description provided for @resumeSummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Professional Summary'**
+  String get resumeSummaryTitle;
+
+  /// No description provided for @resumeExperienceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Professional Experience'**
+  String get resumeExperienceTitle;
+
+  /// No description provided for @resumeSkillsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical Skills'**
+  String get resumeSkillsTitle;
+
+  /// No description provided for @resumeSkillsProgramming.
+  ///
+  /// In en, this message translates to:
+  /// **'Programming Languages'**
+  String get resumeSkillsProgramming;
+
+  /// No description provided for @resumeSkillsBackend.
+  ///
+  /// In en, this message translates to:
+  /// **'Backend Technologies'**
+  String get resumeSkillsBackend;
+
+  /// No description provided for @resumeSkillsInfrastructure.
+  ///
+  /// In en, this message translates to:
+  /// **'Infrastructure & DevOps'**
+  String get resumeSkillsInfrastructure;
+
+  /// No description provided for @resumeSkillsData.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Processing'**
+  String get resumeSkillsData;
+
+  /// No description provided for @resumeEducationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get resumeEducationTitle;
+
+  /// No description provided for @resumeCertificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Certifications'**
+  String get resumeCertificationsTitle;
+
+  /// No description provided for @resumeProjectsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured Projects'**
+  String get resumeProjectsTitle;
+
+  /// No description provided for @resumeLanguagesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages'**
+  String get resumeLanguagesTitle;
+
+  /// No description provided for @resumeInterestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Interests'**
+  String get resumeInterestsTitle;
 }
 
 class _AppLocalizationsDelegate

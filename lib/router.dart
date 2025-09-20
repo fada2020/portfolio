@@ -12,6 +12,7 @@ import 'package:portfolio/features/privacy/app_privacy_page.dart';
 import 'package:portfolio/features/projects/project_detail_page.dart';
 import 'package:portfolio/features/projects/projects_page.dart';
 import 'package:portfolio/features/resume/resume_page.dart';
+import 'package:portfolio/features/search/search_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -33,6 +34,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(path: '/resume', builder: (context, state) => const ResumePage()),
           GoRoute(path: '/contact', builder: (context, state) => const ContactPage()),
+          GoRoute(path: '/search', builder: (context, state) => const SearchPage()),
           GoRoute(path: '/privacy', builder: (context, state) => const PrivacyPage()),
           GoRoute(path: '/privacy-app', builder: (context, state) => const AppPrivacyPage()),
         ],

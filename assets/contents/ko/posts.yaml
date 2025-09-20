@@ -1,3 +1,18 @@
+- id: microservices-patterns
+  title: 마이크로서비스 디자인 패턴 - 프로덕션에서의 경험
+  date: 2024-12-15
+  tags: [백엔드, 마이크로서비스, 아키텍처, Go]
+  body: posts/microservices-patterns.md
+- id: database-optimization
+  title: 데이터베이스 성능 최적화 - 30초에서 300ms로
+  date: 2024-11-28
+  tags: [데이터베이스, 성능, PostgreSQL, 최적화]
+  body: posts/database-optimization.md
+- id: cicd-automation
+  title: 견고한 CI/CD 파이프라인 구축 - 무중단 배포
+  date: 2024-10-15
+  tags: [DevOps, CI/CD, Kubernetes, 자동화]
+  body: posts/cicd-automation.md
 - id: riverpod-arch
   title: Riverpod로 확장 가능한 상태 관리
   date: 2024-07-10

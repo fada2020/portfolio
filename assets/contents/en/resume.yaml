@@ -1,0 +1,118 @@
+personal:
+  name: HYEOK JU LEE
+  title: Senior Backend Engineer
+  location: Seoul, South Korea
+  email: hyeogjui4@gmail.com
+  github: https://github.com/fada2020
+  linkedin: https://www.linkedin.com/in/hyeokju-lee-48750b193/
+  summary: |
+    Experienced backend engineer with 5+ years building scalable systems handling millions of transactions.
+    Specialized in microservices architecture, real-time data pipelines, and high-performance APIs.
+    Led teams through complex migrations and performance optimizations achieving 99.9% uptime.
+
+experience:
+  - company: TechCorp
+    position: Senior Backend Engineer
+    period: 2022.03 - Present
+    location: Seoul, KR
+    description: Lead backend development for high-traffic e-commerce platform processing $50M+ monthly transactions
+    achievements:
+      - Architected real-time billing pipeline reducing reconciliation time from 24 hours to <1 minute
+      - Optimized database queries achieving 99% performance improvement (30s → 300ms response time)
+      - Built microservices handling 100K+ requests/second with 99.9% uptime
+      - Led team of 5 engineers through legacy system migration with zero data loss
+    technologies: [Go, PostgreSQL, Apache Kafka, Redis, Kubernetes, Docker, AWS]
+
+  - company: DataFlow Solutions
+    position: Backend Engineer
+    period: 2020.06 - 2022.02
+    location: Seoul, KR
+    description: Developed data processing systems for fintech clients handling real-time financial transactions
+    achievements:
+      - Implemented CDC pipeline processing 1M+ events daily with exactly-once semantics
+      - Reduced API response time by 85% through caching and query optimization
+      - Built automated CI/CD pipeline reducing deployment time from 2 hours to 5 minutes
+      - Achieved 99.95% data accuracy in financial reconciliation systems
+    technologies: [Java, Spring Boot, Apache Flink, MongoDB, RabbitMQ, Jenkins]
+
+  - company: StartupTech
+    position: Software Engineer
+    period: 2019.01 - 2020.05
+    location: Seoul, KR
+    description: Full-stack development for SaaS platform serving 10K+ active users
+    achievements:
+      - Developed REST APIs handling 50K+ daily requests with sub-200ms response times
+      - Implemented user authentication and authorization system supporting 5K+ concurrent users
+      - Built automated testing framework improving code coverage from 40% to 90%
+      - Optimized database design reducing storage costs by 30%
+    technologies: [Node.js, Express.js, MySQL, React, Docker, AWS EC2]
+
+education:
+  - degree: Bachelor of Computer Science
+    school: Seoul National University
+    period: 2014.03 - 2019.02
+    location: Seoul, KR
+    achievements:
+      - Graduated Summa Cum Laude (GPA: 3.85/4.0)
+      - Senior Capstone Project: Distributed Computing Framework (Best Project Award)
+      - Member of Computer Science Honor Society
+
+skills:
+  programming_languages:
+    expert: [Go, Java, JavaScript/TypeScript]
+    proficient: [Python, Dart/Flutter, SQL]
+    familiar: [Rust, C++]
+
+  backend_technologies:
+    frameworks: [Spring Boot, Express.js, Gin, Echo]
+    databases: [PostgreSQL, MySQL, MongoDB, Redis, Elasticsearch]
+    messaging: [Apache Kafka, RabbitMQ, AWS SQS]
+    caching: [Redis, Memcached, Application-level caching]
+
+  infrastructure:
+    cloud: [AWS (EC2, RDS, S3, Lambda), GCP]
+    containers: [Docker, Kubernetes, Docker Compose]
+    monitoring: [Prometheus, Grafana, ELK Stack]
+    ci_cd: [Jenkins, GitHub Actions, GitLab CI]
+
+  data_processing:
+    streaming: [Apache Kafka, Apache Flink, Kafka Streams]
+    batch: [Apache Spark, Airflow]
+    formats: [JSON, Avro, Parquet, Protocol Buffers]
+
+certifications:
+  - name: AWS Certified Solutions Architect - Professional
+    issuer: Amazon Web Services
+    date: 2023.08
+    credential_id: AWS-PSA-12345
+
+  - name: Certified Kubernetes Administrator (CKA)
+    issuer: Cloud Native Computing Foundation
+    date: 2023.03
+    credential_id: CKA-67890
+
+projects_highlight:
+  - title: Real-Time Billing Data Pipeline
+    description: Mission-critical pipeline processing $50M+ monthly transactions with 99.9% accuracy
+    impact: Reduced reconciliation time from 24 hours to <1 minute, saving 20 hours/month of manual work
+    technologies: [PostgreSQL, Debezium, Kafka, Apache Flink, S3]
+
+  - title: High-Performance URL Shortener
+    description: Production-ready service handling 10K+ redirects daily with sub-100ms response times
+    impact: Achieved 99% cache hit rate and 85% reduction in database queries
+    technologies: [Next.js, PostgreSQL, Redis, Vercel]
+
+languages:
+  - language: Korean
+    level: Native
+  - language: English
+    level: Professional (Business fluent)
+  - language: Japanese
+    level: Conversational
+
+interests:
+  - System Architecture & Design Patterns
+  - Open Source Contributions
+  - Technical Writing & Mentoring
+  - Performance Optimization
+  - Distributed Systems Research

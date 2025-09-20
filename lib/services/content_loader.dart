@@ -1,8 +1,19 @@
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:portfolio/models/post.dart';
 import 'package:portfolio/models/profile.dart';
 import 'package:portfolio/models/project.dart';
 import 'package:yaml/yaml.dart';
+
+class ContentLoader {
+  Future<String> loadContent(String localeCode, String fileName) async {
+    final code = (localeCode == 'ko') ? 'ko' : 'en';
+    final path = 'assets/contents/$code/$fileName';
+    return await rootBundle.loadString(path);
+  }
+}
+
+final contentLoaderProvider = Provider<ContentLoader>((ref) => ContentLoader());
 
 Future<List<Project>> loadProjects(String localeCode) async {
   final code = (localeCode == 'ko') ? 'ko' : 'en';
