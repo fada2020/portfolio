@@ -1,7 +1,7 @@
 # Next.js URL Shortener — Requirements (KO)
 
 ## 목표
-- Next.js(App Router) + TypeScript로 간단한 URL 단축기 구현
+- Next.js(App Router) + JavaScript로 간단한 URL 단축기 구현
 - 짧은 코드 생성/리다이렉트/간단 통계 제공, Vercel 배포
 
 ## 핵심 기능
@@ -10,7 +10,7 @@
 - 대시보드: 최근 생성 링크, 클릭 수 목록(SSR/RSC)
 
 ## 기술 스택
-- Next.js, React, TypeScript, Prisma, SQLite, zod, Vercel
+- Next.js, React, JavaScript, Prisma, SQLite, zod, Vercel
 
 ## 데이터 모델
 - Link(id, code, url, clicks, createdAt)

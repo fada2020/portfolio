@@ -155,50 +155,53 @@ class _HeaderSection extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              personal.name,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+        child: SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                personal.name,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '${personal.title} • ${personal.location}',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              const SizedBox(height: 6),
+              Text(
+                '${personal.title} • ${personal.location}',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Wrap(
-              spacing: 12,
-              runSpacing: 8,
-              children: [
-                _ContactChip(
-                  icon: Icons.email,
-                  label: personal.email,
-                  onTap: () => launchUrl(Uri.parse('mailto:${personal.email}')),
-                ),
-                _ContactChip(
-                  icon: Icons.code,
-                  label: 'GitHub',
-                  onTap: () => launchUrl(Uri.parse(personal.github)),
-                ),
-                _ContactChip(
-                  icon: Icons.business,
-                  label: 'LinkedIn',
-                  onTap: () => launchUrl(Uri.parse(personal.linkedin)),
-                ),
-                _ContactChip(
-                  icon: Icons.picture_as_pdf,
-                  label: l10n.commonDownloadResume,
-                  onTap: () => launchUrl(Uri.parse('resume-${Localizations.localeOf(context).languageCode}.pdf')),
-                ),
-              ],
-            ),
-          ],
+              const SizedBox(height: 20),
+              Wrap(
+                spacing: 12,
+                runSpacing: 8,
+                children: [
+                  _ContactChip(
+                    icon: Icons.email,
+                    label: personal.email,
+                    onTap: () => launchUrl(Uri.parse('mailto:${personal.email}')),
+                  ),
+                  _ContactChip(
+                    icon: Icons.code,
+                    label: 'GitHub',
+                    onTap: () => launchUrl(Uri.parse(personal.github)),
+                  ),
+                  _ContactChip(
+                    icon: Icons.business,
+                    label: 'LinkedIn',
+                    onTap: () => launchUrl(Uri.parse(personal.linkedin)),
+                  ),
+                  _ContactChip(
+                    icon: Icons.picture_as_pdf,
+                    label: l10n.commonDownloadResume,
+                    onTap: () => launchUrl(Uri.parse('resume.pdf')),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

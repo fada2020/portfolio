@@ -1,25 +1,15 @@
-- id: microservices-patterns
-  title: 마이크로서비스 디자인 패턴 - 프로덕션에서의 경험
-  date: 2024-12-15
-  tags: [백엔드, 마이크로서비스, 아키텍처, Go]
-  body: posts/microservices-patterns.md
-- id: database-optimization
-  title: 데이터베이스 성능 최적화 - 30초에서 300ms로
-  date: 2024-11-28
-  tags: [데이터베이스, 성능, PostgreSQL, 최적화]
-  body: posts/database-optimization.md
-- id: cicd-automation
-  title: 견고한 CI/CD 파이프라인 구축 - 무중단 배포
-  date: 2024-10-15
-  tags: [DevOps, CI/CD, Kubernetes, 자동화]
-  body: posts/cicd-automation.md
-- id: riverpod-arch
-  title: Riverpod로 확장 가능한 상태 관리
-  date: 2024-07-10
-  tags: [Flutter, Riverpod, 아키텍처]
-  body: posts/riverpod-arch.md
-- id: api-hardening
-  title: API 하드닝 플레이북
-  date: 2024-05-22
-  tags: [백엔드, 보안]
-  body: posts/api-hardening.md
+- id: spring-migration
+  title: Hybricks를 PHP에서 Spring Boot로 옮기기
+  date: 2024-09-05
+  tags: [Spring Boot, 마이그레이션, AWS, MariaDB]
+  body: posts/spring-migration.md
+- id: quest-platform
+  title: Quest 플랫폼을 만들며 얻은 아키텍처 노트
+  date: 2024-07-18
+  tags: [아키텍처, Java, 교육서비스, API]
+  body: posts/quest-platform.md
+- id: flutter-shell
+  title: Flutter WebView로 자사 서비스를 하나의 앱으로
+  date: 2024-05-02
+  tags: [Flutter, WebView, DevEx, 모바일]
+  body: posts/flutter-shell.md

@@ -6,6 +6,8 @@ import 'package:portfolio/state/posts_state.dart';
 import 'package:portfolio/state/profile_state.dart';
 import 'package:portfolio/state/projects_state.dart';
 import 'package:portfolio/utils/period.dart';
+import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -14,7 +16,7 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final localeCode = Localizations.localeOf(context).languageCode;
-
+    
     final profileAsync = ref.watch(profileProvider(localeCode));
     final projectsAsync = ref.watch(projectsProvider(localeCode));
     final postsAsync = ref.watch(postsProvider(localeCode));
@@ -63,12 +65,11 @@ class HomePage extends ConsumerWidget {
                               spacing: 12,
                               runSpacing: 12,
                               children: [
-                                if (p.links['resume_url'] != null)
-                                  FilledButton.icon(
-                                    icon: const Icon(Icons.picture_as_pdf),
-                                    label: Text(l10n.commonDownloadResume),
-                                    onPressed: () => context.go('/resume'),
-                                  ),
+                                FilledButton.icon(
+                                  icon: const Icon(Icons.picture_as_pdf),
+                                  label: Text(l10n.commonDownloadResume),
+                                  onPressed: () => launchUrl(Uri.parse('resume.pdf')),
+                                ),
                                 FilledButton.icon(
                                   icon: const Icon(Icons.layers),
                                   label: Text(l10n.navProjects),
@@ -229,6 +230,8 @@ class _PostPreviewCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final formatter = DateFormat.yMMMd(l10n.localeName);
     final excerptAsync = ref.watch(postExcerptProvider((localeCode: localeCode, path: bodyPath)));
     return InkWell(
       onTap: () => context.go('/blog/$id'),
@@ -246,7 +249,7 @@ class _PostPreviewCard extends ConsumerWidget {
             children: [
               Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
               const SizedBox(height: 6),
-              Text(date.toIso8601String().split('T').first, style: Theme.of(context).textTheme.bodySmall),
+              Text(formatter.format(date), style: Theme.of(context).textTheme.bodySmall),
               const SizedBox(height: 8),
               excerptAsync.when(
                 data: (ex) => Text(ex, maxLines: 3, overflow: TextOverflow.ellipsis),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/state/posts_state.dart';
+import 'package:intl/intl.dart';
 
 class BlogPage extends ConsumerWidget {
   const BlogPage({super.key});
@@ -104,6 +105,8 @@ class _PostCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final formatter = DateFormat.yMMMd(l10n.localeName);
     final excerptAsync = ref.watch(postExcerptProvider((localeCode: localeCode, path: bodyPath)));
     return InkWell(
       onTap: () => context.go('/blog/$id'),
@@ -119,7 +122,7 @@ class _PostCard extends ConsumerWidget {
             children: [
               Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
               const SizedBox(height: 6),
-              Text(date.toIso8601String().split('T').first, style: Theme.of(context).textTheme.bodySmall),
+              Text(formatter.format(date), style: Theme.of(context).textTheme.bodySmall),
               const SizedBox(height: 10),
               Expanded(
                 child: excerptAsync.when(

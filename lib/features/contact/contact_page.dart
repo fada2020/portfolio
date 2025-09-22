@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/state/profile_state.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,6 +13,7 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
+  static const _contactEmail = 'hyeogjui4@gmail.com';
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -31,6 +33,7 @@ class _ContactPageState extends State<ContactPage> {
 
   Future<void> _submitForm() async {
     if (!_formKey.currentState!.validate()) return;
+    final l10n = AppLocalizations.of(context)!;
 
     setState(() {
       _isSubmitting = true;
@@ -49,7 +52,7 @@ ${_messageController.text}
 
       final mailtoUrl = Uri(
         scheme: 'mailto',
-        path: 'hyeogjui4@gmail.com',
+        path: _contactEmail,
         queryParameters: {
           'subject': _subjectController.text,
           'body': emailBody,
@@ -66,16 +69,17 @@ ${_messageController.text}
           _messageController.clear();
         });
       } else {
-        throw Exception('Could not launch email client');
+        throw Exception('mailto unavailable');
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to open email client: $e'),
+            content: Text(l10n.contactMailFallbackError),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
+        await _showManualEmailDialog(l10n);
       }
     } finally {
       if (mounted) {
@@ -84,6 +88,53 @@ ${_messageController.text}
         });
       }
     }
+  }
+
+  Future<void> _showManualEmailDialog(AppLocalizations l10n) async {
+    if (!mounted) return;
+    await showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(l10n.contactMailFallbackTitle),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l10n.contactMailFallbackDescription(_contactEmail)),
+              const SizedBox(height: 12),
+              SelectableText(
+                _contactEmail,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                await _copyEmailToClipboard(l10n);
+                if (Navigator.of(context).canPop()) {
+                  Navigator.of(context).pop();
+                }
+              },
+              child: Text(l10n.contactCopyEmail),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(MaterialLocalizations.of(context).closeButtonLabel),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _copyEmailToClipboard(AppLocalizations l10n) async {
+    await Clipboard.setData(const ClipboardData(text: _contactEmail));
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(l10n.contactCopiedEmail)),
+    );
   }
 
   @override

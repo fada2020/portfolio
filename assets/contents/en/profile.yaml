@@ -1,17 +1,17 @@
 name: HYEOK JU LEE
-title: Backend Engineer
+title: Full-stack Engineer
 location: Seoul, KR
 summary:
   - Streamlined CI/CD to reduce release lead time.
   - Implemented i18n (KO/EN) with a language switcher.
   - Built an OpenAPI-based API showcase with cURL generation.
 links:
-  email: hyeogjui4@gmail.com
+  email: leehyeokju1@gmail.com
   github: https://github.com/fada2020
   linkedin: https://www.linkedin.com/in/hyeokju-lee-48750b193/
-  resume_url: resume-en.pdf
+  resume_url: resume.pdf
 skills:
   primary: [Dart, Flutter, Riverpod]
   secondary: [go_router, OpenAPI, YAML, Markdown]
   exposure: [GitHub Actions, GitHub Pages, SEO]
-  learning: [TypeScript]
+  learning: [JavaScript]

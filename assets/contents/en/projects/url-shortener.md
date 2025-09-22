@@ -4,7 +4,7 @@
 A production-ready URL shortening service built with modern web technologies, handling 10k+ redirects daily with sub-100ms response times. Features include analytics tracking, rate limiting, and comprehensive error handling.
 
 ## Technical Stack
-- **Frontend**: Next.js 14 with App Router, TypeScript, Tailwind CSS
+- **Frontend**: Next.js 14 with App Router, JavaScript, Tailwind CSS
 - **Backend**: Next.js API Routes with edge runtime optimization
 - **Database**: PostgreSQL with Prisma ORM (production), SQLite for development
 - **Caching**: Redis for hot URLs and rate limiting

@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'Backend Portfolio'**
+  /// **'Full-stack Portfolio'**
   String get appTitle;
 
   /// No description provided for @navHome.
@@ -259,6 +259,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No projects match filters.'**
   String get projectsNoMatch;
+
+  /// No description provided for @projectNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Project not found'**
+  String get projectNotFound;
+
+  /// No description provided for @projectKeyMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Metrics'**
+  String get projectKeyMetrics;
+
+  /// No description provided for @projectRepository.
+  ///
+  /// In en, this message translates to:
+  /// **'Repository'**
+  String get projectRepository;
+
+  /// No description provided for @projectDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo'**
+  String get projectDemo;
+
+  /// No description provided for @projectCaseStudy.
+  ///
+  /// In en, this message translates to:
+  /// **'Case Study'**
+  String get projectCaseStudy;
+
+  /// No description provided for @projectNoDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'No detail available.'**
+  String get projectNoDetail;
+
+  /// No description provided for @projectLoadBodyError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load detail: {error}'**
+  String projectLoadBodyError(Object error);
+
+  /// No description provided for @projectLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load project: {error}'**
+  String projectLoadError(Object error);
 
   /// No description provided for @blogSearchTitle.
   ///
@@ -625,6 +673,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'I typically respond within 24 hours during business days.'**
   String get contactResponseTime;
+
+  /// No description provided for @contactMailFallbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Email client unavailable'**
+  String get contactMailFallbackTitle;
+
+  /// No description provided for @contactMailFallbackDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the email address below and send manually to {email}.'**
+  String contactMailFallbackDescription(Object email);
+
+  /// No description provided for @contactCopyEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy email address'**
+  String get contactCopyEmail;
+
+  /// No description provided for @contactCopiedEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied email address'**
+  String get contactCopiedEmail;
+
+  /// No description provided for @contactMailFallbackError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open your email client. Try copying the address instead.'**
+  String get contactMailFallbackError;
 
   /// No description provided for @navSearch.
   ///

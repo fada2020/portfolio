@@ -21,26 +21,24 @@ class Resume {
 
   factory Resume.fromMap(Map<String, dynamic> map) {
     return Resume(
-      personal: PersonalInfo.fromMap(map['personal'] ?? {}),
-      experience: (map['experience'] as List<dynamic>?)
-          ?.map((e) => Experience.fromMap(e as Map<String, dynamic>))
-          .toList() ?? [],
-      education: (map['education'] as List<dynamic>?)
-          ?.map((e) => Education.fromMap(e as Map<String, dynamic>))
-          .toList() ?? [],
-      skills: Skills.fromMap(map['skills'] ?? {}),
-      certifications: (map['certifications'] as List<dynamic>?)
-          ?.map((e) => Certification.fromMap(e as Map<String, dynamic>))
-          .toList() ?? [],
-      projectsHighlight: (map['projects_highlight'] as List<dynamic>?)
-          ?.map((e) => ProjectHighlight.fromMap(e as Map<String, dynamic>))
-          .toList() ?? [],
-      languages: (map['languages'] as List<dynamic>?)
-          ?.map((e) => Language.fromMap(e as Map<String, dynamic>))
-          .toList() ?? [],
-      interests: (map['interests'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList() ?? [],
+      personal: PersonalInfo.fromMap(_asMap(map['personal'])),
+      experience: _asMapList(map['experience'])
+          .map(Experience.fromMap)
+          .toList(),
+      education: _asMapList(map['education'])
+          .map(Education.fromMap)
+          .toList(),
+      skills: Skills.fromMap(_asMap(map['skills'])),
+      certifications: _asMapList(map['certifications'])
+          .map(Certification.fromMap)
+          .toList(),
+      projectsHighlight: _asMapList(map['projects_highlight'])
+          .map(ProjectHighlight.fromMap)
+          .toList(),
+      languages: _asMapList(map['languages'])
+          .map(Language.fromMap)
+          .toList(),
+      interests: _asStringList(map['interests']),
     );
   }
 }
@@ -66,13 +64,13 @@ class PersonalInfo {
 
   factory PersonalInfo.fromMap(Map<String, dynamic> map) {
     return PersonalInfo(
-      name: map['name'] ?? '',
-      title: map['title'] ?? '',
-      location: map['location'] ?? '',
-      email: map['email'] ?? '',
-      github: map['github'] ?? '',
-      linkedin: map['linkedin'] ?? '',
-      summary: map['summary'] ?? '',
+      name: _asString(map['name']),
+      title: _asString(map['title']),
+      location: _asString(map['location']),
+      email: _asString(map['email']),
+      github: _asString(map['github']),
+      linkedin: _asString(map['linkedin']),
+      summary: _asString(map['summary']),
     );
   }
 }
@@ -98,17 +96,13 @@ class Experience {
 
   factory Experience.fromMap(Map<String, dynamic> map) {
     return Experience(
-      company: map['company'] ?? '',
-      position: map['position'] ?? '',
-      period: map['period'] ?? '',
-      location: map['location'] ?? '',
-      description: map['description'] ?? '',
-      achievements: (map['achievements'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList() ?? [],
-      technologies: (map['technologies'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList() ?? [],
+      company: _asString(map['company']),
+      position: _asString(map['position']),
+      period: _asString(map['period']),
+      location: _asString(map['location']),
+      description: _asString(map['description']),
+      achievements: _asStringList(map['achievements']),
+      technologies: _asStringList(map['technologies']),
     );
   }
 }
@@ -130,13 +124,11 @@ class Education {
 
   factory Education.fromMap(Map<String, dynamic> map) {
     return Education(
-      degree: map['degree'] ?? '',
-      school: map['school'] ?? '',
-      period: map['period'] ?? '',
-      location: map['location'] ?? '',
-      achievements: (map['achievements'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList() ?? [],
+      degree: _asString(map['degree']),
+      school: _asString(map['school']),
+      period: _asString(map['period']),
+      location: _asString(map['location']),
+      achievements: _asStringList(map['achievements']),
     );
   }
 }
@@ -190,12 +182,31 @@ class Certification {
 
   factory Certification.fromMap(Map<String, dynamic> map) {
     return Certification(
-      name: map['name'] ?? '',
-      issuer: map['issuer'] ?? '',
-      date: map['date'] ?? '',
-      credentialId: map['credential_id'] ?? '',
+      name: _asString(map['name']),
+      issuer: _asString(map['issuer']),
+      date: _asString(map['date']),
+      credentialId: _asString(map['credential_id']),
     );
   }
+}
+
+String _asString(dynamic value) => value?.toString() ?? '';
+
+List<String> _asStringList(dynamic data) {
+  if (data is! List) return const [];
+  return data.map((e) => e.toString()).toList();
+}
+
+Map<String, dynamic> _asMap(dynamic value) {
+  if (value is Map) {
+    return value.map((key, v) => MapEntry(key.toString(), v));
+  }
+  return <String, dynamic>{};
+}
+
+List<Map<String, dynamic>> _asMapList(dynamic value) {
+  if (value is! List) return <Map<String, dynamic>>[];
+  return value.map(_asMap).toList();
 }
 
 class ProjectHighlight {
@@ -213,12 +224,10 @@ class ProjectHighlight {
 
   factory ProjectHighlight.fromMap(Map<String, dynamic> map) {
     return ProjectHighlight(
-      title: map['title'] ?? '',
-      description: map['description'] ?? '',
-      impact: map['impact'] ?? '',
-      technologies: (map['technologies'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList() ?? [],
+      title: _asString(map['title']),
+      description: _asString(map['description']),
+      impact: _asString(map['impact']),
+      technologies: _asStringList(map['technologies']),
     );
   }
 }
@@ -234,8 +243,8 @@ class Language {
 
   factory Language.fromMap(Map<String, dynamic> map) {
     return Language(
-      language: map['language'] ?? '',
-      level: map['level'] ?? '',
+      language: _asString(map['language']),
+      level: _asString(map['level']),
     );
   }
 }

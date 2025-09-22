@@ -1,6 +1,6 @@
 # Overview
 
-- Built a personal portfolio with Next.js (App Router) and TypeScript.
+- Built a personal portfolio with Next.js (App Router) and JavaScript.
 - Deployed on Vercel with ISR for fast, cache-friendly pages.
 
 ## Architecture

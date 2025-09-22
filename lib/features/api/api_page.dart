@@ -44,23 +44,7 @@ class ApiPage extends ConsumerWidget {
                       ),
                       const SizedBox(width: 12),
                       // Base URL override input (optional)
-                      SizedBox(
-                        width: 320,
-                        child: Consumer(builder: (context, ref, _) {
-                          final hint = ref.watch(openApiBaseUrlProvider).maybeWhen(orElse: () => null, data: (v) => v);
-                          final override = ref.watch(apiBaseUrlOverrideProvider) ?? '';
-                          return TextField(
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.link),
-                              labelText: l10n.apiBaseUrl,
-                              hintText: hint ?? l10n.apiBaseUrlOverrideHint,
-                            ),
-                            controller: TextEditingController(text: override)
-                              ..selection = TextSelection.fromPosition(TextPosition(offset: override.length)),
-                            onChanged: (v) => ref.read(apiBaseUrlOverrideProvider.notifier).state = v.isEmpty ? null : v,
-                          );
-                        }),
-                      ),
+                      const BaseUrlField(width: 320),
                       const SizedBox(width: 12),
                       DropdownButton<String?>(
                         value: selectedTag,
@@ -128,6 +112,61 @@ class ApiPage extends ConsumerWidget {
       },
       error: (e, st) => Center(child: Text('${l10n.errFailedToLoad}: $e')),
       loading: () => const Center(child: CircularProgressIndicator()),
+    );
+  }
+}
+
+class BaseUrlField extends ConsumerStatefulWidget {
+  const BaseUrlField({required this.width});
+  final double width;
+
+  @override
+  ConsumerState<BaseUrlField> createState() => _BaseUrlFieldState();
+}
+
+class _BaseUrlFieldState extends ConsumerState<BaseUrlField> {
+  late final TextEditingController _controller;
+  late final ProviderSubscription<String?> _overrideSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    final initialValue = ref.read(apiBaseUrlOverrideProvider) ?? '';
+    _controller = TextEditingController(text: initialValue);
+    _overrideSubscription = ref.listenManual<String?>(apiBaseUrlOverrideProvider, (previous, next) {
+      final value = next ?? '';
+      if (value != _controller.text) {
+        _controller.value = TextEditingValue(
+          text: value,
+          selection: TextSelection.collapsed(offset: value.length),
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _overrideSubscription.close();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final hint = ref.watch(openApiBaseUrlProvider).maybeWhen(orElse: () => null, data: (v) => v);
+    return SizedBox(
+      width: widget.width,
+      child: TextField(
+        key: const Key('api_base_url_field'),
+        controller: _controller,
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.link),
+          labelText: l10n.apiBaseUrl,
+          hintText: hint ?? l10n.apiBaseUrlOverrideHint,
+        ),
+        onChanged: (value) => ref.read(apiBaseUrlOverrideProvider.notifier).state = value.isEmpty ? null : value,
+      ),
     );
   }
 }

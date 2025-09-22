@@ -74,6 +74,18 @@
 - [ ] README에 실행/빌드/배포/구조 설명 보강(스크린샷 포함)
 - [ ] CONTRIBUTING(옵션), 코드 스타일/브랜치 전략 요약
 
+## 12. 신규 개선 태스크
+- [x] (1) 모바일 Drawer 버튼에서 `Scaffold.of(context)` 호출로 발생하는 예외 해결
+- [x] (2) Resume PDF 링크 유효화(파일 추가 또는 외부 URL 교체 및 자산 등록)
+- [x] (3) 프로젝트 상세/공유 UI의 하드코딩 영어 문자열 i18n 적용
+- [x] (4) `web/index.html` 메타/OG/JSON-LD 등 SEO 메타데이터 확장
+- [x] (5) README 콘텐츠 보강(개요, 실행 방법, 배포, 스크린샷 등)
+- [x] (6) API 페이지 Base URL 입력 필드를 Stateful 구조로 분리해 controller 재사용
+- [x] (7) 날짜 표기를 `intl` 기반 로케일 포맷으로 교체(Home/Blog 등)
+- [x] (8) Contact 페이지에 mailto 실패 대비 대안 액션 추가
+- [x] (9) 홈/API/검색 등 핵심 플로우 위젯 테스트 보강
+- [x] (10) Resume/콘텐츠 수치 검증 및 현실화(필요 시 데이터 조정)
+
 ## 실행/개발 명령 예시
 - 개발: `flutter run -d chrome`
 - 테스트: `flutter test` (커버리지: `flutter test --coverage`)

@@ -13,13 +13,12 @@ class AppShell extends ConsumerStatefulWidget {
 }
 
 class _AppShellState extends ConsumerState<AppShell> {
-  final FocusNode _skipFocus = FocusNode(debugLabel: 'SkipToContent');
   final FocusNode _contentFocus = FocusNode(debugLabel: 'MainContent');
   final FocusNode _menuButtonFocus = FocusNode(debugLabel: 'MenuButton');
+  final GlobalKey _contentKey = GlobalKey(debugLabel: 'MainContentKey');
 
   @override
   void dispose() {
-    _skipFocus.dispose();
     _contentFocus.dispose();
     _menuButtonFocus.dispose();
     super.dispose();
@@ -44,11 +43,13 @@ class _AppShellState extends ConsumerState<AppShell> {
         appBar: AppBar(
           title: Text(l10n.appTitle),
           leading: isNarrow
-              ? IconButton(
-                  focusNode: _menuButtonFocus,
-                  icon: const Icon(Icons.menu),
-                  onPressed: () => Scaffold.of(context).openDrawer(),
-                  tooltip: l10n.commonMenu,
+              ? Builder(
+                  builder: (buttonContext) => IconButton(
+                    focusNode: _menuButtonFocus,
+                    icon: const Icon(Icons.menu),
+                    onPressed: () => Scaffold.of(buttonContext).openDrawer(),
+                    tooltip: l10n.commonMenu,
+                  ),
                 )
               : null,
           actions: isNarrow
@@ -173,32 +174,13 @@ class _AppShellState extends ConsumerState<AppShell> {
                 ),
               )
             : null,
-        body: Column(
-          children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, top: 4),
-                child: Focus(
-                  focusNode: _skipFocus,
-                  child: TextButton(
-                    style: TextButton.styleFrom(visualDensity: VisualDensity.compact),
-                    onPressed: () => _contentFocus.requestFocus(),
-                    child: Text(l10n.skipToContent),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Focus(
-                focusNode: _contentFocus,
-                child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                child: widget.child ?? const SizedBox.shrink(),
-              ),
-              ),
-            ),
-          ],
+        body: Focus(
+          focusNode: _contentFocus,
+          child: AnimatedSwitcher(
+            key: _contentKey,
+            duration: const Duration(milliseconds: 200),
+            child: widget.child ?? const SizedBox.shrink(),
+          ),
         ),
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,

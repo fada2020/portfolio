@@ -1,6 +1,6 @@
 # 개요
 
-- Next.js(App Router)와 TypeScript로 개인 포트폴리오 구현.
+- Next.js(App Router)와 JavaScript로 개인 포트폴리오 구현.
 - Vercel에 ISR로 배포하여 빠른 응답성과 캐시 효율 확보.
 
 ## 아키텍처

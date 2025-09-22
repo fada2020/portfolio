@@ -1,5 +1,5 @@
 name: portfolio
-description: Backend developer portfolio (Flutter Web) with Riverpod, i18n, and GitHub Pages deploy.
+description: Full-stack engineer portfolio (Flutter Web) with Riverpod, i18n, and GitHub Pages deploy.
 publish_to: "none"
 
 environment:

@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Backend Portfolio';
+  String get appTitle => 'Full-stack Portfolio';
 
   @override
   String get navHome => 'Home';
@@ -88,6 +88,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get projectsNoMatch => 'No projects match filters.';
+
+  @override
+  String get projectNotFound => 'Project not found';
+
+  @override
+  String get projectKeyMetrics => 'Key Metrics';
+
+  @override
+  String get projectRepository => 'Repository';
+
+  @override
+  String get projectDemo => 'Demo';
+
+  @override
+  String get projectCaseStudy => 'Case Study';
+
+  @override
+  String get projectNoDetail => 'No detail available.';
+
+  @override
+  String projectLoadBodyError(Object error) {
+    return 'Failed to load detail: $error';
+  }
+
+  @override
+  String projectLoadError(Object error) {
+    return 'Failed to load project: $error';
+  }
 
   @override
   String get blogSearchTitle => 'Search title';
@@ -277,6 +305,24 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get contactResponseTime =>
       'I typically respond within 24 hours during business days.';
+
+  @override
+  String get contactMailFallbackTitle => 'Email client unavailable';
+
+  @override
+  String contactMailFallbackDescription(Object email) {
+    return 'Copy the email address below and send manually to $email.';
+  }
+
+  @override
+  String get contactCopyEmail => 'Copy email address';
+
+  @override
+  String get contactCopiedEmail => 'Copied email address';
+
+  @override
+  String get contactMailFallbackError =>
+      'Could not open your email client. Try copying the address instead.';
 
   @override
   String get navSearch => 'Search';

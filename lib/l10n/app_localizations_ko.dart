@@ -90,6 +90,34 @@ class AppLocalizationsKo extends AppLocalizations {
   String get projectsNoMatch => '조건에 맞는 프로젝트가 없습니다.';
 
   @override
+  String get projectNotFound => '프로젝트를 찾을 수 없습니다';
+
+  @override
+  String get projectKeyMetrics => '핵심 지표';
+
+  @override
+  String get projectRepository => '저장소';
+
+  @override
+  String get projectDemo => '데모';
+
+  @override
+  String get projectCaseStudy => '프로젝트 상세';
+
+  @override
+  String get projectNoDetail => '상세 내용이 없습니다.';
+
+  @override
+  String projectLoadBodyError(Object error) {
+    return '상세를 불러오지 못했습니다: $error';
+  }
+
+  @override
+  String projectLoadError(Object error) {
+    return '프로젝트를 불러오지 못했습니다: $error';
+  }
+
+  @override
   String get blogSearchTitle => '제목 검색';
 
   @override
@@ -272,6 +300,23 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get contactResponseTime => '평일 기준 24시간 이내에 답변드립니다.';
+
+  @override
+  String get contactMailFallbackTitle => '이메일 앱을 열 수 없습니다';
+
+  @override
+  String contactMailFallbackDescription(Object email) {
+    return '아래 주소를 복사해 직접 메일을 보내주세요: $email';
+  }
+
+  @override
+  String get contactCopyEmail => '이메일 주소 복사';
+
+  @override
+  String get contactCopiedEmail => '이메일 주소를 복사했습니다';
+
+  @override
+  String get contactMailFallbackError => '이메일 앱을 열 수 없습니다. 주소를 복사해 수동으로 보내주세요.';
 
   @override
   String get navSearch => '검색';

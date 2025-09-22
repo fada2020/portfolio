@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/state/projects_state.dart';
 import 'package:portfolio/utils/syntax_highlighter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,10 +13,11 @@ class ProjectDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localeCode = Localizations.localeOf(context).languageCode;
+    final l10n = AppLocalizations.of(context)!;
     final async = ref.watch(projectByIdProvider((localeCode: localeCode, id: id)));
     return async.when(
       data: (p) {
-        if (p == null) return const Center(child: Text('Project not found'));
+        if (p == null) return Center(child: Text(l10n.projectNotFound));
         final bodyAsync = ref.watch(projectBodyProvider((localeCode: localeCode, path: p.body)));
         return Padding(
           padding: const EdgeInsets.all(16),
@@ -33,7 +35,7 @@ class ProjectDetailPage extends ConsumerWidget {
               Text(p.summary),
               const SizedBox(height: 16),
               if ((p.metrics ?? {}).isNotEmpty) ...[
-                Text('Key Metrics', style: Theme.of(context).textTheme.titleMedium),
+                Text(l10n.projectKeyMetrics, style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 8),
                 Wrap(
                   spacing: 8,
@@ -49,23 +51,23 @@ class ProjectDetailPage extends ConsumerWidget {
                 if (p.repo != null)
                   OutlinedButton.icon(
                     icon: const Icon(Icons.code),
-                    label: const Text('Repository'),
+                    label: Text(l10n.projectRepository),
                     onPressed: () => launchUrl(p.repo!),
                   ),
                 if (p.demo != null)
                   OutlinedButton.icon(
                     icon: const Icon(Icons.open_in_new),
-                    label: const Text('Demo'),
+                    label: Text(l10n.projectDemo),
                     onPressed: () => launchUrl(p.demo!),
                   ),
               ]),
               const SizedBox(height: 24),
               if (p.body != null) ...[
-                Text('Case Study', style: Theme.of(context).textTheme.titleMedium),
+                Text(l10n.projectCaseStudy, style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 8),
                 bodyAsync.when(
                   data: (md) => md == null
-                      ? const Text('No detail available.')
+                      ? Text(l10n.projectNoDetail)
                       : Markdown(
                           data: md,
                           shrinkWrap: true,
@@ -75,7 +77,7 @@ class ProjectDetailPage extends ConsumerWidget {
                           },
                           syntaxHighlighter: AppSyntaxHighlighter(Theme.of(context).textTheme),
                         ),
-                  error: (e, st) => Text('Failed to load body: $e'),
+                  error: (e, st) => Text(l10n.projectLoadBodyError(e.toString())),
                   loading: () => const LinearProgressIndicator(),
                 ),
               ],
@@ -83,7 +85,7 @@ class ProjectDetailPage extends ConsumerWidget {
           ),
         );
       },
-      error: (e, st) => Center(child: Text('Failed to load: $e')),
+      error: (e, st) => Center(child: Text(l10n.projectLoadError(e.toString()))),
       loading: () => const Center(child: CircularProgressIndicator()),
     );
   }

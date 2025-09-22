@@ -1,7 +1,7 @@
 # URL 단축기 (Next.js)
 
 ## 개요
-- Next.js(App Router) + TypeScript + Prisma + SQLite 기반의 간단한 URL 단축기.
+- Next.js(App Router) + JavaScript + Prisma + SQLite 기반의 간단한 URL 단축기.
 - API Route에서 단축 코드를 발급하고, 동적 라우트 `/:code`에서 원본 URL로 302 리다이렉트.
 - 최근 생성 링크와 클릭 수를 보여주는 대시보드 제공.
 

@@ -1,25 +1,15 @@
-- id: microservices-patterns
-  title: Microservices Design Patterns - Lessons from Production
-  date: 2024-12-15
-  tags: [Backend, Microservices, Architecture, Go]
-  body: posts/microservices-patterns.md
-- id: database-optimization
-  title: Database Performance Optimization - From 30s to 300ms
-  date: 2024-11-28
-  tags: [Database, Performance, PostgreSQL, Optimization]
-  body: posts/database-optimization.md
-- id: cicd-automation
-  title: Building a Robust CI/CD Pipeline - Zero-Downtime Deployments
-  date: 2024-10-15
-  tags: [DevOps, CI/CD, Kubernetes, Automation]
-  body: posts/cicd-automation.md
-- id: riverpod-arch
-  title: Scalable State Management with Riverpod
-  date: 2024-07-10
-  tags: [Flutter, Riverpod, Architecture]
-  body: posts/riverpod-arch.md
-- id: api-hardening
-  title: API Hardening Playbook
-  date: 2024-05-22
-  tags: [Backend, Security]
-  body: posts/api-hardening.md
+- id: spring-migration
+  title: Migrating Hybricks from PHP to Spring Boot
+  date: 2024-09-05
+  tags: [Spring Boot, Migration, AWS, MariaDB]
+  body: posts/spring-migration.md
+- id: quest-platform
+  title: "Shipping Quest: A Shared Learning Platform"
+  date: 2024-07-18
+  tags: [Architecture, Java, Education, APIs]
+  body: posts/quest-platform.md
+- id: flutter-shell
+  title: Unifying Our Mobile Experience with Flutter WebView
+  date: 2024-05-02
+  tags: [Flutter, WebView, DevEx, Mobile]
+  body: posts/flutter-shell.md

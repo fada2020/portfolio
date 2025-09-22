@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/state/search_state.dart';
+import 'package:intl/intl.dart';
 
 class SearchWidget extends ConsumerStatefulWidget {
   const SearchWidget({
@@ -223,6 +224,7 @@ class SearchResults extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final searchResults = ref.watch(searchResultsProvider(localeCode));
     final query = ref.watch(searchQueryProvider);
+    final dateFormatter = DateFormat.yMMMd(l10n.localeName);
 
     if (query.isEmpty) {
       return const SizedBox.shrink();
@@ -339,7 +341,7 @@ class SearchResults extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        post.date.toLocal().toString().split(' ')[0],
+                        dateFormatter.format(post.date),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       const SizedBox(height: 4),
