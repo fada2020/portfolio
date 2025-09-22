@@ -44,8 +44,8 @@ flutter run -d chrome    # local web preview
 - Use `flutter test --coverage` to generate `coverage/lcov.info` for reporting.
 
 ## Deployment
-- GitHub Actions workflow (see `.github/workflows/`) runs `flutter analyze`, `flutter test`, `flutter build web`, and deploys to GitHub Pages.
-- To build locally with your repository slug: `flutter build web --base-href /<REPO_NAME>/`.
+- GitHub Actions workflow (see `.github/workflows/`) runs `flutter analyze`, `flutter test`, `flutter build web --release --pwa-strategy=none`, and deploys to GitHub Pages. *(The previous `flutter build web --release` command remains commented in the workflow for reference.)*
+- To build locally with your repository slug: `flutter build web --release --pwa-strategy=none --base-href /<REPO_NAME>/`.
 - Static assets like `web/resume.pdf` and `web/og-image.png` ship with the build for direct hosting.
 
 ## Next Steps
