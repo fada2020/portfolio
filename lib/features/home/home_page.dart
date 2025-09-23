@@ -233,32 +233,35 @@ class _PostPreviewCard extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final formatter = DateFormat.yMMMd(l10n.localeName);
     final excerptAsync = ref.watch(postExcerptProvider((localeCode: localeCode, path: bodyPath)));
-    return InkWell(
-      onTap: () => context.go('/blog/$id'),
-      child: Card(
-        elevation: 0.5,
-        margin: const EdgeInsets.symmetric(vertical: 8),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-          side: BorderSide(color: Theme.of(context).dividerColor.withValues(alpha: 0.2)),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
-              const SizedBox(height: 6),
-              Text(formatter.format(date), style: Theme.of(context).textTheme.bodySmall),
-              const SizedBox(height: 8),
-              excerptAsync.when(
-                data: (ex) => Text(ex, maxLines: 3, overflow: TextOverflow.ellipsis),
-                error: (e, st) => const Text('...'),
-                loading: () => const Text('...'),
-              ),
-              const SizedBox(height: 8),
-              Wrap(spacing: 6, runSpacing: 6, children: tags.take(4).map((t) => Chip(label: Text(t), visualDensity: VisualDensity.compact)).toList()),
-            ],
+    return SizedBox(
+      width: double.infinity,
+      child: InkWell(
+        onTap: () => context.go('/blog/$id'),
+        child: Card(
+          elevation: 0.5,
+          margin: const EdgeInsets.symmetric(vertical: 8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: BorderSide(color: Theme.of(context).dividerColor.withValues(alpha: 0.2)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+                const SizedBox(height: 6),
+                Text(formatter.format(date), style: Theme.of(context).textTheme.bodySmall),
+                const SizedBox(height: 8),
+                excerptAsync.when(
+                  data: (ex) => Text(ex, maxLines: 3, overflow: TextOverflow.ellipsis),
+                  error: (e, st) => const Text('...'),
+                  loading: () => const Text('...'),
+                ),
+                const SizedBox(height: 8),
+                Wrap(spacing: 6, runSpacing: 6, children: tags.take(4).map((t) => Chip(label: Text(t), visualDensity: VisualDensity.compact)).toList()),
+              ],
+            ),
           ),
         ),
       ),
