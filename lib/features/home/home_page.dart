@@ -66,11 +66,6 @@ class HomePage extends ConsumerWidget {
                               runSpacing: 12,
                               children: [
                                 FilledButton.icon(
-                                  icon: const Icon(Icons.picture_as_pdf),
-                                  label: Text(l10n.commonDownloadResume),
-                                  onPressed: () => launchUrl(Uri.parse('resume.pdf')),
-                                ),
-                                FilledButton.icon(
                                   icon: const Icon(Icons.layers),
                                   label: Text(l10n.navProjects),
                                   onPressed: () => context.go('/projects'),

@@ -174,32 +174,33 @@ class _HeaderSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Wrap(
-                spacing: 12,
-                runSpacing: 8,
-                children: [
-                  _ContactChip(
-                    icon: Icons.email,
-                    label: personal.email,
-                    onTap: () => launchUrl(Uri.parse('mailto:${personal.email}')),
-                  ),
-                  _ContactChip(
-                    icon: Icons.code,
-                    label: 'GitHub',
-                    onTap: () => launchUrl(Uri.parse(personal.github)),
-                  ),
-                  _ContactChip(
-                    icon: Icons.business,
-                    label: 'LinkedIn',
-                    onTap: () => launchUrl(Uri.parse(personal.linkedin)),
-                  ),
-                  _ContactChip(
-                    icon: Icons.picture_as_pdf,
-                    label: l10n.commonDownloadResume,
-                    onTap: () => launchUrl(Uri.parse('resume.pdf')),
-                  ),
-                ],
-              ),
+            Wrap(
+              spacing: 12,
+              runSpacing: 8,
+              children: [
+                _ContactChip(
+                  icon: Icons.email,
+                  label: personal.email,
+                  onTap: () => launchUrl(Uri.parse('mailto:${personal.email}')),
+                ),
+                _ContactChip(
+                  icon: Icons.code,
+                  label: 'GitHub',
+                  onTap: () => launchUrl(Uri.parse(personal.github)),
+                ),
+                _ContactChip(
+                  icon: Icons.business,
+                  label: 'LinkedIn',
+                  onTap: () => launchUrl(Uri.parse(personal.linkedin)),
+                ),
+                // Download button intentionally removed to protect personal data.
+                // _ContactChip(
+                //   icon: Icons.picture_as_pdf,
+                //   label: l10n.commonDownloadResume,
+                //   onTap: () => launchUrl(Uri.parse('resume.pdf')),
+                // ),
+              ],
+            ),
             ],
           ),
         ),
