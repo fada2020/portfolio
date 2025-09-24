@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/router.dart';
 import 'package:portfolio/state/locale_state.dart';
+import 'package:portfolio/theme/app_theme.dart';
 
 void main() {
   runApp(const ProviderScope(child: PortfolioApp()));
@@ -35,16 +36,8 @@ class PortfolioApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [Locale('en'), Locale('ko')],
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.indigo,
-        brightness: Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.indigo,
-        brightness: Brightness.dark,
-      ),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
     );
   }
 }

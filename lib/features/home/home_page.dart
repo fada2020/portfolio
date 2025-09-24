@@ -7,7 +7,6 @@ import 'package:portfolio/state/profile_state.dart';
 import 'package:portfolio/state/projects_state.dart';
 import 'package:portfolio/utils/period.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
