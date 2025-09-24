@@ -12,7 +12,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:portfolio/utils/animations.dart';
 
 class _SkillHighlightData {
-  const _SkillHighlightData({required this.icon, required this.title, required this.subtitle});
+  const _SkillHighlightData(
+      {required this.icon, required this.title, required this.subtitle});
 
   final IconData icon;
   final String title;
@@ -54,14 +55,18 @@ class HomePage extends ConsumerWidget {
         final isWide = constraints.maxWidth >= 1024;
         final body = <Widget>[
           profileAsync.when(
-            data: (profile) => _HeroSection(profile: profile, isWide: isWide, l10n: l10n)
-                .fadeScale(duration: const Duration(milliseconds: 520)),
-            error: (e, st) => const _ErrorBox(message: 'Failed to load profile'),
+            data: (profile) =>
+                _HeroSection(profile: profile, isWide: isWide, l10n: l10n)
+                    .fadeScale(duration: const Duration(milliseconds: 520)),
+            error: (e, st) =>
+                const _ErrorBox(message: 'Failed to load profile'),
             loading: () => const _Shimmer(height: 220),
           ),
           const SizedBox(height: 32),
-          const _SkillHighlights()
-              .fadeSlide(duration: const Duration(milliseconds: 460), beginOffset: const Offset(0, 0.08), delay: const Duration(milliseconds: 120)),
+          const _SkillHighlights().fadeSlide(
+              duration: const Duration(milliseconds: 460),
+              beginOffset: const Offset(0, 0.08),
+              delay: const Duration(milliseconds: 120)),
           const SizedBox(height: 36),
           _SectionHeader(
             title: l10n.homeFeaturedProjects,
@@ -73,12 +78,17 @@ class HomePage extends ConsumerWidget {
           const SizedBox(height: 16),
           projectsAsync.when(
             data: (items) {
-              final sorted = [...items]..sort((a, b) => periodStartKey(b.period).compareTo(periodStartKey(a.period)));
+              final sorted = [...items]..sort((a, b) =>
+                  periodStartKey(b.period).compareTo(periodStartKey(a.period)));
               final featured = sorted.take(3).toList();
               if (featured.isEmpty) {
                 return _EmptyState(message: l10n.homeNoProjects);
               }
-              final crossAxisCount = isWide ? 3 : constraints.maxWidth >= 768 ? 2 : 1;
+              final crossAxisCount = isWide
+                  ? 3
+                  : constraints.maxWidth >= 768
+                      ? 2
+                      : 1;
               final grid = GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -95,7 +105,9 @@ class HomePage extends ConsumerWidget {
                     id: project.id,
                     title: project.title,
                     summary: project.summary,
-                    tags: project.domains.isNotEmpty ? project.domains : project.stack,
+                    tags: project.domains.isNotEmpty
+                        ? project.domains
+                        : project.stack,
                   ).fadeSlide(
                     delay: Duration(milliseconds: 120 * index),
                     duration: const Duration(milliseconds: 420),
@@ -123,7 +135,8 @@ class HomePage extends ConsumerWidget {
           const SizedBox(height: 16),
           postsAsync.when(
             data: (items) {
-              final sorted = [...items]..sort((a, b) => b.date.compareTo(a.date));
+              final sorted = [...items]
+                ..sort((a, b) => b.date.compareTo(a.date));
               final recent = sorted.take(3).toList();
               if (recent.isEmpty) {
                 return _EmptyState(message: l10n.homeNoPosts);
@@ -156,7 +169,8 @@ class HomePage extends ConsumerWidget {
         ];
 
         return ListView(
-          padding: EdgeInsets.symmetric(horizontal: isWide ? 48 : 20, vertical: 32),
+          padding:
+              EdgeInsets.symmetric(horizontal: isWide ? 48 : 20, vertical: 32),
           children: body,
         );
       },
@@ -165,7 +179,8 @@ class HomePage extends ConsumerWidget {
 }
 
 class _HeroSection extends StatelessWidget {
-  const _HeroSection({required this.profile, required this.isWide, required this.l10n});
+  const _HeroSection(
+      {required this.profile, required this.isWide, required this.l10n});
 
   final Profile profile;
   final bool isWide;
@@ -185,9 +200,11 @@ class _HeroSection extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.25)),
+        border: Border.all(
+            color: theme.colorScheme.outline.withValues(alpha: 0.25)),
       ),
-      padding: EdgeInsets.symmetric(horizontal: isWide ? 48 : 24, vertical: isWide ? 40 : 32),
+      padding: EdgeInsets.symmetric(
+          horizontal: isWide ? 48 : 24, vertical: isWide ? 40 : 32),
       child: LayoutBuilder(
         builder: (context, box) {
           final showAside = box.maxWidth >= 720;
@@ -201,18 +218,23 @@ class _HeroSection extends StatelessWidget {
                   children: [
                     Text(
                       profile.name,
-                      style: theme.textTheme.displaySmall?.copyWith(fontWeight: FontWeight.w700),
+                      style: theme.textTheme.displaySmall
+                          ?.copyWith(fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(height: 12),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 8),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primary.withValues(alpha: 0.12),
+                        color:
+                            theme.colorScheme.primary.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Text(
                         '${profile.title} · ${profile.location}',
-                        style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w600),
+                        style: theme.textTheme.labelLarge?.copyWith(
+                            color: theme.colorScheme.primary,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -266,14 +288,19 @@ class _HeroSection extends StatelessWidget {
                           radius: 1.1,
                           center: const Alignment(-0.3, -0.5),
                         ),
-                        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.18)),
+                        border: Border.all(
+                            color: theme.colorScheme.outline
+                                .withValues(alpha: 0.18)),
                       ),
                       child: Stack(
                         children: [
                           Positioned(
                             top: 24,
                             right: 24,
-                            child: Icon(Icons.code_rounded, size: 44, color: theme.colorScheme.primary.withValues(alpha: 0.4)),
+                            child: Icon(Icons.code_rounded,
+                                size: 44,
+                                color: theme.colorScheme.primary
+                                    .withValues(alpha: 0.4)),
                           ),
                           Positioned(
                             bottom: 20,
@@ -283,7 +310,8 @@ class _HeroSection extends StatelessWidget {
                               children: const [
                                 _HeroBadge(label: 'Full-stack Engineer'),
                                 SizedBox(height: 12),
-                                _HeroBadge(label: 'Spring Boot · Flutter · AWS'),
+                                _HeroBadge(
+                                    label: 'Spring Boot · Flutter · AWS'),
                               ],
                             ),
                           ),
@@ -314,7 +342,8 @@ class _HeroBullet extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
+        border:
+            Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -323,7 +352,9 @@ class _HeroBullet extends StatelessWidget {
           const SizedBox(width: 8),
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 360),
-            child: Text(text, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
+            child: Text(text,
+                style: theme.textTheme.bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.w500)),
           ),
         ],
       ),
@@ -347,7 +378,8 @@ class _HeroBadge extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         child: Text(
           label,
-          style: theme.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+          style:
+              theme.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
         ),
       ),
     );
@@ -363,7 +395,11 @@ class _SkillHighlights extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isWide = constraints.maxWidth >= 900;
-        final crossAxis = isWide ? 3 : constraints.maxWidth >= 600 ? 2 : 1;
+        final crossAxis = isWide
+            ? 3
+            : constraints.maxWidth >= 600
+                ? 2
+                : 1;
         return GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -380,7 +416,8 @@ class _SkillHighlights extends StatelessWidget {
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
+                border: Border.all(
+                    color: theme.colorScheme.outline.withValues(alpha: 0.2)),
                 boxShadow: [
                   BoxShadow(
                     color: theme.colorScheme.shadow.withValues(alpha: 0.04),
@@ -390,18 +427,25 @@ class _SkillHighlights extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Icon(item.icon, color: theme.colorScheme.primary),
                     const SizedBox(height: 12),
-                    Text(item.title, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+                    Text(item.title,
+                        style: theme.textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w600)),
                     const SizedBox(height: 6),
                     Text(
                       item.subtitle,
-                      style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                          height: 1.4),
                     ),
                   ],
                 ),
@@ -426,7 +470,9 @@ class _SectionHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700)),
+        Text(title,
+            style: theme.textTheme.headlineSmall
+                ?.copyWith(fontWeight: FontWeight.w700)),
         action,
       ],
     );
@@ -447,12 +493,14 @@ class _EmptyState extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: theme.colorScheme.surface,
-        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.18)),
+        border: Border.all(
+            color: theme.colorScheme.outline.withValues(alpha: 0.18)),
       ),
       child: Center(
         child: Text(
           message,
-          style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          style: theme.textTheme.bodyLarge
+              ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
         ),
       ),
     );
@@ -460,7 +508,11 @@ class _EmptyState extends StatelessWidget {
 }
 
 class _ProjectCard extends StatelessWidget {
-  const _ProjectCard({required this.id, required this.title, required this.summary, required this.tags});
+  const _ProjectCard(
+      {required this.id,
+      required this.title,
+      required this.summary,
+      required this.tags});
   final String id;
   final String title;
   final String summary;
@@ -484,7 +536,8 @@ class _ProjectCard extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.18)),
+          border: Border.all(
+              color: theme.colorScheme.outline.withValues(alpha: 0.18)),
           boxShadow: [
             BoxShadow(
               color: theme.colorScheme.shadow.withValues(alpha: 0.06),
@@ -499,12 +552,14 @@ class _ProjectCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.auto_awesome_outlined, color: theme.colorScheme.primary, size: 20),
+                Icon(Icons.auto_awesome_outlined,
+                    color: theme.colorScheme.primary, size: 20),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     title,
-                    style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                    style: theme.textTheme.titleMedium
+                        ?.copyWith(fontWeight: FontWeight.w700),
                   ),
                 ),
               ],
@@ -524,7 +579,8 @@ class _ProjectCard extends StatelessWidget {
                 return Chip(
                   label: Text(tag),
                   visualDensity: VisualDensity.compact,
-                  backgroundColor: theme.colorScheme.surface.withValues(alpha: 0.7),
+                  backgroundColor:
+                      theme.colorScheme.surface.withValues(alpha: 0.7),
                 );
               }).toList(),
             ),
@@ -555,7 +611,8 @@ class _PostPreviewCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final formatter = DateFormat.yMMMd(l10n.localeName);
-    final excerptAsync = ref.watch(postExcerptProvider((localeCode: localeCode, path: bodyPath)));
+    final excerptAsync = ref
+        .watch(postExcerptProvider((localeCode: localeCode, path: bodyPath)));
     final theme = Theme.of(context);
     return InkWell(
       borderRadius: BorderRadius.circular(22),
@@ -566,7 +623,8 @@ class _PostPreviewCard extends ConsumerWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(22),
           color: theme.colorScheme.surface,
-          border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
+          border: Border.all(
+              color: theme.colorScheme.outline.withValues(alpha: 0.2)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -574,12 +632,14 @@ class _PostPreviewCard extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.article_outlined, color: theme.colorScheme.secondary),
+                Icon(Icons.article_outlined,
+                    color: theme.colorScheme.secondary),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     title,
-                    style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                    style: theme.textTheme.titleMedium
+                        ?.copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
               ],
@@ -587,7 +647,8 @@ class _PostPreviewCard extends ConsumerWidget {
             const SizedBox(height: 10),
             Text(
               formatter.format(date),
-              style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+              style: theme.textTheme.bodySmall
+                  ?.copyWith(color: theme.colorScheme.onSurfaceVariant),
             ),
             const SizedBox(height: 10),
             excerptAsync.when(
@@ -604,7 +665,11 @@ class _PostPreviewCard extends ConsumerWidget {
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: tags.take(4).map((tag) => Chip(label: Text(tag), visualDensity: VisualDensity.compact)).toList(),
+              children: tags
+                  .take(4)
+                  .map((tag) => Chip(
+                      label: Text(tag), visualDensity: VisualDensity.compact))
+                  .toList(),
             ),
           ],
         ),
@@ -621,7 +686,10 @@ class _Shimmer extends StatelessWidget {
     return Container(
       height: height,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
+        color: Theme.of(context)
+            .colorScheme
+            .surfaceContainerHighest
+            .withValues(alpha: 0.4),
         borderRadius: BorderRadius.circular(12),
       ),
     );
@@ -659,7 +727,12 @@ class _ListSkeleton extends StatelessWidget {
   final int count;
   @override
   Widget build(BuildContext context) {
-    return Column(children: List.generate(count, (_) => const Padding(padding: EdgeInsets.symmetric(vertical: 8), child: _Shimmer(height: 80))));
+    return Column(
+        children: List.generate(
+            count,
+            (_) => const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: _Shimmer(height: 80))));
   }
 }
 
@@ -670,12 +743,14 @@ class _ErrorBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      color: Theme.of(context).colorScheme.errorContainer.withValues(alpha: 0.3),
+      color:
+          Theme.of(context).colorScheme.errorContainer.withValues(alpha: 0.3),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
-            Icon(Icons.error_outline, color: Theme.of(context).colorScheme.error),
+            Icon(Icons.error_outline,
+                color: Theme.of(context).colorScheme.error),
             const SizedBox(width: 8),
             Expanded(child: Text(message)),
           ],

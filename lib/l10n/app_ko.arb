@@ -42,6 +42,7 @@
   "goHome": "홈으로 가기",
   "commonMenu": "메뉴",
   "commonLanguage": "언어",
+  "commonToggleTheme": "테마 전환",
   "skipToContent": "본문으로 건너뛰기"
   ,
   "privacyTitle": "개인정보처리방침",
@@ -124,5 +125,8 @@
   "resumeCertificationsTitle": "자격증",
   "resumeProjectsTitle": "주요 프로젝트",
   "resumeLanguagesTitle": "언어",
-  "resumeInterestsTitle": "관심사"
+  "resumeInterestsTitle": "관심사",
+  "themeModeSystem": "시스템 기본",
+  "themeModeLight": "라이트",
+  "themeModeDark": "다크"
 }

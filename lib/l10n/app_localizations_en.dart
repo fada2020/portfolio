@@ -142,6 +142,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonLanguage => 'Language';
 
   @override
+  String get commonToggleTheme => 'Toggle theme';
+
+  @override
   String get skipToContent => 'Skip to content';
 
   @override
@@ -419,4 +422,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resumeInterestsTitle => 'Interests';
+
+  @override
+  String get themeModeSystem => 'System';
+
+  @override
+  String get themeModeLight => 'Light';
+
+  @override
+  String get themeModeDark => 'Dark';
 }

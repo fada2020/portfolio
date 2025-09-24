@@ -42,6 +42,7 @@
   "goHome": "Go Home",
   "commonMenu": "Menu",
   "commonLanguage": "Language",
+  "commonToggleTheme": "Toggle theme",
   "skipToContent": "Skip to content"
   ,
   "privacyTitle": "Privacy Policy",
@@ -124,5 +125,8 @@
   "resumeCertificationsTitle": "Certifications",
   "resumeProjectsTitle": "Featured Projects",
   "resumeLanguagesTitle": "Languages",
-  "resumeInterestsTitle": "Interests"
+  "resumeInterestsTitle": "Interests",
+  "themeModeSystem": "System",
+  "themeModeLight": "Light",
+  "themeModeDark": "Dark"
 }

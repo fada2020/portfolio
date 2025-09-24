@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/state/locale_state.dart';
+import 'package:portfolio/state/theme_state.dart';
 
 class AppShell extends ConsumerStatefulWidget {
   const AppShell({super.key, required this.child});
@@ -55,6 +56,7 @@ class _AppShellState extends ConsumerState<AppShell> {
           actions: isNarrow
               ? [
                   const SizedBox(width: 8),
+                  _ThemeModeToggle(compact: true),
                   _LangMenu(tooltip: l10n.commonLanguage),
                   const SizedBox(width: 8),
                 ]
@@ -66,6 +68,7 @@ class _AppShellState extends ConsumerState<AppShell> {
                   _NavButton(label: l10n.navResume, route: '/resume'),
                   _NavButton(label: l10n.navContact, route: '/contact'),
                   const SizedBox(width: 8),
+                  _ThemeModeToggle(compact: false),
                   IconButton(
                     icon: const Icon(Icons.search),
                     onPressed: () => context.go('/search'),
@@ -82,23 +85,25 @@ class _AppShellState extends ConsumerState<AppShell> {
                     padding: EdgeInsets.zero,
                     children: [
                       Focus(
-                        autofocus: true,
-                        child: ListTile(
-                        leading: const Icon(Icons.home),
-                        title: Text(l10n.navHome),
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          context.go('/');
-                          Future.microtask(() => _menuButtonFocus.requestFocus());
-                        },
-                      )),
+                          autofocus: true,
+                          child: ListTile(
+                            leading: const Icon(Icons.home),
+                            title: Text(l10n.navHome),
+                            onTap: () {
+                              Navigator.of(context).pop();
+                              context.go('/');
+                              Future.microtask(
+                                  () => _menuButtonFocus.requestFocus());
+                            },
+                          )),
                       ListTile(
                         leading: const Icon(Icons.layers),
                         title: Text(l10n.navProjects),
                         onTap: () {
                           Navigator.of(context).pop();
                           context.go('/projects');
-                          Future.microtask(() => _menuButtonFocus.requestFocus());
+                          Future.microtask(
+                              () => _menuButtonFocus.requestFocus());
                         },
                       ),
                       ListTile(
@@ -107,7 +112,8 @@ class _AppShellState extends ConsumerState<AppShell> {
                         onTap: () {
                           Navigator.of(context).pop();
                           context.go('/api');
-                          Future.microtask(() => _menuButtonFocus.requestFocus());
+                          Future.microtask(
+                              () => _menuButtonFocus.requestFocus());
                         },
                       ),
                       ListTile(
@@ -116,7 +122,8 @@ class _AppShellState extends ConsumerState<AppShell> {
                         onTap: () {
                           Navigator.of(context).pop();
                           context.go('/blog');
-                          Future.microtask(() => _menuButtonFocus.requestFocus());
+                          Future.microtask(
+                              () => _menuButtonFocus.requestFocus());
                         },
                       ),
                       ListTile(
@@ -125,7 +132,8 @@ class _AppShellState extends ConsumerState<AppShell> {
                         onTap: () {
                           Navigator.of(context).pop();
                           context.go('/resume');
-                          Future.microtask(() => _menuButtonFocus.requestFocus());
+                          Future.microtask(
+                              () => _menuButtonFocus.requestFocus());
                         },
                       ),
                       ListTile(
@@ -134,7 +142,8 @@ class _AppShellState extends ConsumerState<AppShell> {
                         onTap: () {
                           Navigator.of(context).pop();
                           context.go('/contact');
-                          Future.microtask(() => _menuButtonFocus.requestFocus());
+                          Future.microtask(
+                              () => _menuButtonFocus.requestFocus());
                         },
                       ),
                       ListTile(
@@ -143,13 +152,16 @@ class _AppShellState extends ConsumerState<AppShell> {
                         onTap: () {
                           Navigator.of(context).pop();
                           context.go('/search');
-                          Future.microtask(() => _menuButtonFocus.requestFocus());
+                          Future.microtask(
+                              () => _menuButtonFocus.requestFocus());
                         },
                       ),
                       const Divider(),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        child: Text(l10n.commonLanguage, style: Theme.of(context).textTheme.bodySmall),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        child: Text(l10n.commonLanguage,
+                            style: Theme.of(context).textTheme.bodySmall),
                       ),
                       ListTile(
                         leading: const Icon(Icons.language),
@@ -157,7 +169,8 @@ class _AppShellState extends ConsumerState<AppShell> {
                         onTap: () {
                           setLocale(ref, const Locale('ko'));
                           Navigator.of(context).pop();
-                          Future.microtask(() => _menuButtonFocus.requestFocus());
+                          Future.microtask(
+                              () => _menuButtonFocus.requestFocus());
                         },
                       ),
                       ListTile(
@@ -166,7 +179,8 @@ class _AppShellState extends ConsumerState<AppShell> {
                         onTap: () {
                           setLocale(ref, const Locale('en'));
                           Navigator.of(context).pop();
-                          Future.microtask(() => _menuButtonFocus.requestFocus());
+                          Future.microtask(
+                              () => _menuButtonFocus.requestFocus());
                         },
                       ),
                     ],
@@ -190,7 +204,8 @@ class _AppShellState extends ConsumerState<AppShell> {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               child: Row(
                 children: [
-                  Text('© ${DateTime.now().year}', style: Theme.of(context).textTheme.bodySmall),
+                  Text('© ${DateTime.now().year}',
+                      style: Theme.of(context).textTheme.bodySmall),
                   const Spacer(),
                   TextButton(
                     onPressed: () => context.go('/privacy'),
@@ -218,7 +233,8 @@ class _NavButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final current = GoRouter.of(context).routeInformationProvider.value.uri.toString();
+    final current =
+        GoRouter.of(context).routeInformationProvider.value.uri.toString();
     final selected = current == route;
     return Semantics(
       selected: selected,
@@ -226,7 +242,8 @@ class _NavButton extends ConsumerWidget {
       label: label,
       child: TextButton(
         onPressed: () => context.go(route),
-        child: Text(label, style: TextStyle(fontWeight: selected ? FontWeight.bold : null)),
+        child: Text(label,
+            style: TextStyle(fontWeight: selected ? FontWeight.bold : null)),
       ),
     );
   }
@@ -243,9 +260,79 @@ class _LangMenu extends ConsumerWidget {
       icon: const Icon(Icons.language),
       onSelected: (loc) => setLocale(ref, loc),
       itemBuilder: (context) => [
-        PopupMenuItem(value: const Locale('ko'), child: Text(l10n.languageKorean)),
-        PopupMenuItem(value: const Locale('en'), child: Text(l10n.languageEnglish)),
+        PopupMenuItem(
+            value: const Locale('ko'), child: Text(l10n.languageKorean)),
+        PopupMenuItem(
+            value: const Locale('en'), child: Text(l10n.languageEnglish)),
       ],
+    );
+  }
+}
+
+class _ThemeModeToggle extends ConsumerWidget {
+  const _ThemeModeToggle({required this.compact});
+
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final selected = ref.watch(selectedThemeModeProvider);
+    final saved = ref.watch(savedThemeModeProvider);
+    final current = selected ?? saved.value ?? ThemeMode.system;
+
+    void cycle() {
+      final next = switch (current) {
+        ThemeMode.system => ThemeMode.light,
+        ThemeMode.light => ThemeMode.dark,
+        ThemeMode.dark => ThemeMode.system,
+      };
+      setThemeMode(ref, next);
+    }
+
+    final iconData = switch (current) {
+      ThemeMode.system => Icons.auto_mode_rounded,
+      ThemeMode.light => Icons.light_mode_rounded,
+      ThemeMode.dark => Icons.dark_mode_rounded,
+    };
+
+    final label = switch (current) {
+      ThemeMode.system => l10n.themeModeSystem,
+      ThemeMode.light => l10n.themeModeLight,
+      ThemeMode.dark => l10n.themeModeDark,
+    };
+
+    final tooltip = '${l10n.commonToggleTheme} • $label';
+
+    if (compact) {
+      return IconButton(
+        tooltip: tooltip,
+        onPressed: cycle,
+        icon: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 280),
+          transitionBuilder: (child, animation) => FadeTransition(
+            opacity: animation,
+            child: ScaleTransition(scale: animation, child: child),
+          ),
+          child: Icon(iconData, key: ValueKey(current)),
+        ),
+      );
+    }
+
+    return Tooltip(
+      message: tooltip,
+      child: TextButton.icon(
+        onPressed: cycle,
+        icon: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 280),
+          transitionBuilder: (child, animation) => FadeTransition(
+            opacity: animation,
+            child: ScaleTransition(scale: animation, child: child),
+          ),
+          child: Icon(iconData, key: ValueKey(current)),
+        ),
+        label: Text(label),
+      ),
     );
   }
 }

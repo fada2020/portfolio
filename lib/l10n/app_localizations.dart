@@ -356,6 +356,12 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get commonLanguage;
 
+  /// No description provided for @commonToggleTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle theme'**
+  String get commonToggleTheme;
+
   /// No description provided for @skipToContent.
   ///
   /// In en, this message translates to:
@@ -841,6 +847,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Interests'**
   String get resumeInterestsTitle;
+
+  /// No description provided for @themeModeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeModeSystem;
+
+  /// No description provided for @themeModeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeModeLight;
+
+  /// No description provided for @themeModeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeModeDark;
 }
 
 class _AppLocalizationsDelegate

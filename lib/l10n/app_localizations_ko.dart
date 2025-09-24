@@ -142,6 +142,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get commonLanguage => '언어';
 
   @override
+  String get commonToggleTheme => '테마 전환';
+
+  @override
   String get skipToContent => '본문으로 건너뛰기';
 
   @override
@@ -394,4 +397,13 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get resumeInterestsTitle => '관심사';
+
+  @override
+  String get themeModeSystem => '시스템 기본';
+
+  @override
+  String get themeModeLight => '라이트';
+
+  @override
+  String get themeModeDark => '다크';
 }
