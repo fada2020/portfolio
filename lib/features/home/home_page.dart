@@ -8,6 +8,8 @@ import 'package:portfolio/state/profile_state.dart';
 import 'package:portfolio/state/projects_state.dart';
 import 'package:portfolio/utils/period.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:portfolio/utils/animations.dart';
 
 class _SkillHighlightData {
   const _SkillHighlightData({required this.icon, required this.title, required this.subtitle});
@@ -52,12 +54,14 @@ class HomePage extends ConsumerWidget {
         final isWide = constraints.maxWidth >= 1024;
         final body = <Widget>[
           profileAsync.when(
-            data: (profile) => _HeroSection(profile: profile, isWide: isWide, l10n: l10n),
+            data: (profile) => _HeroSection(profile: profile, isWide: isWide, l10n: l10n)
+                .fadeScale(duration: const Duration(milliseconds: 520)),
             error: (e, st) => const _ErrorBox(message: 'Failed to load profile'),
             loading: () => const _Shimmer(height: 220),
           ),
           const SizedBox(height: 32),
-          const _SkillHighlights(),
+          const _SkillHighlights()
+              .fadeSlide(duration: const Duration(milliseconds: 460), beginOffset: const Offset(0, 0.08), delay: const Duration(milliseconds: 120)),
           const SizedBox(height: 36),
           _SectionHeader(
             title: l10n.homeFeaturedProjects,
@@ -75,7 +79,7 @@ class HomePage extends ConsumerWidget {
                 return _EmptyState(message: l10n.homeNoProjects);
               }
               final crossAxisCount = isWide ? 3 : constraints.maxWidth >= 768 ? 2 : 1;
-              return GridView.builder(
+              final grid = GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: featured.length,
@@ -92,8 +96,17 @@ class HomePage extends ConsumerWidget {
                     title: project.title,
                     summary: project.summary,
                     tags: project.domains.isNotEmpty ? project.domains : project.stack,
+                  ).fadeSlide(
+                    delay: Duration(milliseconds: 120 * index),
+                    duration: const Duration(milliseconds: 420),
+                    beginOffset: const Offset(0, 0.08),
                   );
                 },
+              );
+              return grid.fadeSlide(
+                delay: const Duration(milliseconds: 80),
+                duration: const Duration(milliseconds: 420),
+                beginOffset: const Offset(0, 0.05),
               );
             },
             error: (e, st) => _ErrorBox(message: l10n.errLoadProjects),
@@ -117,16 +130,20 @@ class HomePage extends ConsumerWidget {
               }
               return Column(
                 children: [
-                  for (final post in recent)
+                  for (var i = 0; i < recent.length; i++)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16),
                       child: _PostPreviewCard(
                         localeCode: localeCode,
-                        id: post.id,
-                        title: post.title,
-                        date: post.date,
-                        tags: post.tags,
-                        bodyPath: post.body,
+                        id: recent[i].id,
+                        title: recent[i].title,
+                        date: recent[i].date,
+                        tags: recent[i].tags,
+                        bodyPath: recent[i].body,
+                      ).fadeSlide(
+                        delay: Duration(milliseconds: 140 * i),
+                        duration: const Duration(milliseconds: 380),
+                        beginOffset: const Offset(0, 0.08),
                       ),
                     ),
                 ],
@@ -161,14 +178,14 @@ class _HeroSection extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            theme.colorScheme.primary.withOpacity(0.12),
-            theme.colorScheme.secondary.withOpacity(0.08),
+            theme.colorScheme.primary.withValues(alpha: 0.12),
+            theme.colorScheme.secondary.withValues(alpha: 0.08),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: theme.colorScheme.outline.withOpacity(0.25)),
+        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.25)),
       ),
       padding: EdgeInsets.symmetric(horizontal: isWide ? 48 : 24, vertical: isWide ? 40 : 32),
       child: LayoutBuilder(
@@ -190,7 +207,7 @@ class _HeroSection extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primary.withOpacity(0.12),
+                        color: theme.colorScheme.primary.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Text(
@@ -242,21 +259,21 @@ class _HeroSection extends StatelessWidget {
                         borderRadius: BorderRadius.circular(28),
                         gradient: RadialGradient(
                           colors: [
-                            theme.colorScheme.primary.withOpacity(0.22),
-                            theme.colorScheme.secondary.withOpacity(0.12),
-                            theme.colorScheme.background,
+                            theme.colorScheme.primary.withValues(alpha: 0.22),
+                            theme.colorScheme.secondary.withValues(alpha: 0.12),
+                            theme.colorScheme.surface,
                           ],
                           radius: 1.1,
                           center: const Alignment(-0.3, -0.5),
                         ),
-                        border: Border.all(color: theme.colorScheme.outline.withOpacity(0.18)),
+                        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.18)),
                       ),
                       child: Stack(
                         children: [
                           Positioned(
                             top: 24,
                             right: 24,
-                            child: Icon(Icons.code_rounded, size: 44, color: theme.colorScheme.primary.withOpacity(0.4)),
+                            child: Icon(Icons.code_rounded, size: 44, color: theme.colorScheme.primary.withValues(alpha: 0.4)),
                           ),
                           Positioned(
                             bottom: 20,
@@ -297,7 +314,7 @@ class _HeroBullet extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: theme.colorScheme.outline.withOpacity(0.2)),
+        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -323,7 +340,7 @@ class _HeroBadge extends StatelessWidget {
     final theme = Theme.of(context);
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: theme.colorScheme.onSurface.withOpacity(0.08),
+        color: theme.colorScheme.onSurface.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Padding(
@@ -363,10 +380,10 @@ class _SkillHighlights extends StatelessWidget {
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: theme.colorScheme.outline.withOpacity(0.2)),
+                border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
                 boxShadow: [
                   BoxShadow(
-                    color: theme.colorScheme.shadow.withOpacity(0.04),
+                    color: theme.colorScheme.shadow.withValues(alpha: 0.04),
                     blurRadius: 18,
                     offset: const Offset(0, 10),
                   ),
@@ -430,7 +447,7 @@ class _EmptyState extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: theme.colorScheme.surface,
-        border: Border.all(color: theme.colorScheme.outline.withOpacity(0.18)),
+        border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.18)),
       ),
       child: Center(
         child: Text(
@@ -461,22 +478,23 @@ class _ProjectCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(22),
           gradient: LinearGradient(
             colors: [
-              theme.colorScheme.primary.withOpacity(0.12),
+              theme.colorScheme.primary.withValues(alpha: 0.12),
               theme.colorScheme.surface,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          border: Border.all(color: theme.colorScheme.outline.withOpacity(0.18)),
+          border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.18)),
           boxShadow: [
             BoxShadow(
-              color: theme.colorScheme.shadow.withOpacity(0.06),
+              color: theme.colorScheme.shadow.withValues(alpha: 0.06),
               offset: const Offset(0, 14),
               blurRadius: 28,
             ),
           ],
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -492,13 +510,11 @@ class _ProjectCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            Expanded(
-              child: Text(
-                summary,
-                style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
+            Text(
+              summary,
+              style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 16),
             Wrap(
@@ -508,7 +524,7 @@ class _ProjectCard extends StatelessWidget {
                 return Chip(
                   label: Text(tag),
                   visualDensity: VisualDensity.compact,
-                  backgroundColor: theme.colorScheme.surface.withOpacity(0.7),
+                  backgroundColor: theme.colorScheme.surface.withValues(alpha: 0.7),
                 );
               }).toList(),
             ),
@@ -550,9 +566,10 @@ class _PostPreviewCard extends ConsumerWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(22),
           color: theme.colorScheme.surface,
-          border: Border.all(color: theme.colorScheme.outline.withOpacity(0.2)),
+          border: Border.all(color: theme.colorScheme.outline.withValues(alpha: 0.2)),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(

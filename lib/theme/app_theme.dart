@@ -8,21 +8,20 @@ class AppTheme {
   static const Color _onPrimary = Colors.white;
   static const Color _secondary = Color(0xFFFF6B6B);
   static const Color _tertiary = Color(0xFF4CD4B0);
-  static const Color _backgroundLight = Color(0xFFF6F7FB);
   static const Color _surfaceLight = Colors.white;
   static const Color _surfaceVariantLight = Color(0xFFE2E5F2);
   static const Color _outlineLight = Color(0xFFD0D4E6);
   static const Color _textPrimaryLight = Color(0xFF161A2B);
   static const Color _textMutedLight = Color(0xFF60658C);
 
-  static const Color _backgroundDark = Color(0xFF0F1120);
   static const Color _surfaceDark = Color(0xFF1C2033);
   static const Color _surfaceVariantDark = Color(0xFF2A2F45);
   static const Color _outlineDark = Color(0xFF3A3F58);
   static const Color _textPrimaryDark = Color(0xFFE7EAF9);
   static const Color _textMutedDark = Color(0xFF9AA0C8);
 
-  static ThemeData get light => _buildTheme(_lightColorScheme, Brightness.light);
+  static ThemeData get light =>
+      _buildTheme(_lightColorScheme, Brightness.light);
   static ThemeData get dark => _buildTheme(_darkColorScheme, Brightness.dark);
 
   static ThemeData _buildTheme(ColorScheme scheme, Brightness brightness) {
@@ -32,72 +31,86 @@ class AppTheme {
       brightness: brightness,
     );
 
-    final textTheme = GoogleFonts.plusJakartaSansTextTheme(base.textTheme).apply(
+    final textTheme =
+        GoogleFonts.plusJakartaSansTextTheme(base.textTheme).apply(
       bodyColor: scheme.onSurface,
       displayColor: scheme.onSurface,
     );
 
     return base.copyWith(
-      scaffoldBackgroundColor: scheme.background,
+      scaffoldBackgroundColor: scheme.surface,
       textTheme: textTheme,
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: scheme.surface,
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: scheme.outline.withOpacity(0.4)),
+          side: BorderSide(color: scheme.outline.withValues(alpha: 0.4)),
         ),
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor: scheme.background,
+        backgroundColor: scheme.surface,
         elevation: 0,
         foregroundColor: scheme.onSurface,
-        titleTextStyle: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+        titleTextStyle:
+            textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: ButtonStyle(
-          textStyle: MaterialStateProperty.all(textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
-          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20, vertical: 14)),
-          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+          textStyle: WidgetStateProperty.all(
+              textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+          padding: WidgetStateProperty.all(
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 14)),
+          shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
-          textStyle: MaterialStateProperty.all(textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
-          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20, vertical: 14)),
-          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-          side: MaterialStateProperty.resolveWith(
-            (states) => BorderSide(color: scheme.outline.withOpacity(states.contains(MaterialState.hovered) ? 0.8 : 0.5)),
+          textStyle: WidgetStateProperty.all(
+              textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+          padding: WidgetStateProperty.all(
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 14)),
+          shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+          side: WidgetStateProperty.resolveWith(
+            (states) => BorderSide(
+                color: scheme.outline.withValues(
+                    alpha: states.contains(WidgetState.hovered) ? 0.8 : 0.5)),
           ),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-          textStyle: MaterialStateProperty.all(textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
-          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20, vertical: 14)),
-          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+          textStyle: WidgetStateProperty.all(
+              textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600)),
+          padding: WidgetStateProperty.all(
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 14)),
+          shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
         ),
       ),
       chipTheme: base.chipTheme.copyWith(
         labelStyle: textTheme.labelMedium,
-        backgroundColor: scheme.surfaceVariant,
-        selectedColor: scheme.primary.withOpacity(0.12),
-        side: BorderSide(color: scheme.outline.withOpacity(0.3)),
+        backgroundColor: scheme.surfaceContainerHighest,
+        selectedColor: scheme.primary.withValues(alpha: 0.12),
+        side: BorderSide(color: scheme.outline.withValues(alpha: 0.3)),
       ),
       dividerTheme: DividerThemeData(
-        color: scheme.outline.withOpacity(0.3),
+        color: scheme.outline.withValues(alpha: 0.3),
         space: 32,
         thickness: 1,
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: scheme.surface,
-        indicatorColor: scheme.primary.withOpacity(0.12),
-        labelTextStyle: MaterialStateProperty.all(textTheme.labelSmall),
+        indicatorColor: scheme.primary.withValues(alpha: 0.12),
+        labelTextStyle: WidgetStateProperty.all(textTheme.labelSmall),
       ),
       listTileTheme: ListTileThemeData(
         titleTextStyle: textTheme.titleMedium,
-        subtitleTextStyle: textTheme.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
+        subtitleTextStyle:
+            textTheme.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
         iconColor: scheme.primary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
@@ -122,11 +135,9 @@ class AppTheme {
     onError: Colors.white,
     errorContainer: Color(0xFFFFE0E0),
     onErrorContainer: Color(0xFF410E0B),
-    background: _backgroundLight,
-    onBackground: _textPrimaryLight,
     surface: _surfaceLight,
     onSurface: _textPrimaryLight,
-    surfaceVariant: _surfaceVariantLight,
+    surfaceContainerHighest: _surfaceVariantLight,
     onSurfaceVariant: _textMutedLight,
     outline: _outlineLight,
     outlineVariant: Color(0xFFC6CADE),
@@ -156,11 +167,9 @@ class AppTheme {
     onError: Colors.black,
     errorContainer: Color(0xFF8A1F1F),
     onErrorContainer: Color(0xFFFFE3E0),
-    background: _backgroundDark,
-    onBackground: _textPrimaryDark,
     surface: _surfaceDark,
     onSurface: _textPrimaryDark,
-    surfaceVariant: _surfaceVariantDark,
+    surfaceContainerHighest: _surfaceVariantDark,
     onSurfaceVariant: _textMutedDark,
     outline: _outlineDark,
     outlineVariant: Color(0xFF4A4F68),
