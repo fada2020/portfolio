@@ -13,19 +13,25 @@ This is a Flutter Web portfolio application for a backend developer, built with 
 # Run the app in development mode
 flutter run -d chrome
 
-# Build for web production
+# Build for web production (with proper base href for GitHub Pages)
+flutter build web --base-href /<REPO_NAME>/
+
+# Build for local preview (no base href needed)
 flutter build web
 
 # Run tests
 flutter test
 
+# Run tests with coverage
+flutter test --coverage
+
 # Run specific test file
 flutter test test/specific_test.dart
 
-# Analyze code for issues
-flutter analyze
+# Analyze code for issues (matches CI/CD pipeline)
+flutter analyze --no-fatal-infos --no-fatal-warnings
 
-# Format code
+# Format code (run before committing)
 dart format .
 
 # Get dependencies
@@ -41,13 +47,20 @@ flutter clean
 flutter gen-l10n
 ```
 
+### Deployment
+```bash
+# Generate sitemap and robots.txt for production
+dart run tool/sitemap.dart --out build/web
+```
+
 ## Architecture Overview
 
 ### Core Architecture Patterns
 - **State Management**: Flutter Riverpod with providers for global state
 - **Navigation**: GoRouter with shell routes for consistent app structure
-- **Internationalization**: Flutter's built-in l10n with English/Korean support
-- **Content Management**: Markdown-based content stored in `assets/contents/` with language-specific folders
+- **Internationalization**: Flutter's built-in l10n with English/Korean support, locale persistence via localStorage, URL override support (?lang=en|ko)
+- **Content Management**: YAML/Markdown content pipeline in `assets/contents/` with structured folders for bilingual content
+- **OpenAPI Integration**: Interactive API explorer with cURL generation and mock response toggle
 
 ### Project Structure
 ```
@@ -64,11 +77,17 @@ lib/
 │   ├── home/                   # Home page
 │   ├── projects/               # Projects listing and detail pages
 │   ├── blog/                   # Blog listing and detail pages
-│   ├── api/                    # API documentation page
+│   ├── api/                    # API documentation page with OpenAPI explorer
 │   ├── resume/                 # Resume/CV page
 │   ├── contact/                # Contact information page
 │   └── privacy/                # Privacy policy pages
-└── utils/                      # Utility functions
+├── utils/                      # Utility functions
+assets/
+├── contents/{en,ko}/           # Bilingual content (profile, resume, projects, posts)
+├── openapi/openapi.json        # Sample OpenAPI specification
+test/                           # Unit and widget tests mirroring feature structure
+tool/                           # Build tools (sitemap generator)
+web/                            # Web-specific assets (index.html, favicons, OG image)
 ```
 
 ### Key State Management Patterns
@@ -117,13 +136,21 @@ lib/
 - Support both English and Korean throughout the app
 
 ### Testing
-- Unit tests for utilities, models, and business logic
+- Unit tests for utilities, models, and business logic (content loaders, filters)
 - Widget tests for complex UI components and state interactions
-- Focus on testing state management, content loading, and filtering logic
+- Core test coverage: `content_loader_test.dart`, filters, contact forms, API cURL generation
 - Mock external dependencies and async operations
+- Use `flutter test --coverage` to generate coverage reports in `coverage/lcov.info`
 
 ### Code Organization
 - Follow feature-based folder structure under `lib/features/`
 - Keep models simple with clear data structures
 - Separate business logic into service classes
 - Use meaningful file and class names that reflect their purpose
+
+### Deployment & CI/CD
+- GitHub Actions workflow automatically deploys to GitHub Pages on push to main/master
+- Pipeline: analyze → test → build → deploy with smart base-href detection
+- SPA fallback: copies `index.html` to `404.html` for client-side routing
+- Generates sitemap and robots.txt for SEO using `tool/sitemap.dart`
+- Static assets (PDFs, OG images) hosted directly from `web/` directory

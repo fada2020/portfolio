@@ -1,12 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:portfolio/l10n/app_localizations.dart';
-import 'package:portfolio/state/locale_state.dart';
-import 'package:portfolio/state/theme_state.dart';
+// 앱의 공통 레이아웃을 위한 패키지들
+import 'package:flutter/material.dart';                    // Flutter UI 위젯들
+import 'package:flutter_riverpod/flutter_riverpod.dart';   // 상태 관리
+import 'package:go_router/go_router.dart';                // 페이지 라우팅
+import 'package:portfolio/l10n/app_localizations.dart';    // 다국어 지원
+import 'package:portfolio/state/locale_state.dart';        // 언어 설정 상태
+import 'package:portfolio/state/theme_state.dart';         // 테마 설정 상태
 
+/// 앱의 공통 레이아웃을 제공하는 Shell 위젯
+/// 모든 페이지에서 공유하는 상단바, 네비게이션, 푸터 등을 포함
+/// ConsumerStatefulWidget을 사용하여 상태 변화를 감지하고 반응함
 class AppShell extends ConsumerStatefulWidget {
   const AppShell({super.key, required this.child});
+
+  /// 실제 페이지 내용이 들어갈 자식 위젯
   final Widget? child;
 
   @override
@@ -14,12 +20,17 @@ class AppShell extends ConsumerStatefulWidget {
 }
 
 class _AppShellState extends ConsumerState<AppShell> {
-  final FocusNode _contentFocus = FocusNode(debugLabel: 'MainContent');
-  final FocusNode _menuButtonFocus = FocusNode(debugLabel: 'MenuButton');
+  // 접근성을 위한 포커스 노드들
+  // 키보드 네비게이션과 스크린 리더 지원을 위해 사용
+  final FocusNode _contentFocus = FocusNode(debugLabel: 'MainContent');      // 메인 콘텐츠 영역 포커스
+  final FocusNode _menuButtonFocus = FocusNode(debugLabel: 'MenuButton');    // 메뉴 버튼 포커스
+
+  // 메인 콘텐츠를 식별하기 위한 글로벌 키
   final GlobalKey _contentKey = GlobalKey(debugLabel: 'MainContentKey');
 
   @override
   void dispose() {
+    // 메모리 누수 방지를 위해 포커스 노드들을 정리
     _contentFocus.dispose();
     _menuButtonFocus.dispose();
     super.dispose();
@@ -27,32 +38,48 @@ class _AppShellState extends ConsumerState<AppShell> {
 
   @override
   Widget build(BuildContext context) {
+    // 현재 언어에 맞는 번역 텍스트를 가져옴
     final l10n = AppLocalizations.of(context)!;
+
+    // GoRouter 인스턴스를 가져와서 현재 URL 정보를 확인
     final router = GoRouter.of(context);
-    // URL query ?lang=ko|en -> apply once
+
+    // URL 쿼리 파라미터로 언어 전환 지원 (?lang=ko 또는 ?lang=en)
+    // 예: https://portfolio.com/projects?lang=ko
     final uri = router.routeInformationProvider.value.uri;
     final lang = uri.queryParameters['lang'];
+
+    // URL에 언어 파라미터가 있고 유효한 언어 코드인 경우
     if (lang == 'ko' || lang == 'en') {
-      final current = ref.read(selectedLocaleProvider);
+      final current = ref.read(selectedLocaleProvider);   // 현재 선택된 언어 확인
+      // 현재 언어와 URL 파라미터 언어가 다른 경우에만 변경
       if (current?.languageCode != lang) {
-        setLocale(ref, Locale(lang!));
+        setLocale(ref, Locale(lang!));                   // 언어 설정 변경
       }
     }
+    // LayoutBuilder: 화면 크기에 따라 다른 레이아웃을 제공
     return LayoutBuilder(builder: (context, constraints) {
+      // 반응형 디자인: 720px를 기준으로 모바일/데스크톱 구분
       final isNarrow = constraints.maxWidth < 720;
+
       return Scaffold(
+        // 상단 앱바 설정
         appBar: AppBar(
+          // 앱 제목 표시
           title: Text(l10n.appTitle),
+
+          // 모바일 환경에서만 햄버거 메뉴 버튼 표시
           leading: isNarrow
               ? Builder(
+                  // Builder를 사용하여 올바른 context에서 drawer를 열 수 있도록 함
                   builder: (buttonContext) => IconButton(
-                    focusNode: _menuButtonFocus,
-                    icon: const Icon(Icons.menu),
-                    onPressed: () => Scaffold.of(buttonContext).openDrawer(),
-                    tooltip: l10n.commonMenu,
+                    focusNode: _menuButtonFocus,           // 접근성을 위한 포커스 관리
+                    icon: const Icon(Icons.menu),          // 햄버거 메뉴 아이콘
+                    onPressed: () => Scaffold.of(buttonContext).openDrawer(), // 드로어 열기
+                    tooltip: l10n.commonMenu,              // 접근성을 위한 툴팁
                   ),
                 )
-              : null,
+              : null,                                      // 데스크톱에서는 leading 없음
           actions: isNarrow
               ? [
                   const SizedBox(width: 8),
