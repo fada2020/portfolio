@@ -1,13 +1,38 @@
 {
-    "name": "portfolio",
-    "short_name": "portfolio",
+    "name": "HYEOK JU LEE Portfolio",
+    "short_name": "HJL Portfolio",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#1a237e",
+    "theme_color": "#1a237e",
+    "description": "Full-stack engineer portfolio showcasing microservices, API design, and Flutter development projects with bilingual support.",
+    "orientation": "any",
     "prefer_related_applications": false,
+    "lang": "en",
+    "categories": ["portfolio", "developer", "engineering"],
+    "shortcuts": [
+        {
+            "name": "Projects",
+            "short_name": "Projects",
+            "description": "View my development projects",
+            "url": "/projects",
+            "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "Blog",
+            "short_name": "Blog",
+            "description": "Read my technical blog posts",
+            "url": "/blog",
+            "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "Contact",
+            "short_name": "Contact",
+            "description": "Get in touch with me",
+            "url": "/contact",
+            "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
+        }
+    ],
     "icons": [
         {
             "src": "icons/Icon-192.png",

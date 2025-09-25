@@ -7,10 +7,14 @@ import 'package:portfolio/router.dart';                     // GoRouter 설정�
 import 'package:portfolio/state/locale_state.dart';         // 언어 선택 상태 관리
 import 'package:portfolio/state/theme_state.dart';          // 테마(다크/라이트 모드) 상태 관리
 import 'package:portfolio/theme/app_theme.dart';            // 앱의 커스텀 테마 정의
+import 'package:portfolio/utils/performance.dart';          // 성능 모니터링 유틸리티
 
 /// 앱의 진입점(Entry Point)
 /// Flutter 앱이 시작될 때 가장 먼저 실행되는 함수
 void main() {
+  // 성능 모니터링 초기화 (Core Web Vitals 추적)
+  PerformanceMonitor.initialize();
+
   // ProviderScope로 전체 앱을 감싸서 Riverpod 상태 관리 시스템을 활성화
   // 이를 통해 앱 전체에서 Provider를 사용할 수 있게 됨
   runApp(const ProviderScope(child: PortfolioApp()));

@@ -37,6 +37,44 @@ String _fullUrl(String base, String path) {
   return '$b$path';
 }
 
+String _getPriority(String path) {
+  switch (path) {
+    case '/':
+      return '1.0';
+    case '/projects':
+    case '/blog':
+      return '0.9';
+    case '/contact':
+    case '/resume':
+      return '0.8';
+    case '/api':
+      return '0.7';
+    default:
+      if (path.startsWith('/projects/') || path.startsWith('/blog/')) {
+        return '0.8';
+      }
+      return '0.6';
+  }
+}
+
+String _getChangeFreq(String path) {
+  switch (path) {
+    case '/':
+      return 'daily';
+    case '/projects':
+    case '/blog':
+      return 'weekly';
+    case '/contact':
+    case '/resume':
+      return 'monthly';
+    default:
+      if (path.startsWith('/projects/') || path.startsWith('/blog/')) {
+        return 'monthly';
+      }
+      return 'yearly';
+  }
+}
+
 Future<void> main(List<String> args) async {
   final outDir = (args.length >= 2 && args[0] == '--out') ? args[1] : 'build/web';
   final base = Platform.environment['SITE_BASE_URL'] ?? 'https://example.com';
@@ -63,15 +101,27 @@ Future<void> main(List<String> args) async {
 
   final buf = StringBuffer()
     ..writeln('<?xml version="1.0" encoding="UTF-8"?>')
-    ..writeln('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
+    ..writeln('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">');
+
   for (final path in entries) {
+    final priority = _getPriority(path);
+    final changefreq = _getChangeFreq(path);
+
     buf
       ..writeln('  <url>')
       ..writeln('    <loc>${_fullUrl(base, path)}</loc>')
       ..writeln('    <lastmod>$now</lastmod>')
-      ..writeln('    <changefreq>weekly</changefreq>')
-      ..writeln('    <priority>${path == '/' ? '1.0' : '0.7'}</priority>')
-      ..writeln('  </url>');
+      ..writeln('    <changefreq>$changefreq</changefreq>')
+      ..writeln('    <priority>$priority</priority>');
+
+    // Add alternate language links for main pages
+    if (!path.startsWith('/blog/') && !path.startsWith('/projects/')) {
+      buf
+        ..writeln('    <xhtml:link rel="alternate" hreflang="en" href="${_fullUrl(base, path)}?lang=en"/>')
+        ..writeln('    <xhtml:link rel="alternate" hreflang="ko" href="${_fullUrl(base, path)}?lang=ko"/>');
+    }
+
+    buf.writeln('  </url>');
   }
   buf.writeln('</urlset>');
 
@@ -82,6 +132,22 @@ Future<void> main(List<String> args) async {
   final robots = StringBuffer()
     ..writeln('User-agent: *')
     ..writeln('Allow: /')
+    ..writeln('Disallow: /assets/')
+    ..writeln('Disallow: /*.dart')
+    ..writeln('Disallow: /*.js.map')
+    ..writeln('')
+    ..writeln('User-agent: Googlebot')
+    ..writeln('Allow: /')
+    ..writeln('Disallow: /assets/')
+    ..writeln('')
+    ..writeln('User-agent: Bingbot')
+    ..writeln('Allow: /')
+    ..writeln('Disallow: /assets/')
+    ..writeln('')
+    ..writeln('# Crawl delay')
+    ..writeln('Crawl-delay: 1')
+    ..writeln('')
+    ..writeln('# Sitemap')
     ..writeln('Sitemap: ${_fullUrl(base, '/sitemap.xml')}');
   await File('$outDir/robots.txt').writeAsString(robots.toString());
 
