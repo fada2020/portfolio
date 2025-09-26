@@ -2,15 +2,77 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:portfolio/models/openapi.dart';
 
-Future<Map<String, dynamic>> loadOpenApiSpec() async {
-  final raw = await rootBundle.loadString('assets/openapi/openapi.json');
+// List of available OpenAPI specifications
+const apiSpecs = [
+  'assets/openapi/openapi.json',        // Demo API
+  'assets/openapi/portfolio-api.json',  // Portfolio Backend API
+];
+
+Future<Map<String, dynamic>> loadOpenApiSpec([String? specPath]) async {
+  final path = specPath ?? apiSpecs.first;
+  final raw = await rootBundle.loadString(path);
   return jsonDecode(raw) as Map<String, dynamic>;
 }
 
-Future<List<ApiEndpoint>> loadOpenApi() async {
-  final json = await loadOpenApiSpec();
+Future<List<Map<String, dynamic>>> loadAllOpenApiSpecs() async {
+  final specs = <Map<String, dynamic>>[];
+  for (final specPath in apiSpecs) {
+    try {
+      final spec = await loadOpenApiSpec(specPath);
+      // Add metadata to identify the spec
+      spec['_specPath'] = specPath;
+      spec['_specName'] = _getSpecName(specPath);
+      specs.add(spec);
+    } catch (e) {
+      print('Failed to load OpenAPI spec $specPath: $e');
+    }
+  }
+  return specs;
+}
+
+String _getSpecName(String path) {
+  if (path.contains('portfolio-api')) return 'Portfolio API';
+  if (path.contains('openapi.json')) return 'Demo API';
+  return 'Unknown API';
+}
+
+Future<List<ApiEndpoint>> loadOpenApi([String? specPath]) async {
+  final json = await loadOpenApiSpec(specPath);
+  return _parseEndpoints(json);
+}
+
+Future<List<ApiEndpoint>> loadAllOpenApiEndpoints() async {
+  final allSpecs = await loadAllOpenApiSpecs();
+  final allEndpoints = <ApiEndpoint>[];
+
+  for (final spec in allSpecs) {
+    final endpoints = _parseEndpoints(spec);
+    // Add API source information to each endpoint
+    final specName = spec['_specName'] as String? ?? 'Unknown API';
+    final baseUrl = _getBaseUrl(spec);
+
+    for (final endpoint in endpoints) {
+      final updatedEndpoint = ApiEndpoint(
+        method: endpoint.method,
+        path: endpoint.path,
+        summary: '[$specName] ${endpoint.summary ?? ''}',
+        operationId: endpoint.operationId,
+        tags: [...endpoint.tags, specName],
+        parameters: endpoint.parameters,
+        requestBodySchema: endpoint.requestBodySchema,
+        responseSchema: endpoint.responseSchema,
+      );
+      allEndpoints.add(updatedEndpoint);
+    }
+  }
+
+  return allEndpoints;
+}
+
+List<ApiEndpoint> _parseEndpoints(Map<String, dynamic> json) {
   final paths = json['paths'] as Map<String, dynamic>? ?? {};
   final List<ApiEndpoint> endpoints = [];
+
   for (final entry in paths.entries) {
     final path = entry.key;
     final methods = (entry.value as Map<String, dynamic>);
@@ -56,6 +118,26 @@ Future<List<ApiEndpoint>> loadOpenApi() async {
     }
   }
   return endpoints;
+}
+
+String _getBaseUrl(Map<String, dynamic> spec) {
+  final host = spec['host'] as String?;
+  final basePath = spec['basePath'] as String? ?? '';
+  final schemes = spec['schemes'] as List?;
+  final scheme = schemes?.first as String? ?? 'https';
+
+  if (host != null) {
+    return '$scheme://$host$basePath';
+  }
+
+  // Fallback to servers array (OpenAPI 3.0+)
+  final servers = spec['servers'] as List?;
+  if (servers != null && servers.isNotEmpty) {
+    final server = servers.first as Map?;
+    return server?['url'] as String? ?? '';
+  }
+
+  return 'http://localhost:8080';
 }
 
 Future<String?> loadOpenApiServerUrl() async {

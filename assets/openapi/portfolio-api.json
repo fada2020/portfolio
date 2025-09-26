@@ -1,0 +1,1003 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Portfolio API with Supabase",
+    "description": "Backend API for portfolio showcase with Supabase integration - PostgreSQL, authentication, and real-time features",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Support",
+      "email": "hyoukjoo@example.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "portfolio-api.up.railway.app",
+  "basePath": "/api/v1",
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "tags": [
+    {
+      "name": "system",
+      "description": "System health and status endpoints"
+    },
+    {
+      "name": "users",
+      "description": "User management operations"
+    },
+    {
+      "name": "projects",
+      "description": "Portfolio project operations"
+    },
+    {
+      "name": "skills",
+      "description": "Skills and technology management"
+    },
+    {
+      "name": "contact",
+      "description": "Contact form submissions"
+    },
+    {
+      "name": "stats",
+      "description": "Portfolio analytics and statistics"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": ["system"],
+        "summary": "Health check",
+        "description": "Check if the API is running and healthy",
+        "responses": {
+          "200": {
+            "description": "API is healthy",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "healthy"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "version": {
+                  "type": "string",
+                  "example": "1.0.0"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Get all users",
+        "description": "Retrieve a list of all users in the system",
+        "responses": {
+          "200": {
+            "description": "List of users",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/User"
+                  }
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["users"],
+        "summary": "Create a new user",
+        "description": "Create a new user with the provided information",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Get user by ID",
+        "description": "Retrieve a specific user by their ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer",
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["users"],
+        "summary": "Update user",
+        "description": "Update an existing user by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["users"],
+        "summary": "Delete user",
+        "description": "Delete a user by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/projects": {
+      "get": {
+        "tags": ["projects"],
+        "summary": "Get all projects",
+        "description": "Retrieve a list of portfolio projects with optional filtering",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "type": "string",
+            "description": "Filter by project status",
+            "enum": ["in-progress", "completed", "planned"]
+          },
+          {
+            "in": "query",
+            "name": "featured",
+            "type": "boolean",
+            "description": "Filter by featured projects"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of projects",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Project"
+                  }
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["projects"],
+        "summary": "Create a new project",
+        "description": "Add a new project to the portfolio",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "project",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateProjectRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Project created successfully",
+            "schema": {
+              "$ref": "#/definitions/Project"
+            }
+          }
+        }
+      }
+    },
+    "/projects/{id}": {
+      "get": {
+        "tags": ["projects"],
+        "summary": "Get project by ID",
+        "description": "Retrieve a specific project by its ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project found",
+            "schema": {
+              "$ref": "#/definitions/Project"
+            }
+          },
+          "404": {
+            "description": "Project not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["projects"],
+        "summary": "Update project",
+        "description": "Update an existing project",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "project",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateProjectRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project updated successfully",
+            "schema": {
+              "$ref": "#/definitions/Project"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["projects"],
+        "summary": "Delete project",
+        "description": "Remove a project from the portfolio",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Project deleted successfully"
+          }
+        }
+      }
+    },
+    "/skills": {
+      "get": {
+        "tags": ["skills"],
+        "summary": "Get all skills",
+        "description": "Retrieve a list of technical skills with optional filtering",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "category",
+            "type": "string",
+            "description": "Filter by skill category",
+            "enum": ["frontend", "backend", "mobile", "devops", "cloud", "database"]
+          },
+          {
+            "in": "query",
+            "name": "featured",
+            "type": "boolean",
+            "description": "Filter by featured skills"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of skills",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Skill"
+                  }
+                },
+                "count": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["skills"],
+        "summary": "Add a new skill",
+        "description": "Add a new technical skill to the portfolio",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "skill",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddSkillRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Skill added successfully",
+            "schema": {
+              "$ref": "#/definitions/Skill"
+            }
+          }
+        }
+      }
+    },
+    "/skills/{id}": {
+      "delete": {
+        "tags": ["skills"],
+        "summary": "Remove skill",
+        "description": "Remove a skill from the portfolio",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Skill removed successfully"
+          }
+        }
+      }
+    },
+    "/contact": {
+      "post": {
+        "tags": ["contact"],
+        "summary": "Submit contact form",
+        "description": "Submit a contact form message",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "contact",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ContactFormRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Contact form submitted successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats/views": {
+      "get": {
+        "tags": ["stats"],
+        "summary": "Get view statistics",
+        "description": "Retrieve portfolio view and visitor statistics",
+        "responses": {
+          "200": {
+            "description": "View statistics",
+            "schema": {
+              "$ref": "#/definitions/ViewStats"
+            }
+          }
+        }
+      }
+    },
+    "/stats/projects": {
+      "get": {
+        "tags": ["stats"],
+        "summary": "Get project statistics",
+        "description": "Retrieve project-related statistics and analytics",
+        "responses": {
+          "200": {
+            "description": "Project statistics",
+            "schema": {
+              "$ref": "#/definitions/ProjectStats"
+            }
+          }
+        }
+      }
+    },
+    "/stats/visit": {
+      "post": {
+        "tags": ["stats"],
+        "summary": "Record a visit",
+        "description": "Track a page visit for analytics",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "visit",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VisitRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Visit recorded successfully"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "name": {
+          "type": "string",
+          "example": "이혁주"
+        },
+        "email": {
+          "type": "string",
+          "example": "hyoukjoo@example.com"
+        },
+        "role": {
+          "type": "string",
+          "example": "Backend Developer"
+        },
+        "avatar": {
+          "type": "string",
+          "example": "https://avatars.githubusercontent.com/u/12345678"
+        },
+        "bio": {
+          "type": "string",
+          "example": "Backend engineer specializing in Go and cloud architecture"
+        },
+        "website": {
+          "type": "string",
+          "example": "https://hyoukjoolee.github.io/portfolio"
+        },
+        "location": {
+          "type": "string",
+          "example": "Seoul, Korea"
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": ["Go", "JavaScript", "Docker", "AWS"]
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CreateUserRequest": {
+      "type": "object",
+      "required": ["name", "email", "role"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John Doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "john@example.com"
+        },
+        "role": {
+          "type": "string",
+          "example": "developer"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "bio": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "UpdateUserRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "bio": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Project": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "title": {
+          "type": "string",
+          "example": "Portfolio Website"
+        },
+        "description": {
+          "type": "string",
+          "example": "A responsive portfolio website built with Flutter"
+        },
+        "tech_stack": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": ["Flutter", "Dart", "GitHub Pages"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["in-progress", "completed", "planned"],
+          "example": "completed"
+        },
+        "featured": {
+          "type": "boolean",
+          "example": true
+        },
+        "live_url": {
+          "type": "string",
+          "example": "https://johndoe.github.io/portfolio"
+        },
+        "github_url": {
+          "type": "string",
+          "example": "https://github.com/johndoe/portfolio"
+        },
+        "image_url": {
+          "type": "string",
+          "example": "https://example.com/project-image.jpg"
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end_date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CreateProjectRequest": {
+      "type": "object",
+      "required": ["title", "description", "status"],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "tech_stack": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": ["in-progress", "completed", "planned"]
+        },
+        "featured": {
+          "type": "boolean"
+        },
+        "live_url": {
+          "type": "string"
+        },
+        "github_url": {
+          "type": "string"
+        },
+        "image_url": {
+          "type": "string"
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end_date": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "UpdateProjectRequest": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "tech_stack": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string"
+        },
+        "featured": {
+          "type": "boolean"
+        },
+        "live_url": {
+          "type": "string"
+        },
+        "github_url": {
+          "type": "string"
+        },
+        "image_url": {
+          "type": "string"
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end_date": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Skill": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "example": "Go"
+        },
+        "category": {
+          "type": "string",
+          "example": "backend"
+        },
+        "level": {
+          "type": "string",
+          "enum": ["beginner", "intermediate", "advanced", "expert"],
+          "example": "expert"
+        },
+        "years_exp": {
+          "type": "integer",
+          "example": 3
+        },
+        "featured": {
+          "type": "boolean"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string",
+          "example": "#00ADD8"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "AddSkillRequest": {
+      "type": "object",
+      "required": ["name", "category", "level"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "years_exp": {
+          "type": "integer"
+        },
+        "featured": {
+          "type": "boolean"
+        },
+        "icon": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "ContactFormRequest": {
+      "type": "object",
+      "required": ["name", "email", "subject", "message"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John Doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "john@example.com"
+        },
+        "subject": {
+          "type": "string",
+          "example": "Project Inquiry"
+        },
+        "message": {
+          "type": "string",
+          "example": "I would like to discuss a project opportunity"
+        }
+      }
+    },
+    "ViewStats": {
+      "type": "object",
+      "properties": {
+        "total_views": {
+          "type": "integer",
+          "example": 1250
+        },
+        "unique_visitors": {
+          "type": "integer",
+          "example": 950
+        },
+        "views_today": {
+          "type": "integer",
+          "example": 45
+        },
+        "views_this_week": {
+          "type": "integer",
+          "example": 320
+        },
+        "views_this_month": {
+          "type": "integer",
+          "example": 1100
+        },
+        "top_pages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "string"
+              },
+              "views": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "views_by_country": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "country": {
+                "type": "string"
+              },
+              "views": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "views_over_time": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string"
+              },
+              "views": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "ProjectStats": {
+      "type": "object",
+      "properties": {
+        "total_projects": {
+          "type": "integer"
+        },
+        "completed_projects": {
+          "type": "integer"
+        },
+        "featured_projects": {
+          "type": "integer"
+        },
+        "tech_stack_stats": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "technology": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer"
+              },
+              "percentage": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "projects_by_status": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "VisitRequest": {
+      "type": "object",
+      "required": ["page"],
+      "properties": {
+        "page": {
+          "type": "string",
+          "example": "/projects"
+        },
+        "user_agent": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string",
+          "example": "KR"
+        },
+        "referrer": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
