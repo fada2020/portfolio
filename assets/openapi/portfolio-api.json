@@ -13,7 +13,7 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "portfolio-api.up.railway.app",
+  "host": "portfolio-5dum87pvh-fada2020s-projects.vercel.app",
   "basePath": "/api/v1",
   "schemes": ["http", "https"],
   "consumes": ["application/json"],

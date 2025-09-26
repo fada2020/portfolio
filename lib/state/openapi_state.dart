@@ -24,7 +24,7 @@ final availableApiSpecsProvider =
 
 final openApiBaseUrlProvider = FutureProvider<String>((ref) async {
   return await loadOpenApiServerUrl() ??
-      'https://portfolio-cnhgvf3tv-fada2020s-projects.vercel.app';
+      'https://portfolio-5dum87pvh-fada2020s-projects.vercel.app';
 });
 
 final apiSearchQueryProvider = StateProvider<String>((ref) => '');
