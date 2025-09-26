@@ -46,7 +46,9 @@ class PerformanceMonitor {
       final observer = html.PerformanceObserver((entries, observer) {
         final fidEntries = entries.getEntries();
         for (final entry in fidEntries) {
-          final fid = entry.processingStart - entry.startTime;
+          // Use safe property access with fallback
+          final processingStart = _getPropertySafe(entry, 'processingStart') ?? entry.startTime;
+          final fid = processingStart - entry.startTime;
 
           // Log FID for monitoring
           print('FID: ${fid.toStringAsFixed(2)}ms');
@@ -71,9 +73,13 @@ class PerformanceMonitor {
       final observer = html.PerformanceObserver((entries, observer) {
         final clsEntries = entries.getEntries();
         for (final entry in clsEntries) {
+          // Use safe property access with fallback
+          final hadRecentInput = _getPropertySafe(entry, 'hadRecentInput') as bool? ?? false;
+          final value = _getPropertySafe(entry, 'value') as num? ?? 0;
+
           // CLS calculation logic
-          if (!entry.hadRecentInput) {
-            clsValue += entry.value;
+          if (!hadRecentInput) {
+            clsValue += value.toDouble();
           }
         }
 
@@ -126,13 +132,24 @@ class PerformanceMonitor {
       final entries = html.window.performance.getEntriesByType('paint');
       for (final entry in entries) {
         if (entry.name == 'first-paint') {
-          return entry.startTime;
+          return entry.startTime.toDouble();
         }
       }
     } catch (e) {
       print('First paint timing failed: $e');
     }
     return null;
+  }
+
+  /// Safe property access for PerformanceEntry
+  static dynamic _getPropertySafe(html.PerformanceEntry entry, String property) {
+    try {
+      // Use JavaScript interop to safely access properties
+      final jsEntry = entry as dynamic;
+      return jsEntry[property];
+    } catch (e) {
+      return null;
+    }
   }
 
   /// Log performance summary
