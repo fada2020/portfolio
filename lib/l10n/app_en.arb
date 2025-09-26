@@ -72,9 +72,7 @@
   "apiCopyUrl": "Copy URL",
   "apiCopiedUrl": "Copied URL",
   "apiCopyBody": "Copy body",
-  "apiCopiedBody": "Copied body"
-  ,
-  "apiMockMode": "Mock response",
+  "apiCopiedBody": "Copied body",
   "contactTitle": "Get In Touch",
   "contactSubtitle": "Have a project in mind or want to discuss backend architecture? I'd love to hear from you.",
   "contactFormTitle": "Send Message",

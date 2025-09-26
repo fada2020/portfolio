@@ -232,9 +232,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get apiCopiedBody => '본문을 복사했습니다';
 
   @override
-  String get apiMockMode => '목업 응답';
-
-  @override
   String get contactTitle => '연락하기';
 
   @override

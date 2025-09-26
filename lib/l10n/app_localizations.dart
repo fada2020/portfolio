@@ -536,12 +536,6 @@ abstract class AppLocalizations {
   /// **'Copied body'**
   String get apiCopiedBody;
 
-  /// No description provided for @apiMockMode.
-  ///
-  /// In en, this message translates to:
-  /// **'Mock response'**
-  String get apiMockMode;
-
   /// No description provided for @contactTitle.
   ///
   /// In en, this message translates to:

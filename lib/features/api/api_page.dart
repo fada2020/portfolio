@@ -75,14 +75,6 @@ class ApiPage extends ConsumerWidget {
                         ),
                       ]),
                       const SizedBox(width: 8),
-                      Row(children: [
-                        Text(l10n.apiMockMode),
-                        Switch.adaptive(
-                          value: ref.watch(apiMockModeProvider),
-                          onChanged: (v) => ref.read(apiMockModeProvider.notifier).state = v,
-                        ),
-                      ]),
-                      const SizedBox(width: 8),
                       if (includeAuth)
                         Expanded(
                           child: TextField(
@@ -363,7 +355,6 @@ class _EndpointTile extends ConsumerWidget {
                     includeAuth: includeAuth,
                     token: token,
                     components: components,
-                    mock: ref.watch(apiMockModeProvider),
                   ),
                 ],
               );
@@ -428,14 +419,12 @@ class _TryBox extends StatefulWidget {
     required this.includeAuth,
     required this.token,
     required this.components,
-    required this.mock,
   });
   final ApiEndpoint e;
   final String baseUrl;
   final bool includeAuth;
   final String token;
   final Map<String, dynamic>? components;
-  final bool mock;
 
   @override
   State<_TryBox> createState() => _TryBoxState();
@@ -504,25 +493,6 @@ class _TryBoxState extends State<_TryBox> {
       final headers = <String, String>{'accept': 'application/json'};
       if (widget.includeAuth && widget.token.isNotEmpty) {
         headers['authorization'] = 'Bearer ${widget.token}';
-      }
-      if (widget.mock) {
-        // Generate mock response from response schema or request schema
-        dynamic mock;
-        if (widget.e.responseSchema != null) {
-          mock = sampleFromSchemaWithComponents(widget.e.responseSchema!, widget.components ?? const {});
-        } else if (widget.e.requestBodySchema != null) {
-          mock = sampleFromSchemaWithComponents(widget.e.requestBodySchema!, widget.components ?? const {});
-        } else {
-          mock = {'ok': true};
-        }
-        await Future.delayed(const Duration(milliseconds: 50));
-        setState(() {
-          _status = 200;
-          _headers = {'content-type': 'application/json'};
-          _body = const JsonEncoder.withIndent('  ').convert(mock);
-          _durationMs = 1;
-        });
-        return;
       }
       http.Response res;
       final sw = Stopwatch()..start();

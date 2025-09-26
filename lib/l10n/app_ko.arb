@@ -72,9 +72,7 @@
   "apiCopyUrl": "URL 복사",
   "apiCopiedUrl": "URL을 복사했습니다",
   "apiCopyBody": "본문 복사",
-  "apiCopiedBody": "본문을 복사했습니다"
-  ,
-  "apiMockMode": "목업 응답",
+  "apiCopiedBody": "본문을 복사했습니다",
   "contactTitle": "연락하기",
   "contactSubtitle": "새로운 프로젝트나 백엔드 아키텍처에 대해 논의하고 싶으시다면 언제든지 연락주세요.",
   "contactFormTitle": "메시지 보내기",

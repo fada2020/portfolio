@@ -232,9 +232,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get apiCopiedBody => 'Copied body';
 
   @override
-  String get apiMockMode => 'Mock response';
-
-  @override
   String get contactTitle => 'Get In Touch';
 
   @override
