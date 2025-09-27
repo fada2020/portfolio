@@ -4,7 +4,6 @@ import 'package:portfolio/models/openapi.dart';
 
 // List of available OpenAPI specifications
 const apiSpecs = [
-  'assets/openapi/openapi.json',        // Demo API
   'assets/openapi/portfolio-api.json',  // Portfolio Backend API
 ];
 
@@ -32,8 +31,7 @@ Future<List<Map<String, dynamic>>> loadAllOpenApiSpecs() async {
 
 String _getSpecName(String path) {
   if (path.contains('portfolio-api')) return 'Portfolio API';
-  if (path.contains('openapi.json')) return 'Demo API';
-  return 'Unknown API';
+  return 'API';
 }
 
 Future<List<ApiEndpoint>> loadOpenApi([String? specPath]) async {
@@ -142,13 +140,28 @@ String _getBaseUrl(Map<String, dynamic> spec) {
 
 Future<String?> loadOpenApiServerUrl() async {
   try {
-    final raw = await rootBundle.loadString('assets/openapi/openapi.json');
+    final raw = await rootBundle.loadString('assets/openapi/portfolio-api.json');
     final json = jsonDecode(raw) as Map<String, dynamic>;
+
+    // Check for OpenAPI 3.0+ servers array first
     final servers = json['servers'] as List?;
-    if (servers == null || servers.isEmpty) return null;
-    final first = servers.first as Map?;
-    final url = first?['url']?.toString();
-    return url;
+    if (servers != null && servers.isNotEmpty) {
+      final first = servers.first as Map?;
+      final url = first?['url']?.toString();
+      if (url != null) return url;
+    }
+
+    // Fallback to Swagger 2.0 format
+    final host = json['host'] as String?;
+    final basePath = json['basePath'] as String? ?? '';
+    final schemes = json['schemes'] as List?;
+    final scheme = schemes?.first as String? ?? 'https';
+
+    if (host != null) {
+      return '$scheme://$host$basePath';
+    }
+
+    return null;
   } catch (_) {
     return null;
   }
