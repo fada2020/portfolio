@@ -1,5 +1,5 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.3",
   "info": {
     "title": "Portfolio API with Supabase",
     "description": "Backend API for portfolio showcase with Supabase integration - PostgreSQL, authentication, and real-time features",
@@ -13,11 +13,12 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "portfolio-api-jet-beta.vercel.app",
-  "basePath": "/api/v1",
-  "schemes": ["https"],
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "servers": [
+    {
+      "url": "https://portfolio-api-jet-beta.vercel.app",
+      "description": "Production server"
+    }
+  ],
   "tags": [
     {
       "name": "system",
@@ -53,24 +54,28 @@
         "responses": {
           "200": {
             "description": "API is healthy",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "string",
-                  "example": "healthy"
-                },
-                "timestamp": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "version": {
-                  "type": "string",
-                  "example": "1.0.0"
-                },
-                "platform": {
-                  "type": "string",
-                  "example": "vercel-nodejs"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "healthy"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "version": {
+                      "type": "string",
+                      "example": "1.0.0"
+                    },
+                    "platform": {
+                      "type": "string",
+                      "example": "vercel-nodejs"
+                    }
+                  }
                 }
               }
             }
@@ -78,7 +83,7 @@
         }
       }
     },
-    "/users": {
+    "/api/v1/users": {
       "get": {
         "tags": ["users"],
         "summary": "Get all users",
@@ -86,59 +91,22 @@
         "responses": {
           "200": {
             "description": "Successful response",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "example": "1"
-                      },
-                      "name": {
-                        "type": "string",
-                        "example": "이혁주"
-                      },
-                      "email": {
-                        "type": "string",
-                        "example": "hyoukjoo@example.com"
-                      },
-                      "role": {
-                        "type": "string",
-                        "example": "Full-Stack Developer"
-                      },
-                      "bio": {
-                        "type": "string",
-                        "example": "Backend engineer specializing in Go, TypeScript, and cloud architecture"
-                      },
-                      "website": {
-                        "type": "string",
-                        "example": "https://hyoukjoolee.github.io/portfolio"
-                      },
-                      "location": {
-                        "type": "string",
-                        "example": "Seoul, Korea"
-                      },
-                      "skills": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        },
-                        "example": ["Go", "TypeScript", "Flutter", "AWS", "Docker", "PostgreSQL"]
-                      },
-                      "is_public": {
-                        "type": "boolean",
-                        "example": true
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
                       }
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 1
                     }
                   }
-                },
-                "count": {
-                  "type": "integer",
-                  "example": 1
                 }
               }
             }
@@ -146,7 +114,7 @@
         }
       }
     },
-    "/users/{id}": {
+    "/api/v1/users/{id}": {
       "get": {
         "tags": ["users"],
         "summary": "Get user by ID",
@@ -156,54 +124,19 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "description": "User ID"
           }
         ],
         "responses": {
           "200": {
             "description": "Successful response",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "example": "1"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "이혁주"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "hyoukjoo@example.com"
-                },
-                "role": {
-                  "type": "string",
-                  "example": "Full-Stack Developer"
-                },
-                "bio": {
-                  "type": "string",
-                  "example": "Backend engineer specializing in Go, TypeScript, and cloud architecture"
-                },
-                "website": {
-                  "type": "string",
-                  "example": "https://hyoukjoolee.github.io/portfolio"
-                },
-                "location": {
-                  "type": "string",
-                  "example": "Seoul, Korea"
-                },
-                "skills": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "example": ["Go", "TypeScript", "Flutter", "AWS", "Docker", "PostgreSQL"]
-                },
-                "is_public": {
-                  "type": "boolean",
-                  "example": true
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
                 }
               }
             }
@@ -219,53 +152,29 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "User ID"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "이혁주"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "hyoukjoo@example.com"
-                },
-                "role": {
-                  "type": "string",
-                  "example": "Full-Stack Developer"
-                },
-                "bio": {
-                  "type": "string",
-                  "example": "Backend engineer specializing in Go, TypeScript, and cloud architecture"
-                }
+              "type": "string"
+            },
+            "description": "User ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdate"
               }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "User updated successfully",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "User updated successfully"
-                },
-                "id": {
-                  "type": "string",
-                  "example": "1"
-                },
-                "timestamp": {
-                  "type": "string",
-                  "format": "date-time"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateResponse"
                 }
               }
             }
@@ -281,7 +190,9 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "description": "User ID"
           }
         ],
@@ -292,7 +203,7 @@
         }
       }
     },
-    "/projects": {
+    "/api/v1/projects": {
       "get": {
         "tags": ["projects"],
         "summary": "Get all projects",
@@ -300,59 +211,22 @@
         "responses": {
           "200": {
             "description": "Successful response",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "example": "1"
-                      },
-                      "title": {
-                        "type": "string",
-                        "example": "Portfolio API Server"
-                      },
-                      "description": {
-                        "type": "string",
-                        "example": "Go REST API with Supabase integration deployed on Vercel"
-                      },
-                      "tech_stack": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        },
-                        "example": ["Go", "Supabase", "Vercel"]
-                      },
-                      "status": {
-                        "type": "string",
-                        "example": "completed"
-                      },
-                      "featured": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "live_url": {
-                        "type": "string",
-                        "example": "https://portfolio-api.vercel.app"
-                      },
-                      "github_url": {
-                        "type": "string",
-                        "example": "https://github.com/hyoukjoolee/portfolio-api"
-                      },
-                      "is_public": {
-                        "type": "boolean",
-                        "example": true
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Project"
                       }
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 2
                     }
                   }
-                },
-                "count": {
-                  "type": "integer",
-                  "example": 2
                 }
               }
             }
@@ -360,7 +234,7 @@
         }
       }
     },
-    "/projects/{id}": {
+    "/api/v1/projects/{id}": {
       "get": {
         "tags": ["projects"],
         "summary": "Get project by ID",
@@ -370,54 +244,19 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "description": "Project ID"
           }
         ],
         "responses": {
           "200": {
             "description": "Successful response",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "example": "1"
-                },
-                "title": {
-                  "type": "string",
-                  "example": "Portfolio API Server"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Go REST API with Supabase integration deployed on Vercel"
-                },
-                "tech_stack": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "example": ["Go", "Supabase", "Vercel"]
-                },
-                "status": {
-                  "type": "string",
-                  "example": "completed"
-                },
-                "featured": {
-                  "type": "boolean",
-                  "example": true
-                },
-                "live_url": {
-                  "type": "string",
-                  "example": "https://portfolio-api.vercel.app"
-                },
-                "github_url": {
-                  "type": "string",
-                  "example": "https://github.com/hyoukjoolee/portfolio-api"
-                },
-                "is_public": {
-                  "type": "boolean",
-                  "example": true
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
                 }
               }
             }
@@ -433,52 +272,29 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "Project ID"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Updated Project Title"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Updated project description"
-                },
-                "tech_stack": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "example": ["Go", "Supabase", "Vercel"]
-                }
+              "type": "string"
+            },
+            "description": "Project ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectUpdate"
               }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Project updated successfully",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Project updated successfully"
-                },
-                "id": {
-                  "type": "string",
-                  "example": "1"
-                },
-                "timestamp": {
-                  "type": "string",
-                  "format": "date-time"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateResponse"
                 }
               }
             }
@@ -494,7 +310,9 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "description": "Project ID"
           }
         ],
@@ -505,7 +323,7 @@
         }
       }
     },
-    "/skills": {
+    "/api/v1/skills": {
       "get": {
         "tags": ["skills"],
         "summary": "Get all skills",
@@ -513,48 +331,22 @@
         "responses": {
           "200": {
             "description": "Successful response",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "example": "1"
-                      },
-                      "name": {
-                        "type": "string",
-                        "example": "Go"
-                      },
-                      "category": {
-                        "type": "string",
-                        "example": "backend"
-                      },
-                      "level": {
-                        "type": "string",
-                        "example": "expert"
-                      },
-                      "years_exp": {
-                        "type": "integer",
-                        "example": 3
-                      },
-                      "featured": {
-                        "type": "boolean",
-                        "example": true
-                      },
-                      "color": {
-                        "type": "string",
-                        "example": "#00ADD8"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Skill"
                       }
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 4
                     }
                   }
-                },
-                "count": {
-                  "type": "integer",
-                  "example": 4
                 }
               }
             }
@@ -562,7 +354,7 @@
         }
       }
     },
-    "/skills/{id}": {
+    "/api/v1/skills/{id}": {
       "delete": {
         "tags": ["skills"],
         "summary": "Delete skill",
@@ -572,7 +364,9 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
+            "schema": {
+              "type": "string"
+            },
             "description": "Skill ID"
           }
         ],
@@ -583,73 +377,52 @@
         }
       }
     },
-    "/contact": {
+    "/api/v1/contact": {
       "post": {
         "tags": ["contact"],
         "summary": "Submit contact form",
         "description": "Submit a contact form message",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "John Doe"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "john@example.com"
-                },
-                "subject": {
-                  "type": "string",
-                  "example": "Project Inquiry"
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Hello, I'm interested in discussing a project..."
-                }
-              },
-              "required": ["name", "email", "subject", "message"]
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactForm"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Contact form submitted successfully",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Contact form submitted successfully"
-                },
-                "id": {
-                  "type": "integer",
-                  "example": 1234
-                },
-                "timestamp": {
-                  "type": "string",
-                  "format": "date-time"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Contact form submitted successfully"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "example": 1234
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
                 }
               }
             }
           },
           "405": {
             "description": "Method not allowed",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "example": "Method not allowed"
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Only POST requests are supported for this endpoint"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -657,7 +430,7 @@
         }
       }
     },
-    "/stats/views": {
+    "/api/v1/stats/views": {
       "get": {
         "tags": ["stats"],
         "summary": "Get view statistics",
@@ -665,77 +438,10 @@
         "responses": {
           "200": {
             "description": "Successful response",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "total_views": {
-                  "type": "integer",
-                  "example": 1250
-                },
-                "unique_visitors": {
-                  "type": "integer",
-                  "example": 950
-                },
-                "views_today": {
-                  "type": "integer",
-                  "example": 45
-                },
-                "views_this_week": {
-                  "type": "integer",
-                  "example": 320
-                },
-                "views_this_month": {
-                  "type": "integer",
-                  "example": 1100
-                },
-                "top_pages": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "page": {
-                        "type": "string",
-                        "example": "/projects"
-                      },
-                      "views": {
-                        "type": "integer",
-                        "example": 450
-                      }
-                    }
-                  }
-                },
-                "views_by_country": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "country": {
-                        "type": "string",
-                        "example": "KR"
-                      },
-                      "views": {
-                        "type": "integer",
-                        "example": 750
-                      }
-                    }
-                  }
-                },
-                "views_over_time": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "date": {
-                        "type": "string",
-                        "format": "date",
-                        "example": "2023-12-01"
-                      },
-                      "views": {
-                        "type": "integer",
-                        "example": 45
-                      }
-                    }
-                  }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ViewStats"
                 }
               }
             }
@@ -743,7 +449,7 @@
         }
       }
     },
-    "/stats/projects": {
+    "/api/v1/stats/projects": {
       "get": {
         "tags": ["stats"],
         "summary": "Get project statistics",
@@ -751,56 +457,10 @@
         "responses": {
           "200": {
             "description": "Successful response",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "total_projects": {
-                  "type": "integer",
-                  "example": 12
-                },
-                "completed_projects": {
-                  "type": "integer",
-                  "example": 8
-                },
-                "featured_projects": {
-                  "type": "integer",
-                  "example": 3
-                },
-                "tech_stack_stats": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "technology": {
-                        "type": "string",
-                        "example": "Go"
-                      },
-                      "count": {
-                        "type": "integer",
-                        "example": 5
-                      },
-                      "percentage": {
-                        "type": "number",
-                        "example": 41.7
-                      }
-                    }
-                  }
-                },
-                "projects_by_status": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "completed"
-                      },
-                      "count": {
-                        "type": "integer",
-                        "example": 8
-                      }
-                    }
-                  }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectStats"
                 }
               }
             }
@@ -808,67 +468,413 @@
         }
       }
     },
-    "/stats/visit": {
+    "/api/v1/stats/visit": {
       "post": {
         "tags": ["stats"],
         "summary": "Record a visit",
         "description": "Record a new visit to the portfolio",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": false,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "page": {
-                  "type": "string",
-                  "example": "/projects"
-                },
-                "referrer": {
-                  "type": "string",
-                  "example": "https://google.com"
-                },
-                "user_agent": {
-                  "type": "string",
-                  "example": "Mozilla/5.0..."
-                }
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisitData"
               }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Visit recorded successfully",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Visit recorded successfully"
-                },
-                "timestamp": {
-                  "type": "string",
-                  "format": "date-time"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Visit recorded successfully"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
                 }
               }
             }
           },
           "405": {
             "description": "Method not allowed",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "string",
-                  "example": "Method not allowed"
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Only POST requests are supported for this endpoint"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "이혁주"
+          },
+          "email": {
+            "type": "string",
+            "example": "hyoukjoo@example.com"
+          },
+          "role": {
+            "type": "string",
+            "example": "Full-Stack Developer"
+          },
+          "bio": {
+            "type": "string",
+            "example": "Backend engineer specializing in Go, TypeScript, and cloud architecture"
+          },
+          "website": {
+            "type": "string",
+            "example": "https://hyoukjoolee.github.io/portfolio"
+          },
+          "location": {
+            "type": "string",
+            "example": "Seoul, Korea"
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["Go", "TypeScript", "Flutter", "AWS", "Docker", "PostgreSQL"]
+          },
+          "is_public": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "UserUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "이혁주"
+          },
+          "email": {
+            "type": "string",
+            "example": "hyoukjoo@example.com"
+          },
+          "role": {
+            "type": "string",
+            "example": "Full-Stack Developer"
+          },
+          "bio": {
+            "type": "string",
+            "example": "Backend engineer specializing in Go, TypeScript, and cloud architecture"
+          }
+        }
+      },
+      "Project": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "title": {
+            "type": "string",
+            "example": "Portfolio API Server"
+          },
+          "description": {
+            "type": "string",
+            "example": "Go REST API with Supabase integration deployed on Vercel"
+          },
+          "tech_stack": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["Go", "Supabase", "Vercel"]
+          },
+          "status": {
+            "type": "string",
+            "example": "completed"
+          },
+          "featured": {
+            "type": "boolean",
+            "example": true
+          },
+          "live_url": {
+            "type": "string",
+            "example": "https://portfolio-api.vercel.app"
+          },
+          "github_url": {
+            "type": "string",
+            "example": "https://github.com/hyoukjoolee/portfolio-api"
+          },
+          "is_public": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "ProjectUpdate": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Updated Project Title"
+          },
+          "description": {
+            "type": "string",
+            "example": "Updated project description"
+          },
+          "tech_stack": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["Go", "Supabase", "Vercel"]
+          }
+        }
+      },
+      "Skill": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "Go"
+          },
+          "category": {
+            "type": "string",
+            "example": "backend"
+          },
+          "level": {
+            "type": "string",
+            "example": "expert"
+          },
+          "years_exp": {
+            "type": "integer",
+            "example": 3
+          },
+          "featured": {
+            "type": "boolean",
+            "example": true
+          },
+          "color": {
+            "type": "string",
+            "example": "#00ADD8"
+          }
+        }
+      },
+      "ContactForm": {
+        "type": "object",
+        "required": ["name", "email", "subject", "message"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@example.com"
+          },
+          "subject": {
+            "type": "string",
+            "example": "Project Inquiry"
+          },
+          "message": {
+            "type": "string",
+            "example": "Hello, I'm interested in discussing a project..."
+          }
+        }
+      },
+      "VisitData": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "string",
+            "example": "/projects"
+          },
+          "referrer": {
+            "type": "string",
+            "example": "https://google.com"
+          },
+          "user_agent": {
+            "type": "string",
+            "example": "Mozilla/5.0..."
+          }
+        }
+      },
+      "ViewStats": {
+        "type": "object",
+        "properties": {
+          "total_views": {
+            "type": "integer",
+            "example": 1250
+          },
+          "unique_visitors": {
+            "type": "integer",
+            "example": 950
+          },
+          "views_today": {
+            "type": "integer",
+            "example": 45
+          },
+          "views_this_week": {
+            "type": "integer",
+            "example": 320
+          },
+          "views_this_month": {
+            "type": "integer",
+            "example": 1100
+          },
+          "top_pages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "page": {
+                  "type": "string",
+                  "example": "/projects"
+                },
+                "views": {
+                  "type": "integer",
+                  "example": 450
+                }
+              }
+            }
+          },
+          "views_by_country": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "country": {
+                  "type": "string",
+                  "example": "KR"
+                },
+                "views": {
+                  "type": "integer",
+                  "example": 750
+                }
+              }
+            }
+          },
+          "views_over_time": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "example": "2023-12-01"
+                },
+                "views": {
+                  "type": "integer",
+                  "example": 45
+                }
+              }
+            }
+          }
+        }
+      },
+      "ProjectStats": {
+        "type": "object",
+        "properties": {
+          "total_projects": {
+            "type": "integer",
+            "example": 12
+          },
+          "completed_projects": {
+            "type": "integer",
+            "example": 8
+          },
+          "featured_projects": {
+            "type": "integer",
+            "example": 3
+          },
+          "tech_stack_stats": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "technology": {
+                  "type": "string",
+                  "example": "Go"
+                },
+                "count": {
+                  "type": "integer",
+                  "example": 5
+                },
+                "percentage": {
+                  "type": "number",
+                  "example": 41.7
+                }
+              }
+            }
+          },
+          "projects_by_status": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "completed"
+                },
+                "count": {
+                  "type": "integer",
+                  "example": 8
+                }
+              }
+            }
+          }
+        }
+      },
+      "UpdateResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Updated successfully"
+          },
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Method not allowed"
+          },
+          "message": {
+            "type": "string",
+            "example": "Only POST requests are supported for this endpoint"
           }
         }
       }
