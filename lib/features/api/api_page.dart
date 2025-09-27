@@ -401,12 +401,29 @@ class _EndpointTile extends ConsumerWidget {
         ),
         childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         children: [
-          if (e.tags.isNotEmpty) Wrap(spacing: 6, children: e.tags.map((t) => Chip(label: Text(t))).toList()),
-          if ((e.operationId ?? '').isNotEmpty) Text('operationId: ${e.operationId}', style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 8),
+          // Operation ID
+          if ((e.operationId ?? '').isNotEmpty) ...[
+            Row(
+              children: [
+                Icon(Icons.fingerprint, size: 16, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                const SizedBox(width: 8),
+                Text('Operation ID: ${e.operationId}', style: Theme.of(context).textTheme.bodySmall),
+              ],
+            ),
+            const SizedBox(height: 12),
+          ],
+
+          // Parameters Section
           if (e.parameters.isNotEmpty) ...[
-            Text(l10n.apiParameters, style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 4),
+            Row(
+              children: [
+                Icon(Icons.settings, size: 18, color: Theme.of(context).colorScheme.primary),
+                const SizedBox(width: 8),
+                Text(l10n.apiParameters, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
+              ],
+            ),
+            const SizedBox(height: 8),
             _JsonBox(data: e.parameters
                 .map((p) => {
                       'name': p.name,
@@ -415,19 +432,35 @@ class _EndpointTile extends ConsumerWidget {
                       if (p.schema != null) 'schema': p.schema,
                     })
                 .toList()),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
           ],
+
+          // Request Body Section
           if (e.requestBodySchema != null) ...[
-            Text(l10n.apiRequestBodyJson, style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 4),
+            Row(
+              children: [
+                Icon(Icons.upload, size: 18, color: Theme.of(context).colorScheme.primary),
+                const SizedBox(width: 8),
+                Text(l10n.apiRequestBodyJson, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
+              ],
+            ),
+            const SizedBox(height: 8),
             _JsonBox(data: e.requestBodySchema!),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
           ],
+
+          // Response Section
           if (e.responseSchema != null) ...[
-            Text(l10n.apiResponseJson, style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 4),
-            _JsonBox(data: e.responseSchema!),
+            Row(
+              children: [
+                Icon(Icons.download, size: 18, color: Theme.of(context).colorScheme.primary),
+                const SizedBox(width: 8),
+                Text(l10n.apiResponseJson, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
+              ],
+            ),
             const SizedBox(height: 8),
+            _JsonBox(data: e.responseSchema!),
+            const SizedBox(height: 16),
           ],
           baseUrlAsync.when(
             data: (base) {
@@ -437,8 +470,15 @@ class _EndpointTile extends ConsumerWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n.apiCurlTitle, style: Theme.of(context).textTheme.titleSmall),
-                  const SizedBox(height: 4),
+                  // cURL Section
+                  Row(
+                    children: [
+                      Icon(Icons.code, size: 18, color: Theme.of(context).colorScheme.primary),
+                      const SizedBox(width: 8),
+                      Text(l10n.apiCurlTitle, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
                   Stack(
                     alignment: Alignment.topRight,
                     children: [
@@ -457,7 +497,13 @@ class _EndpointTile extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
+
+                  // Divider
+                  const Divider(),
+                  const SizedBox(height: 16),
+
+                  // Try It Out Section
                   _TryBox(
                     e: e,
                     baseUrl: effectiveBase,
@@ -696,14 +742,27 @@ class _TryBoxState extends State<_TryBox> {
           ),
         ),
         if (_supportsBody) ...[
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Icon(Icons.edit_note, size: 18, color: Theme.of(context).colorScheme.primary),
+              const SizedBox(width: 8),
+              Text(
+                l10n.apiRequestBodyJson,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
           const SizedBox(height: 8),
-          Text(l10n.apiRequestBodyJson, style: Theme.of(context).textTheme.bodySmall),
-          const SizedBox(height: 4),
           TextField(
             controller: _bodyController,
             maxLines: 6,
-            decoration: const InputDecoration(border: OutlineInputBorder()),
-            style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              hintText: 'Enter JSON request body...',
+              helperText: 'Modify the JSON below and click Execute to test',
+            ),
+            style: const TextStyle(fontFamily: 'monospace', fontSize: 13),
           ),
         ],
         if (_lastUrl != null) ...[
@@ -723,20 +782,115 @@ class _TryBoxState extends State<_TryBox> {
           ),
         ],
         const SizedBox(height: 8),
-        if (_error != null) Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
-        if (_status != null) ...[
-          Row(children: [
-            Text('${l10n.apiStatus}: $_status'),
-            if (_durationMs != null) ...[
-              const SizedBox(width: 12),
-              Text('${l10n.apiDuration}: ${_durationMs}ms'),
+        const SizedBox(height: 16),
+
+        // Response Section
+        if (_error != null || _status != null) ...[
+          const Divider(),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Icon(Icons.featured_play_list, size: 18, color: Theme.of(context).colorScheme.primary),
+              const SizedBox(width: 8),
+              Text(
+                'Response',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+              ),
             ],
-          ]),
+          ),
+          const SizedBox(height: 12),
+        ],
+
+        // Error Display
+        if (_error != null) ...[
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.errorContainer,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.error, color: Theme.of(context).colorScheme.error),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    _error!,
+                    style: TextStyle(color: Theme.of(context).colorScheme.onErrorContainer),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+        ],
+
+        // Success Response
+        if (_status != null) ...[
+          // Status and Duration
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: _status! >= 200 && _status! < 300
+                  ? Theme.of(context).colorScheme.primaryContainer
+                  : Theme.of(context).colorScheme.errorContainer,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  _status! >= 200 && _status! < 300 ? Icons.check_circle : Icons.error,
+                  color: _status! >= 200 && _status! < 300
+                      ? Theme.of(context).colorScheme.onPrimaryContainer
+                      : Theme.of(context).colorScheme.onErrorContainer,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  '${l10n.apiStatus}: $_status',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: _status! >= 200 && _status! < 300
+                        ? Theme.of(context).colorScheme.onPrimaryContainer
+                        : Theme.of(context).colorScheme.onErrorContainer,
+                  ),
+                ),
+                if (_durationMs != null) ...[
+                  const SizedBox(width: 16),
+                  Text(
+                    '${l10n.apiDuration}: ${_durationMs}ms',
+                    style: TextStyle(
+                      color: _status! >= 200 && _status! < 300
+                          ? Theme.of(context).colorScheme.onPrimaryContainer
+                          : Theme.of(context).colorScheme.onErrorContainer,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          // Headers
+          Row(
+            children: [
+              Icon(Icons.list, size: 16, color: Theme.of(context).colorScheme.onSurfaceVariant),
+              const SizedBox(width: 8),
+              Text(l10n.apiHeaders, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w500)),
+            ],
+          ),
           const SizedBox(height: 4),
-          Text(l10n.apiHeaders, style: Theme.of(context).textTheme.bodySmall),
           _JsonBox(data: _headers ?? {}),
-          const SizedBox(height: 6),
-          Text(l10n.apiBody, style: Theme.of(context).textTheme.bodySmall),
+          const SizedBox(height: 12),
+
+          // Response Body
+          Row(
+            children: [
+              Icon(Icons.data_object, size: 16, color: Theme.of(context).colorScheme.onSurfaceVariant),
+              const SizedBox(width: 8),
+              Text(l10n.apiBody, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w500)),
+            ],
+          ),
+          const SizedBox(height: 4),
           Stack(
             alignment: Alignment.topRight,
             children: [
