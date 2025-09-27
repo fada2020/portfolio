@@ -29,7 +29,53 @@ class ApiPage extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // API Info Header
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.api, color: Theme.of(context).colorScheme.primary),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Portfolio API',
+                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              ref.watch(openApiBaseUrlProvider).when(
+                                data: (url) => Text(
+                                  url,
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    fontFamily: 'monospace',
+                                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
+                                loading: () => const Text('Loading...'),
+                                error: (_, __) => const Text('Error loading URL'),
+                              ),
+                            ],
+                          ),
+                        ),
+                        FilledButton.icon(
+                          onPressed: () => ref.refresh(openApiEndpointsProvider),
+                          icon: const Icon(Icons.refresh, size: 18),
+                          label: const Text('Refresh'),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  // Search and Filters
                   Row(
                     children: [
                       Expanded(
@@ -38,13 +84,11 @@ class ApiPage extends ConsumerWidget {
                             prefixIcon: const Icon(Icons.search),
                             hintText: l10n.apiSearchHint,
                             labelText: l10n.apiSearchHint,
+                            border: const OutlineInputBorder(),
                           ),
                           onChanged: (v) => ref.read(apiSearchQueryProvider.notifier).state = v,
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      // Base URL override input (optional)
-                      const BaseUrlField(width: 320),
                       const SizedBox(width: 12),
                       DropdownButton<String?>(
                         value: selectedTag,
@@ -65,27 +109,51 @@ class ApiPage extends ConsumerWidget {
                       ]),
                     ],
                   ),
-                  Row(
+                  const SizedBox(height: 8),
+                  // Advanced Options (Collapsible)
+                  ExpansionTile(
+                    title: const Text('Advanced Options'),
+                    leading: const Icon(Icons.settings),
                     children: [
-                      Row(children: [
-                        Text(l10n.apiIncludeAuth),
-                        Switch.adaptive(
-                          value: includeAuth,
-                          onChanged: (v) => ref.read(apiIncludeAuthProvider.notifier).state = v,
-                        ),
-                      ]),
-                      const SizedBox(width: 8),
-                      if (includeAuth)
-                        Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(Icons.vpn_key),
-                              hintText: l10n.apiAuthToken,
-                              labelText: l10n.apiAuthToken,
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                        child: Column(
+                          children: [
+                            // Base URL Override
+                            const Row(
+                              children: [
+                                Expanded(child: BaseUrlField(width: double.infinity)),
+                              ],
                             ),
-                            onChanged: (v) => ref.read(apiAuthTokenProvider.notifier).state = v,
-                          ),
+                            const SizedBox(height: 8),
+                            // Auth Settings
+                            Row(
+                              children: [
+                                Row(children: [
+                                  Text(l10n.apiIncludeAuth),
+                                  Switch.adaptive(
+                                    value: includeAuth,
+                                    onChanged: (v) => ref.read(apiIncludeAuthProvider.notifier).state = v,
+                                  ),
+                                ]),
+                                const SizedBox(width: 16),
+                                if (includeAuth)
+                                  Expanded(
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        prefixIcon: const Icon(Icons.vpn_key),
+                                        hintText: l10n.apiAuthToken,
+                                        labelText: l10n.apiAuthToken,
+                                        border: const OutlineInputBorder(),
+                                      ),
+                                      onChanged: (v) => ref.read(apiAuthTokenProvider.notifier).state = v,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ],
                         ),
+                      ),
                     ],
                   ),
                 ],
@@ -274,22 +342,63 @@ class _EndpointTile extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+      elevation: 2,
       child: ExpansionTile(
+        tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         title: Row(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
                 color: methodColor,
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(6),
               ),
-              child: Text(e.method, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              child: Text(
+                e.method,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
+              ),
             ),
-            const SizedBox(width: 8),
-            Expanded(child: Text(e.path, style: const TextStyle(fontFamily: 'monospace'))),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                e.path,
+                style: const TextStyle(
+                  fontFamily: 'monospace',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            if (e.tags.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondaryContainer,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  e.tags.first,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
           ],
         ),
-        subtitle: e.summary == null ? null : Text(e.summary!),
+        subtitle: e.summary == null ? null : Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: Text(
+            e.summary!,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
+        ),
         childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         children: [
           if (e.tags.isNotEmpty) Wrap(spacing: 6, children: e.tags.map((t) => Chip(label: Text(t))).toList()),
@@ -554,16 +663,37 @@ class _TryBoxState extends State<_TryBox> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text('${l10n.apiTry} (${widget.e.method.toUpperCase()})', style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(width: 8),
-            FilledButton.icon(
-              onPressed: _loading ? null : () => _exec(context),
-              icon: _loading ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.play_arrow),
-              label: Text(l10n.apiExecute),
-            ),
-          ],
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.play_circle_outline, color: Theme.of(context).colorScheme.primary),
+                  const SizedBox(width: 8),
+                  Text(
+                    '${l10n.apiTry} (${widget.e.method.toUpperCase()})',
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Spacer(),
+                  FilledButton.icon(
+                    onPressed: _loading ? null : () => _exec(context),
+                    icon: _loading
+                        ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
+                        : const Icon(Icons.play_arrow),
+                    label: Text(l10n.apiExecute),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
         if (_supportsBody) ...[
           const SizedBox(height: 8),
